@@ -8,3 +8,6 @@ Create a web application, which will allow a shop owner to keep track of the cur
 * Allow importing of received shipments from an XML format;
 * Allow exporting of current inventory in XML format;
 * Support importing shipments and sales via a SOAP API;
+
+
+## [Project Wiki](https://github.com/mschvarc/PB138-Inventory-Management/wiki)
