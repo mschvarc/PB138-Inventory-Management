@@ -1,21 +1,8 @@
-package dal.entities;
+package service.dto;
 
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "Category")
-public class Category {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+public class CategoryDto {
     private Long id;
-
     private String description;
     private String name;
 
