@@ -1,4 +1,4 @@
-package dal.entities;
+package pb138.dal.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;

@@ -1,7 +1,7 @@
-package dal.repository;
+package pb138.dal.repository;
 
-import service.dto.SaleDto;
-import service.filters.SaleFilter;
+import pb138.service.dto.SaleDto;
+import pb138.service.filters.SaleFilter;
 
 public interface SaleRepository {
     SaleDto getById(long id);

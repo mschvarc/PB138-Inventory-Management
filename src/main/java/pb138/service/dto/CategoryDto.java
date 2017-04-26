@@ -1,4 +1,4 @@
-package service.dto;
+package pb138.service.dto;
 
 
 public class CategoryDto {

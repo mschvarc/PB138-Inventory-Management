@@ -1,6 +1,6 @@
-package service.services;
+package pb138.service.services;
 
-import service.dto.ItemDto;
+import pb138.service.dto.ItemDto;
 
 public interface ItemService {
     int createItem(ItemDto item);

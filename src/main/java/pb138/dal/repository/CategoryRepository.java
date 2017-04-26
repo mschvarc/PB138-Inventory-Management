@@ -1,7 +1,7 @@
-package dal.repository;
+package pb138.dal.repository;
 
-import service.dto.CategoryDto;
-import service.filters.CategoryFilter;
+import pb138.service.dto.CategoryDto;
+import pb138.service.filters.CategoryFilter;
 
 public interface CategoryRepository {
     CategoryDto getById(long id);

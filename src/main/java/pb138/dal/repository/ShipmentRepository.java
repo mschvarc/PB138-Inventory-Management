@@ -1,7 +1,7 @@
-package dal.repository;
+package pb138.dal.repository;
 
-import service.dto.ShipmentDto;
-import service.filters.ShipmentFilter;
+import pb138.service.dto.ShipmentDto;
+import pb138.service.filters.ShipmentFilter;
 
 public interface ShipmentRepository {
     ShipmentDto getById(long id);

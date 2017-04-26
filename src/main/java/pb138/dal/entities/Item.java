@@ -1,11 +1,27 @@
-package service.dto;
+package pb138.dal.entities;
 
 
-public class ItemDto {
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Item")
+public class Item {
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
+
     private String name;
+
     private String description;
-    private CategoryDto categoryDto;
+
+    private Category category;
+
     private Integer alertThreshold;
 
     private String unit;
@@ -36,12 +52,12 @@ public class ItemDto {
         this.description = description;
     }
 
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Integer getAlertThreshold() {

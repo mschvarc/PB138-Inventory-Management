@@ -1,6 +1,6 @@
-package service.services;
+package pb138.service.services;
 
-import service.dto.SaleDto;
+import pb138.service.dto.SaleDto;
 
 
 public interface SaleService {

@@ -1,7 +1,7 @@
-package service.services;
+package pb138.service.services;
 
 
-import service.dto.ShipmentDto;
+import pb138.service.dto.ShipmentDto;
 
 public interface ShipmentService {
 

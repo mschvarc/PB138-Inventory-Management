@@ -1,7 +1,7 @@
-package service.filters;
+package pb138.service.filters;
 
-import service.dto.CategoryDto;
-import service.dto.ItemDto;
+import pb138.service.dto.CategoryDto;
+import pb138.service.dto.ItemDto;
 
 import java.util.Date;
 

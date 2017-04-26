@@ -1,4 +1,4 @@
-package service.filters;
+package pb138.service.filters;
 
 public class ItemFilter {
     private Long id;

@@ -1,4 +1,4 @@
-package service.dto;
+package pb138.service.dto;
 
 import java.util.Date;
 

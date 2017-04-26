@@ -1,4 +1,4 @@
-package service.filters;
+package pb138.service.filters;
 
 public class CategoryFilter {
     private Long id;
