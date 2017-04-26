@@ -1,14 +1,16 @@
 package pb138.dal.repository;
 
-import pb138.service.dto.CategoryDto;
+import pb138.dal.entities.Category;
 import pb138.service.filters.CategoryFilter;
 
 public interface CategoryRepository {
-    CategoryDto getById(long id);
+    Category getById(long id);
 
-    void save(CategoryDto category);
+    void create(Category category);
 
-    void delete(CategoryDto category);
+    void update(Category category);
 
-    Iterable<CategoryDto> find(CategoryFilter criteria);
+    void delete(Category category);
+
+    Iterable<Category> find(CategoryFilter criteria);
 }

@@ -26,11 +26,11 @@ public class Shipment {
     @Column(name = "EVENT_DATE")
     private Date dateImported;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

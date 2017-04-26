@@ -1,15 +1,15 @@
 package pb138.service.filters;
 
-import pb138.service.dto.CategoryDto;
-import pb138.service.dto.ItemDto;
+import pb138.dal.entities.Category;
+import pb138.dal.entities.Item;
 
 import java.util.Date;
 
 public class SaleFilter {
     private Date startDate;
     private Integer count;
-    private ItemDto item;
-    private CategoryDto category;
+    private Item item;
+    private Category category;
 
     public Date getStartDate() {
         return startDate;
@@ -27,19 +27,19 @@ public class SaleFilter {
         this.count = count;
     }
 
-    public ItemDto getItem() {
+    public Item getItem() {
         return item;
     }
 
-    public void setItem(ItemDto item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
-    public CategoryDto getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDto category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

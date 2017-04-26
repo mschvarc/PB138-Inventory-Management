@@ -1,13 +1,13 @@
 package pb138.service.services;
 
-import pb138.service.dto.CategoryDto;
+import pb138.dal.entities.Category;
 
 public interface CategoryService {
-    int createCategory(CategoryDto category);
+    int create(Category category);
 
-    void deleteCategory(CategoryDto category);
+    void delete(Category category);
 
-    void updateCategory(CategoryDto category);
+    void update(Category category);
 
-    CategoryDto getCategoryById(long id);
+    Category getById(long id);
 }

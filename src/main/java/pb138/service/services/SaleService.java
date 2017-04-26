@@ -1,14 +1,14 @@
 package pb138.service.services;
 
-import pb138.service.dto.SaleDto;
+import pb138.dal.entities.Sale;
 
 
 public interface SaleService {
-    int createSale(SaleDto sale);
+    int create(Sale sale);
 
-    void deleteSale(SaleDto sale);
+    void delete(Sale sale);
 
-    void updateSale(SaleDto sale);
+    void update(Sale sale);
 
-    SaleDto getSaleDtoById(long id);
+    Sale getById(long id);
 }

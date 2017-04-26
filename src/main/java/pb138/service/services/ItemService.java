@@ -1,13 +1,13 @@
 package pb138.service.services;
 
-import pb138.service.dto.ItemDto;
+import pb138.dal.entities.Item;
 
 public interface ItemService {
-    int createItem(ItemDto item);
+    int create(Item item);
 
-    void updateItem(ItemDto item);
+    void update(Item item);
 
-    void deleteItem(ItemDto item);
+    void delete(Item item);
 
-    ItemDto getItemById(long id);
+    Item getById(long id);
 }

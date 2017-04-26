@@ -1,14 +1,16 @@
 package pb138.dal.repository;
 
-import pb138.service.dto.ItemDto;
+import pb138.dal.entities.Item;
 import pb138.service.filters.ItemFilter;
 
 public interface ItemRepository {
-    ItemDto getById(long id);
+    Item getById(long id);
 
-    void save(ItemDto item);
+    void create(Item item);
 
-    void delete(ItemDto item);
+    void update(Item item);
 
-    Iterable<ItemDto> find(ItemFilter criteria);
+    void delete(Item item);
+
+    Iterable<Item> find(ItemFilter criteria);
 }

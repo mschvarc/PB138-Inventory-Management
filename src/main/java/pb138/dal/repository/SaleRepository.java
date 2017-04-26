@@ -1,14 +1,16 @@
 package pb138.dal.repository;
 
-import pb138.service.dto.SaleDto;
+import pb138.dal.entities.Sale;
 import pb138.service.filters.SaleFilter;
 
 public interface SaleRepository {
-    SaleDto getById(long id);
+    Sale getById(long id);
 
-    void save(SaleDto sale);
+    void create(Sale sale);
 
-    void delete(SaleDto sale);
+    void update(Sale sale);
 
-    Iterable<SaleDto> find(SaleFilter criteria);
+    void delete(Sale sale);
+
+    Iterable<Sale> find(SaleFilter criteria);
 }

@@ -1,16 +1,15 @@
 package pb138.service.services;
 
 
-import pb138.service.dto.ShipmentDto;
+import pb138.dal.entities.Shipment;
 
 public interface ShipmentService {
 
-    int createShipment(ShipmentDto shipment); //return new ID
+    int create(Shipment shipment); //return new ID
 
-    void deleteShipment(ShipmentDto shipment);
+    void delete(Shipment shipment);
 
-    void updateShipment(ShipmentDto shipment);
+    void update(Shipment shipment);
 
-    ShipmentDto getShipmentById(long id);
-
+    Shipment getById(long id);
 }
