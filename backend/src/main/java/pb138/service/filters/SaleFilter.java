@@ -6,10 +6,19 @@ import pb138.dal.entities.Item;
 import java.util.Date;
 
 public class SaleFilter {
+    private Long id;
     private Date startDate;
     private Integer count;
     private Item item;
     private Category category;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Date getStartDate() {
         return startDate;

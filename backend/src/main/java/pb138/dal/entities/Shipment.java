@@ -1,29 +1,30 @@
 package pb138.dal.entities;
 
+
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "Sale")
-public class Sale {
+@Table(name = "Shipment")
+public class Shipment {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
+    @ManyToOne
     private Item item;
-    private int quantitySold;
+    private int quantityImported;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "EVENT_DATE")
-    private Date dateSold;
+    private Date dateImported;
 
     public long getId() {
         return id;
@@ -41,19 +42,19 @@ public class Sale {
         this.item = item;
     }
 
-    public int getQuantitySold() {
-        return quantitySold;
+    public int getQuantityImported() {
+        return quantityImported;
     }
 
-    public void setQuantitySold(int quantitySold) {
-        this.quantitySold = quantitySold;
+    public void setQuantityImported(int quantityImported) {
+        this.quantityImported = quantityImported;
     }
 
-    public Date getDateSold() {
-        return dateSold;
+    public Date getDateImported() {
+        return dateImported;
     }
 
-    public void setDateSold(Date dateSold) {
-        this.dateSold = dateSold;
+    public void setDateImported(Date dateImported) {
+        this.dateImported = dateImported;
     }
 }
