@@ -12,5 +12,5 @@ public interface SaleRepository {
 
     void delete(Sale sale);
 
-    Iterable<Sale> find(SaleFilter criteria);
+    Iterable<Sale> find(SaleFilter filter);
 }

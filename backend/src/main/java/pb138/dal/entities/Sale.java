@@ -6,24 +6,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "Sale")
 public class Sale {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    private long id;
 
     @ManyToOne
+    @NotNull
     private Item item;
+    @NotNull
     private int quantitySold;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date dateSold;
 
     public long getId() {
@@ -56,5 +58,27 @@ public class Sale {
 
     public void setDateSold(Date dateSold) {
         this.dateSold = dateSold;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sale)) return false;
+
+        Sale sale = (Sale) o;
+
+        if (getId() != sale.getId()) return false;
+        if (getQuantitySold() != sale.getQuantitySold()) return false;
+        if (!getItem().equals(sale.getItem())) return false;
+        return getDateSold().equals(sale.getDateSold());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getItem().hashCode();
+        result = 31 * result + getQuantitySold();
+        result = 31 * result + getDateSold().hashCode();
+        return result;
     }
 }

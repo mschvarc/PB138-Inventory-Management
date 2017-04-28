@@ -6,17 +6,18 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Category")
 public class Category {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    private long id;
 
+    @NotNull
     private String description;
+    @NotNull
     private String name;
 
     public long getId() {
@@ -41,5 +42,25 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+
+        Category category = (Category) o;
+
+        if (getId() != category.getId()) return false;
+        if (!getDescription().equals(category.getDescription())) return false;
+        return getName().equals(category.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + getName().hashCode();
+        return result;
     }
 }

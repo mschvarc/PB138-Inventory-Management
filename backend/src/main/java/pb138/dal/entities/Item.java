@@ -7,28 +7,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Item")
 public class Item {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private Long id;
+    private long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String description;
 
     @ManyToOne
+    @NotNull
     private Category category;
 
     private Integer alertThreshold;
 
+    @NotNull
     private String unit;
 
     private int ean;
+
+    @NotNull
+    private int currentCount;
 
     public long getId() {
         return id;
@@ -84,5 +90,45 @@ public class Item {
 
     public void setEan(int ean) {
         this.ean = ean;
+    }
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+
+    public void setCurrentCount(int currentCount) {
+        this.currentCount = currentCount;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (getId() != item.getId()) return false;
+        if (getEan() != item.getEan()) return false;
+        if (getCurrentCount() != item.getCurrentCount()) return false;
+        if (!getName().equals(item.getName())) return false;
+        if (!getDescription().equals(item.getDescription())) return false;
+        if (!getCategory().equals(item.getCategory())) return false;
+        if (getAlertThreshold() != null ? !getAlertThreshold().equals(item.getAlertThreshold()) : item.getAlertThreshold() != null)
+            return false;
+        return getUnit() != null ? getUnit().equals(item.getUnit()) : item.getUnit() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + getCategory().hashCode();
+        result = 31 * result + (getAlertThreshold() != null ? getAlertThreshold().hashCode() : 0);
+        result = 31 * result + (getUnit() != null ? getUnit().hashCode() : 0);
+        result = 31 * result + getEan();
+        result = 31 * result + getCurrentCount();
+        return result;
     }
 }

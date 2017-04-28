@@ -7,8 +7,7 @@ import java.util.Date;
 
 public class SaleFilter {
     private Long id;
-    private Date startDate;
-    private Integer count;
+    private Date dateSold;
     private Item item;
     private Category category;
 
@@ -20,20 +19,12 @@ public class SaleFilter {
         this.id = id;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getDateSold() {
+        return dateSold;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setDateSold(Date dateSold) {
+        this.dateSold = dateSold;
     }
 
     public Item getItem() {

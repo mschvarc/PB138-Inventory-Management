@@ -12,5 +12,5 @@ public interface CategoryRepository {
 
     void delete(Category category);
 
-    Iterable<Category> find(CategoryFilter criteria);
+    Iterable<Category> find(CategoryFilter filter);
 }

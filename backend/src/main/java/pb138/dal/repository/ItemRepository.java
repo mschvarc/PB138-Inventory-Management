@@ -12,5 +12,5 @@ public interface ItemRepository {
 
     void delete(Item item);
 
-    Iterable<Item> find(ItemFilter criteria);
+    Iterable<Item> find(ItemFilter filter);
 }

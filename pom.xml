@@ -52,10 +52,30 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>5.2.10.Final</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -64,8 +84,13 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <compilerArguments>
+                            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                        </compilerArguments>
                     </configuration>
                 </plugin>
+
+
                 <!-- Check code style -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -91,7 +116,6 @@
                     </executions>
                 </plugin>
             </plugins>
-
         </pluginManagement>
     </build>
 </project>
