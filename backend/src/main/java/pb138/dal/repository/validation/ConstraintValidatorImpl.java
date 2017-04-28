@@ -19,30 +19,25 @@ public class ConstraintValidatorImpl implements ConstraintValidator {
 
     @Override
     public <T> void validate(T entity) throws EntityValidationException {
-        try {
-            Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
-            StringBuilder errors = new StringBuilder();
-            for (ConstraintViolation<T> constraintViolation : constraintViolations) {
-                errors.append(constraintViolation.getRootBean())
-                        .append(" ")
-                        .append(constraintViolation.getMessage())
-                        .append(System.lineSeparator());
-            }
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+        StringBuilder errors = new StringBuilder();
+        for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+            errors.append(constraintViolation.getRootBean())
+                    .append(" ")
+                    .append(constraintViolation.getMessage())
+                    .append(System.lineSeparator());
+        }
 
-            if (constraintViolations.size() > 0) {
-                throw new EntityValidationException("Failed to validate: "
-                        + entity.getClass()
-                        + ", caused by: "
-                        + errors);
-            }
-        } //if X.Y is NULL, validating Y will throw javax.validation.ValidationException
-        catch (javax.validation.ValidationException navigationException) {
+        if (constraintViolations.size() > 0) {
             throw new EntityValidationException("Failed to validate: "
                     + entity.getClass()
-                    + ", caused by one or more linked navigation entities being NULL or being INVALID"
-                    + System.lineSeparator()
-                    + navigationException.getMessage(),
-                    navigationException);
+                    + ", caused by: "
+                    + errors);
         }
+        // NOTE for future: if X.Y is NULL, validator should NOT throw an exception,
+        // if it does, check X.hashCode() implementation for null checks
+        // https://hibernate.atlassian.net/browse/HV-1013
+        // http://stackoverflow.com/questions/30333779/javax-validation-validationexception-hv000041-call-to-traversableresolver-isre
+
     }
 }

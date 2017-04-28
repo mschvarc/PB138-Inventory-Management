@@ -11,6 +11,7 @@ import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
 import pb138.dal.repository.ItemRepository;
+import pb138.dal.repository.validation.ConstraintValidator;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ItemFilter;
 
@@ -35,16 +36,20 @@ public class ItemRepositoryTest extends TestCase {
     @Autowired
     private ItemRepository repository;
 
+    @Autowired
+    private ConstraintValidator validator;
+
     private Category category;
     private Item item;
     private Sale sale;
 
     @Transactional
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws Exception {
         category = new Category();
         category.setDescription("desc");
         category.setName("cat_name");
+        validator.validate(category);
         manager.persist(category);
 
         item = new Item();
@@ -55,12 +60,14 @@ public class ItemRepositoryTest extends TestCase {
         item.setAlertThreshold(10);
         item.setUnit("pcs");
         item.setCurrentCount(100);
+        validator.validate(item);
         manager.persist(item);
 
         sale = new Sale();
         sale.setQuantitySold(5);
         sale.setDateSold(new Date());
         sale.setItem(item);
+        validator.validate(sale);
         manager.persist(sale);
     }
 
@@ -140,7 +147,7 @@ public class ItemRepositoryTest extends TestCase {
     }
 
     @Test(expected = EntityValidationException.class)
-    public void testValidation() throws Exception {
+    public void testValidationNested() throws Exception {
         Item item1 = new Item();
         item1.setCategory(null);
         item1.setEan(123);
@@ -151,4 +158,18 @@ public class ItemRepositoryTest extends TestCase {
         item1.setDescription(null);
         repository.create(item1);
     }
+
+    @Test(expected = EntityValidationException.class)
+    public void testValidation() throws Exception {
+        Item item1 = new Item();
+        item1.setCategory(category);
+        item1.setEan(123);
+        item1.setUnit(null);
+        item1.setCurrentCount(10);
+        item1.setName(null);
+        item1.setAlertThreshold(30);
+        item1.setDescription(null);
+        repository.create(item1);
+    }
+
 }

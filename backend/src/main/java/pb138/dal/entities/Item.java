@@ -2,6 +2,7 @@ package pb138.dal.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +18,11 @@ public class Item {
     private long id;
 
     @NotNull
+    @Length(min = 1)
     private String name;
 
     @NotNull
+    @Length(min = 1)
     private String description;
 
     @ManyToOne
@@ -29,6 +32,7 @@ public class Item {
     private Integer alertThreshold;
 
     @NotNull
+    @Length(min = 1)
     private String unit;
 
     private int ean;
@@ -100,7 +104,6 @@ public class Item {
         this.currentCount = currentCount;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,9 +114,11 @@ public class Item {
         if (getId() != item.getId()) return false;
         if (getEan() != item.getEan()) return false;
         if (getCurrentCount() != item.getCurrentCount()) return false;
-        if (!getName().equals(item.getName())) return false;
-        if (!getDescription().equals(item.getDescription())) return false;
-        if (!getCategory().equals(item.getCategory())) return false;
+        if (getName() != null ? !getName().equals(item.getName()) : item.getName() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
+            return false;
+        if (getCategory() != null ? !getCategory().equals(item.getCategory()) : item.getCategory() != null)
+            return false;
         if (getAlertThreshold() != null ? !getAlertThreshold().equals(item.getAlertThreshold()) : item.getAlertThreshold() != null)
             return false;
         return getUnit() != null ? getUnit().equals(item.getUnit()) : item.getUnit() == null;
@@ -122,9 +127,9 @@ public class Item {
     @Override
     public int hashCode() {
         int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getCategory().hashCode();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
         result = 31 * result + (getAlertThreshold() != null ? getAlertThreshold().hashCode() : 0);
         result = 31 * result + (getUnit() != null ? getUnit().hashCode() : 0);
         result = 31 * result + getEan();

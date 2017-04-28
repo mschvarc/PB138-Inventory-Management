@@ -11,6 +11,7 @@ import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
 import pb138.dal.repository.SaleRepository;
+import pb138.dal.repository.validation.ConstraintValidator;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.SaleFilter;
 
@@ -36,6 +37,9 @@ public class SaleRepositoryTest extends TestCase {
     @Autowired
     private SaleRepository repository;
 
+    @Autowired
+    private ConstraintValidator validator;
+
     private Category category;
     private Item item;
     private Sale insertedSale;
@@ -48,10 +52,11 @@ public class SaleRepositoryTest extends TestCase {
 
     @Transactional
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws Exception {
         category = new Category();
         category.setDescription("desc");
         category.setName("cat_name");
+        validator.validate(category);
         manager.persist(category);
 
         item = new Item();
@@ -61,6 +66,7 @@ public class SaleRepositoryTest extends TestCase {
         item.setEan(5);
         item.setAlertThreshold(10);
         item.setUnit("pcs");
+        validator.validate(item);
         manager.persist(item);
 
         insertedSale = new Sale();
@@ -69,6 +75,7 @@ public class SaleRepositoryTest extends TestCase {
         date.setTime(600L);
         insertedSale.setDateSold(date);
         insertedSale.setItem(item);
+        validator.validate(item);
         manager.persist(insertedSale);
     }
 
