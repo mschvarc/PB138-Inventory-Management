@@ -2,6 +2,8 @@ package pb138.dal.repository;
 
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Item_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ItemFilter;
 
 import javax.persistence.EntityManager;
@@ -15,9 +17,11 @@ import java.util.List;
 public class ItemRepositoryImpl implements ItemRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public ItemRepositoryImpl(EntityManager entityManager) {
+    public ItemRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -26,17 +30,20 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public void create(Item item) {
+    public void create(Item item) throws EntityValidationException {
+        validator.validate(item);
         entityManager.persist(item);
     }
 
     @Override
-    public void update(Item item) {
+    public void update(Item item) throws EntityValidationException {
+        validator.validate(item);
         entityManager.merge(item);
     }
 
     @Override
-    public void delete(Item item) {
+    public void delete(Item item) throws EntityValidationException {
+        validator.validate(item);
         entityManager.remove(item);
     }
 
@@ -63,6 +70,10 @@ public class ItemRepositoryImpl implements ItemRepository {
         if (filter.getName() != null) {
             Predicate name = builder.equal(root.get(Item_.name), filter.getName());
             validPredicates.add(name);
+        }
+        if (filter.getEan() != null) {
+            Predicate ean = builder.equal(root.get(Item_.ean), filter.getEan());
+            validPredicates.add(ean);
         }
         criteria.where(builder.and(validPredicates.toArray(new Predicate[validPredicates.size()])));
         return entityManager.createQuery(criteria.select(root)).getResultList();

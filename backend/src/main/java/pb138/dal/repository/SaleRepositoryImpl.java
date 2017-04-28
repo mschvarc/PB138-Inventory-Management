@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Sale;
 import pb138.dal.entities.Sale_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.SaleFilter;
 
 import javax.persistence.EntityManager;
@@ -21,9 +23,11 @@ import java.util.List;
 public class SaleRepositoryImpl implements SaleRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public SaleRepositoryImpl(EntityManager entityManager) {
+    public SaleRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -32,17 +36,20 @@ public class SaleRepositoryImpl implements SaleRepository {
     }
 
     @Override
-    public void create(Sale sale) {
+    public void create(Sale sale) throws EntityValidationException {
+        validator.validate(sale);
         entityManager.persist(sale);
     }
 
     @Override
-    public void update(Sale sale) {
+    public void update(Sale sale) throws EntityValidationException {
+        validator.validate(sale);
         entityManager.merge(sale);
     }
 
     @Override
-    public void delete(Sale sale) {
+    public void delete(Sale sale) throws EntityValidationException {
+        validator.validate(sale);
         entityManager.remove(sale);
     }
 

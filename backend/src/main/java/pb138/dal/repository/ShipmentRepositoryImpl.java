@@ -3,6 +3,8 @@ package pb138.dal.repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Shipment;
 import pb138.dal.entities.Shipment_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ShipmentFilter;
 
 import javax.persistence.EntityManager;
@@ -16,9 +18,11 @@ import java.util.List;
 public class ShipmentRepositoryImpl implements ShipmentRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public ShipmentRepositoryImpl(EntityManager entityManager) {
+    public ShipmentRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -27,17 +31,20 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
     }
 
     @Override
-    public void create(Shipment shipment) {
+    public void create(Shipment shipment) throws EntityValidationException {
+        validator.validate(shipment);
         entityManager.persist(shipment);
     }
 
     @Override
-    public void update(Shipment shipment) {
+    public void update(Shipment shipment) throws EntityValidationException {
+        validator.validate(shipment);
         entityManager.merge(shipment);
     }
 
     @Override
-    public void delete(Shipment shipment) {
+    public void delete(Shipment shipment) throws EntityValidationException {
+        validator.validate(shipment);
         entityManager.remove(shipment);
     }
 

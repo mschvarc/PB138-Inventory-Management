@@ -2,6 +2,8 @@ package pb138.dal.repository;
 
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Category_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.CategoryFilter;
 
 import javax.persistence.EntityManager;
@@ -15,9 +17,12 @@ import java.util.List;
 public class CategoryRepositoryImpl implements CategoryRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public CategoryRepositoryImpl(EntityManager entityManager) {
+
+    public CategoryRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -26,17 +31,20 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public void create(Category category) {
+    public void create(Category category) throws EntityValidationException {
+        validator.validate(category);
         entityManager.persist(category);
     }
 
     @Override
-    public void update(Category category) {
+    public void update(Category category) throws EntityValidationException {
+        validator.validate(category);
         entityManager.merge(category);
     }
 
     @Override
-    public void delete(Category category) {
+    public void delete(Category category) throws EntityValidationException {
+        validator.validate(category);
         entityManager.remove(category);
     }
 
