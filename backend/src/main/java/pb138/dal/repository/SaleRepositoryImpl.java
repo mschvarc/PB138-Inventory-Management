@@ -70,6 +70,14 @@ public class SaleRepositoryImpl implements SaleRepository {
             Predicate dateSold = builder.equal(root.get(Sale_.dateSold), filter.getDateSold());
             validPredicates.add(dateSold);
         }
+        if (filter.getDateSoldFrom() != null) {
+            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Sale_.dateSold), filter.getDateSoldFrom());
+            validPredicates.add(dateSoldFrom);
+        }
+        if (filter.getDateSoldTo() != null) {
+            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Sale_.dateSold), filter.getDateSoldTo());
+            validPredicates.add(dateSoldTo);
+        }
         if (filter.getItem() != null) {
             Predicate item = builder.equal(root.get(Sale_.item), filter.getItem());
             validPredicates.add(item);

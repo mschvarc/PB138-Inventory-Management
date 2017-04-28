@@ -68,6 +68,14 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
             Predicate item = builder.equal(root.get(Shipment_.item), filter.getItem());
             validPredicates.add(item);
         }
+        if (filter.getDateImportedFrom() != null) {
+            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
+            validPredicates.add(dateSoldFrom);
+        }
+        if (filter.getDateImportedTo() != null) {
+            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
+            validPredicates.add(dateSoldTo);
+        }
         if (filter.getCategory() != null) {
             //http://stackoverflow.com/questions/6396877/openjpa-criteriabuilder-nested-object-property-fetch
             Predicate category = builder.equal(root.get(Shipment_.item).get(Item_.category), filter.getCategory());

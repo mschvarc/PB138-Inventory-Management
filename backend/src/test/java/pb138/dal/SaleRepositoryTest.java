@@ -1,5 +1,6 @@
 package pb138.dal;
 
+import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,17 +20,15 @@ import javax.transaction.Transactional;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:META-INF/persistence-config.xml")
 @Transactional
-public class SaleRepositoryTest {
+public class SaleRepositoryTest extends TestCase {
 
     @PersistenceContext
     private EntityManager manager;
@@ -40,6 +39,12 @@ public class SaleRepositoryTest {
     private Category category;
     private Item item;
     private Sale insertedSale;
+
+    private static Date date(long stamp) {
+        Date date = new Date();
+        date.setTime(stamp);
+        return date;
+    }
 
     @Transactional
     @Before
@@ -60,11 +65,12 @@ public class SaleRepositoryTest {
 
         insertedSale = new Sale();
         insertedSale.setQuantitySold(5);
-        insertedSale.setDateSold(new Date());
+        Date date = new Date();
+        date.setTime(600L);
+        insertedSale.setDateSold(date);
         insertedSale.setItem(item);
         manager.persist(insertedSale);
     }
-
 
     @Test
     public void basicCreateRetrieveTest() throws Exception {
@@ -123,7 +129,6 @@ public class SaleRepositoryTest {
         assertThat(result, hasItem(sale));
     }
 
-
     @Test
     public void basicRetrieveTest() {
         Sale result = repository.getById(insertedSale.getId());
@@ -138,4 +143,44 @@ public class SaleRepositoryTest {
         sale.setItem(null);
         repository.create(sale);
     }
+
+    @Test
+    public void dateFilteringTestFrom() throws Exception {
+        Sale sale = new Sale();
+        sale.setQuantitySold(25);
+        Date dateSold = new Date();
+        sale.setDateSold(date(500L));
+        sale.setItem(item);
+        sale.getItem().setCategory(category);
+        repository.create(sale);
+
+        SaleFilter filter = new SaleFilter();
+        filter.setCategory(category);
+
+        filter.setDateSoldFrom(date(400L));
+        Iterable<Sale> result = repository.find(filter);
+        assertThat(result.spliterator().getExactSizeIfKnown(), is(2L));
+        assertThat(result, hasItems(sale, insertedSale));
+    }
+
+    @Test
+    public void dateFilteringTestFromTo() throws Exception {
+        Sale sale = new Sale();
+        sale.setQuantitySold(25);
+        Date dateSold = new Date();
+        sale.setDateSold(date(500L));
+        sale.setItem(item);
+        sale.getItem().setCategory(category);
+        repository.create(sale);
+
+        SaleFilter filter = new SaleFilter();
+        filter.setCategory(category);
+
+        filter.setDateSoldFrom(date(400L));
+        filter.setDateSoldTo(date(550L));
+        Iterable<Sale> result = repository.find(filter);
+        assertThat(result.spliterator().getExactSizeIfKnown(), is(1L));
+        assertThat(result, hasItem(sale));
+    }
+
 }

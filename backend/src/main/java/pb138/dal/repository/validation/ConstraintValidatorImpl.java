@@ -35,10 +35,11 @@ public class ConstraintValidatorImpl implements ConstraintValidator {
                         + ", caused by: "
                         + errors);
             }
-        } catch (javax.validation.ValidationException navigationException) {
+        } //if X.Y is NULL, validating Y will throw javax.validation.ValidationException
+        catch (javax.validation.ValidationException navigationException) {
             throw new EntityValidationException("Failed to validate: "
                     + entity.getClass()
-                    + ", caused by null navigation errors: "
+                    + ", caused by one or more linked navigation entities being NULL or being INVALID"
                     + System.lineSeparator()
                     + navigationException.getMessage(),
                     navigationException);

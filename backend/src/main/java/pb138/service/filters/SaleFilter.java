@@ -10,6 +10,9 @@ public class SaleFilter {
     private Date dateSold;
     private Item item;
     private Category category;
+    private Date dateSoldFrom;
+    private Date dateSoldTo;
+
 
     public Long getId() {
         return id;
@@ -41,5 +44,21 @@ public class SaleFilter {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Date getDateSoldFrom() {
+        return dateSoldFrom;
+    }
+
+    public void setDateSoldFrom(Date dateSoldFrom) {
+        this.dateSoldFrom = dateSoldFrom;
+    }
+
+    public Date getDateSoldTo() {
+        return dateSoldTo;
+    }
+
+    public void setDateSoldTo(Date dateSoldTo) {
+        this.dateSoldTo = dateSoldTo;
     }
 }
