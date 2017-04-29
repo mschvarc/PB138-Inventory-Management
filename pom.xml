@@ -87,9 +87,12 @@
                         <compilerArguments>
                             <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
                         </compilerArguments>
+                        <!-- http://pilhuhn.blogspot.sk/2013/01/when-annotation-processor-does-not.html -->
+                        <annotationProcessors>
+                            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                        </annotationProcessors>
                     </configuration>
                 </plugin>
-
 
                 <!-- Check code style -->
                 <plugin>

@@ -3,6 +3,7 @@ package pb138.dal.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,7 +20,7 @@ public class Sale {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Item item;
     @NotNull
@@ -69,7 +70,6 @@ public class Sale {
 
         Sale sale = (Sale) o;
 
-        if (getId() != sale.getId()) return false;
         if (getQuantitySold() != sale.getQuantitySold()) return false;
         if (getItem() != null ? !getItem().equals(sale.getItem()) : sale.getItem() != null) return false;
         return getDateSold() != null ? getDateSold().equals(sale.getDateSold()) : sale.getDateSold() == null;
@@ -77,8 +77,7 @@ public class Sale {
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getItem() != null ? getItem().hashCode() : 0);
+        int result = getItem() != null ? getItem().hashCode() : 0;
         result = 31 * result + getQuantitySold();
         result = 31 * result + (getDateSold() != null ? getDateSold().hashCode() : 0);
         return result;

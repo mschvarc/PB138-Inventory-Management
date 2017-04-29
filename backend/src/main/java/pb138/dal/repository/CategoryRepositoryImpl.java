@@ -32,20 +32,35 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public void create(Category category) throws EntityValidationException {
-        validator.validate(category);
-        entityManager.persist(category);
+        try {
+            validator.validate(category);
+            entityManager.persist(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void update(Category category) throws EntityValidationException {
-        validator.validate(category);
-        entityManager.merge(category);
+        try {
+            validator.validate(category);
+            entityManager.merge(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void delete(Category category) throws EntityValidationException {
-        validator.validate(category);
-        entityManager.remove(category);
+        try {
+            validator.validate(category);
+            entityManager.remove(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override

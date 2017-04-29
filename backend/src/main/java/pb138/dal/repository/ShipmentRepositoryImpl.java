@@ -32,20 +32,35 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
 
     @Override
     public void create(Shipment shipment) throws EntityValidationException {
-        validator.validate(shipment);
-        entityManager.persist(shipment);
+        try {
+            validator.validate(shipment);
+            entityManager.persist(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void update(Shipment shipment) throws EntityValidationException {
-        validator.validate(shipment);
-        entityManager.merge(shipment);
+        try {
+            validator.validate(shipment);
+            entityManager.merge(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void delete(Shipment shipment) throws EntityValidationException {
-        validator.validate(shipment);
-        entityManager.remove(shipment);
+        try {
+            validator.validate(shipment);
+            entityManager.remove(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override

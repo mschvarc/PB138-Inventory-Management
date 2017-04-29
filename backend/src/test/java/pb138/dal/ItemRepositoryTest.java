@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Date;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -90,6 +91,50 @@ public class ItemRepositoryTest extends TestCase {
     }
 
     @Test
+    public void updatetest() throws Exception {
+        Item item1 = new Item();
+        item1.setCategory(category);
+        item1.setEan(123);
+        item1.setUnit("pcs");
+        item1.setCurrentCount(10);
+        item1.setName("item");
+        item1.setAlertThreshold(30);
+        item1.setDescription("desc");
+        repository.create(item1);
+        Item result = repository.getById(item1.getId());
+        result.setDescription("updated desc");
+        result.setName("updated name");
+        result.setUnit("kg");
+        result.setCurrentCount(20);
+        repository.update(result);
+        result = repository.getById(item1.getId());
+        assertThat(result.getDescription(), is(equalTo("updated desc")));
+        assertThat(result.getCurrentCount(), is(equalTo(20)));
+        assertThat(result.getName(), is(equalTo("updated name")));
+        assertThat(result.getUnit(), is(equalTo("kg")));
+    }
+
+    @Test
+    public void deleteTest() throws Exception {
+        Item item1 = new Item();
+        item1.setCategory(category);
+        item1.setEan(123);
+        item1.setUnit("pcs");
+        item1.setCurrentCount(10);
+        item1.setName("item");
+        item1.setAlertThreshold(30);
+        item1.setDescription("desc");
+        repository.create(item1);
+
+        Item result = repository.getById(item1.getId());
+        assertNotNull(result);
+
+        repository.delete(result);
+        result = repository.getById(item1.getId());
+        assertNull(result);
+    }
+
+    @Test
     public void basicFilteringTest() {
         ItemFilter filter = new ItemFilter();
         filter.setId(item.getId());
@@ -137,6 +182,30 @@ public class ItemRepositoryTest extends TestCase {
         Iterable<Item> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(1L));
         assertThat(result, hasItem(item1));
+    }
+
+    @Test(expected = EntityValidationException.class)
+    public void duplicateEanTest() throws Exception {
+        Item i1 = new Item();
+        i1.setCategory(category);
+        i1.setDescription("desc1");
+        i1.setName("name1");
+        i1.setCurrentCount(5);
+        i1.setEan(123);
+        i1.setUnit("kg");
+        repository.create(i1);
+        Item r1 = repository.getById(i1.getId());
+        assertEquals(r1, i1);
+
+        Item i2 = new Item();
+        i2.setCategory(category);
+        i2.setDescription("desc2");
+        i2.setName("name2");
+        i2.setCurrentCount(10);
+        i2.setEan(123); //<<duplicate ean, ean is business key
+        i2.setUnit("pcs");
+        assertThat(i2, is(i1));
+        repository.create(i2);
     }
 
 

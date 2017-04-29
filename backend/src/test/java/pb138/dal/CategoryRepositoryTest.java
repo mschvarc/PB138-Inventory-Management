@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -59,6 +60,19 @@ public class CategoryRepositoryTest extends TestCase {
         assertEquals(result.getId(), category.getId());
     }
 
+    @Test(expected = EntityValidationException.class)
+    public void duplicateKeyTest() throws Exception {
+        Category c1 = new Category();
+        c1.setName("name");
+        c1.setDescription("desc1");
+        repository.create(c1);
+
+        Category c2 = new Category();
+        c2.setName("name");
+        c2.setDescription("desc2");
+        repository.create(c2);
+    }
+
 
     @Test
     public void basicFilteringTest() throws Exception {
@@ -68,6 +82,7 @@ public class CategoryRepositoryTest extends TestCase {
         repository.create(category);
         CategoryFilter filter = new CategoryFilter();
         filter.setName("category_name1");
+        filter.setId(category.getId());
 
         Iterable<Category> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(1L));
@@ -89,4 +104,34 @@ public class CategoryRepositoryTest extends TestCase {
         category.setName(null);
         repository.create(category);
     }
+
+    @Test
+    public void updateTest() throws Exception {
+        Category category = new Category();
+        category.setName("name");
+        category.setDescription("desc");
+        repository.create(category);
+        Category result = repository.getById(category.getId());
+        assertNotNull(result);
+        result.setDescription("desc updated");
+        repository.update(result);
+        result = repository.getById(result.getId());
+        assertThat(result.getDescription(), is(equalTo("desc updated")));
+        assertEquals(result, category);
+    }
+
+    @Test
+    public void deleteTest() throws Exception {
+        Category category = new Category();
+        category.setName("name");
+        category.setDescription("desc");
+        repository.create(category);
+        Category result = repository.getById(category.getId());
+        assertNotNull(result);
+
+        repository.delete(category);
+        result = repository.getById(result.getId());
+        assertNull(result);
+    }
+
 }

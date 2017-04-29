@@ -37,20 +37,35 @@ public class SaleRepositoryImpl implements SaleRepository {
 
     @Override
     public void create(Sale sale) throws EntityValidationException {
-        validator.validate(sale);
-        entityManager.persist(sale);
+        try {
+            validator.validate(sale);
+            entityManager.persist(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void update(Sale sale) throws EntityValidationException {
-        validator.validate(sale);
-        entityManager.merge(sale);
+        try {
+            validator.validate(sale);
+            entityManager.merge(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void delete(Sale sale) throws EntityValidationException {
-        validator.validate(sale);
-        entityManager.remove(sale);
+        try {
+            validator.validate(sale);
+            entityManager.remove(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override

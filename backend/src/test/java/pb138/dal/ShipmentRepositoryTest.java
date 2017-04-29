@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Date;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
@@ -87,6 +88,38 @@ public class ShipmentRepositoryTest extends TestCase {
         Shipment result = repository.getById(shipment.getId());
         assertNotNull(result);
         assertEquals(result.getId(), shipment.getId());
+    }
+
+    @Test
+    public void updateTest() throws Exception {
+        Shipment shipment = new Shipment();
+        shipment.setQuantityImported(5);
+        shipment.setDateImported(date(500L));
+        shipment.setItem(item);
+        repository.create(shipment);
+        Shipment result = repository.getById(shipment.getId());
+        result.setQuantityImported(10);
+        result.setDateImported(date(999));
+        repository.update(result);
+        result = repository.getById(result.getId());
+        assertThat(result.getDateImported(), is(equalTo(date(999))));
+        assertThat(result.getQuantityImported(), is(equalTo(10)));
+        assertEquals(result, shipment);
+    }
+
+    @Test
+    public void deleteTest() throws Exception {
+        Shipment shipment = new Shipment();
+        shipment.setQuantityImported(5);
+        shipment.setDateImported(date(500L));
+        shipment.setItem(item);
+        repository.create(shipment);
+        Shipment result = repository.getById(shipment.getId());
+        assertNotNull(result);
+        assertEquals(result.getId(), shipment.getId());
+        repository.delete(result);
+        result = repository.getById(shipment.getId());
+        assertNull(result);
     }
 
     @Test

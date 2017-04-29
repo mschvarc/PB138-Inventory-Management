@@ -4,6 +4,7 @@ package pb138.dal.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -20,7 +21,7 @@ public class Shipment {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Item item;
 
@@ -71,7 +72,6 @@ public class Shipment {
 
         Shipment shipment = (Shipment) o;
 
-        if (getId() != shipment.getId()) return false;
         if (getQuantityImported() != shipment.getQuantityImported()) return false;
         if (getItem() != null ? !getItem().equals(shipment.getItem()) : shipment.getItem() != null) return false;
         return getDateImported() != null ? getDateImported().equals(shipment.getDateImported()) : shipment.getDateImported() == null;
@@ -79,8 +79,7 @@ public class Shipment {
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getItem() != null ? getItem().hashCode() : 0);
+        int result = getItem() != null ? getItem().hashCode() : 0;
         result = 31 * result + getQuantityImported();
         result = 31 * result + (getDateImported() != null ? getDateImported().hashCode() : 0);
         return result;

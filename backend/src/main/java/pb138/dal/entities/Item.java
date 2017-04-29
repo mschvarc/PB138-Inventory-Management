@@ -4,11 +4,15 @@ package pb138.dal.entities;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Item {
@@ -19,13 +23,14 @@ public class Item {
 
     @NotNull
     @Length(min = 1)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
     @Length(min = 1)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Category category;
 
@@ -35,6 +40,10 @@ public class Item {
     @Length(min = 1)
     private String unit;
 
+    //business key
+    @Min(0)
+    @NotNull
+    @Column(nullable = false, unique = true)
     private int ean;
 
     @NotNull
@@ -111,29 +120,11 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (getId() != item.getId()) return false;
-        if (getEan() != item.getEan()) return false;
-        if (getCurrentCount() != item.getCurrentCount()) return false;
-        if (getName() != null ? !getName().equals(item.getName()) : item.getName() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
-            return false;
-        if (getCategory() != null ? !getCategory().equals(item.getCategory()) : item.getCategory() != null)
-            return false;
-        if (getAlertThreshold() != null ? !getAlertThreshold().equals(item.getAlertThreshold()) : item.getAlertThreshold() != null)
-            return false;
-        return getUnit() != null ? getUnit().equals(item.getUnit()) : item.getUnit() == null;
+        return getEan() == item.getEan();
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
-        result = 31 * result + (getAlertThreshold() != null ? getAlertThreshold().hashCode() : 0);
-        result = 31 * result + (getUnit() != null ? getUnit().hashCode() : 0);
-        result = 31 * result + getEan();
-        result = 31 * result + getCurrentCount();
-        return result;
+        return getEan();
     }
 }

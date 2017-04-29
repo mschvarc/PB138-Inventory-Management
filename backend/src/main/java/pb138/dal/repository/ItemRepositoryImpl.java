@@ -31,20 +31,35 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public void create(Item item) throws EntityValidationException {
-        validator.validate(item);
-        entityManager.persist(item);
+        try {
+            validator.validate(item);
+            entityManager.persist(item);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void update(Item item) throws EntityValidationException {
-        validator.validate(item);
-        entityManager.merge(item);
+        try {
+            validator.validate(item);
+            entityManager.merge(item);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
     public void delete(Item item) throws EntityValidationException {
-        validator.validate(item);
-        entityManager.remove(item);
+        try {
+            validator.validate(item);
+            entityManager.remove(item);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override
