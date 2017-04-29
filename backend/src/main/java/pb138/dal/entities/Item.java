@@ -2,12 +2,17 @@ package pb138.dal.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Item {
@@ -17,20 +22,28 @@ public class Item {
     private long id;
 
     @NotNull
+    @Length(min = 1)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
+    @Length(min = 1)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Category category;
 
     private Integer alertThreshold;
 
     @NotNull
+    @Length(min = 1)
     private String unit;
 
+    //business key
+    @Min(0)
+    @NotNull
+    @Column(nullable = false, unique = true)
     private int ean;
 
     @NotNull
@@ -100,7 +113,6 @@ public class Item {
         this.currentCount = currentCount;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,27 +120,11 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (getId() != item.getId()) return false;
-        if (getEan() != item.getEan()) return false;
-        if (getCurrentCount() != item.getCurrentCount()) return false;
-        if (!getName().equals(item.getName())) return false;
-        if (!getDescription().equals(item.getDescription())) return false;
-        if (!getCategory().equals(item.getCategory())) return false;
-        if (getAlertThreshold() != null ? !getAlertThreshold().equals(item.getAlertThreshold()) : item.getAlertThreshold() != null)
-            return false;
-        return getUnit() != null ? getUnit().equals(item.getUnit()) : item.getUnit() == null;
+        return getEan() == item.getEan();
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getCategory().hashCode();
-        result = 31 * result + (getAlertThreshold() != null ? getAlertThreshold().hashCode() : 0);
-        result = 31 * result + (getUnit() != null ? getUnit().hashCode() : 0);
-        result = 31 * result + getEan();
-        result = 31 * result + getCurrentCount();
-        return result;
+        return getEan();
     }
 }

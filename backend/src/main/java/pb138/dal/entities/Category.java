@@ -2,7 +2,9 @@ package pb138.dal.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +18,13 @@ public class Category {
     private long id;
 
     @NotNull
+    @Length(min = 1)
     private String description;
+
+    //business key
     @NotNull
+    @Length(min = 1)
+    @Column(unique = true)
     private String name;
 
     public long getId() {
@@ -51,16 +58,11 @@ public class Category {
 
         Category category = (Category) o;
 
-        if (getId() != category.getId()) return false;
-        if (!getDescription().equals(category.getDescription())) return false;
-        return getName().equals(category.getName());
+        return getName() != null ? getName().equals(category.getName()) : category.getName() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getName().hashCode();
-        return result;
+        return getName() != null ? getName().hashCode() : 0;
     }
 }

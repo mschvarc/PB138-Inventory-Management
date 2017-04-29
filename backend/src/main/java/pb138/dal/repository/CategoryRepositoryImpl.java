@@ -2,6 +2,8 @@ package pb138.dal.repository;
 
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Category_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.CategoryFilter;
 
 import javax.persistence.EntityManager;
@@ -15,9 +17,12 @@ import java.util.List;
 public class CategoryRepositoryImpl implements CategoryRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public CategoryRepositoryImpl(EntityManager entityManager) {
+
+    public CategoryRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -26,18 +31,36 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public void create(Category category) {
-        entityManager.persist(category);
+    public void create(Category category) throws EntityValidationException {
+        try {
+            validator.validate(category);
+            entityManager.persist(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void update(Category category) {
-        entityManager.merge(category);
+    public void update(Category category) throws EntityValidationException {
+        try {
+            validator.validate(category);
+            entityManager.merge(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void delete(Category category) {
-        entityManager.remove(category);
+    public void delete(Category category) throws EntityValidationException {
+        try {
+            validator.validate(category);
+            entityManager.remove(category);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override

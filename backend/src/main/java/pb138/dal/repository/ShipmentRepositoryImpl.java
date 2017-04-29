@@ -3,6 +3,8 @@ package pb138.dal.repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Shipment;
 import pb138.dal.entities.Shipment_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ShipmentFilter;
 
 import javax.persistence.EntityManager;
@@ -16,9 +18,11 @@ import java.util.List;
 public class ShipmentRepositoryImpl implements ShipmentRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public ShipmentRepositoryImpl(EntityManager entityManager) {
+    public ShipmentRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -27,18 +31,36 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
     }
 
     @Override
-    public void create(Shipment shipment) {
-        entityManager.persist(shipment);
+    public void create(Shipment shipment) throws EntityValidationException {
+        try {
+            validator.validate(shipment);
+            entityManager.persist(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void update(Shipment shipment) {
-        entityManager.merge(shipment);
+    public void update(Shipment shipment) throws EntityValidationException {
+        try {
+            validator.validate(shipment);
+            entityManager.merge(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void delete(Shipment shipment) {
-        entityManager.remove(shipment);
+    public void delete(Shipment shipment) throws EntityValidationException {
+        try {
+            validator.validate(shipment);
+            entityManager.remove(shipment);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override
@@ -60,6 +82,14 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         if (filter.getItem() != null) {
             Predicate item = builder.equal(root.get(Shipment_.item), filter.getItem());
             validPredicates.add(item);
+        }
+        if (filter.getDateImportedFrom() != null) {
+            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
+            validPredicates.add(dateSoldFrom);
+        }
+        if (filter.getDateImportedTo() != null) {
+            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
+            validPredicates.add(dateSoldTo);
         }
         if (filter.getCategory() != null) {
             //http://stackoverflow.com/questions/6396877/openjpa-criteriabuilder-nested-object-property-fetch

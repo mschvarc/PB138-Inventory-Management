@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Sale;
 import pb138.dal.entities.Sale_;
+import pb138.dal.repository.validation.ConstraintValidator;
+import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.SaleFilter;
 
 import javax.persistence.EntityManager;
@@ -21,9 +23,11 @@ import java.util.List;
 public class SaleRepositoryImpl implements SaleRepository {
 
     private final EntityManager entityManager;
+    private final ConstraintValidator validator;
 
-    public SaleRepositoryImpl(EntityManager entityManager) {
+    public SaleRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         this.entityManager = entityManager;
+        this.validator = validator;
     }
 
     @Override
@@ -32,18 +36,36 @@ public class SaleRepositoryImpl implements SaleRepository {
     }
 
     @Override
-    public void create(Sale sale) {
-        entityManager.persist(sale);
+    public void create(Sale sale) throws EntityValidationException {
+        try {
+            validator.validate(sale);
+            entityManager.persist(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void update(Sale sale) {
-        entityManager.merge(sale);
+    public void update(Sale sale) throws EntityValidationException {
+        try {
+            validator.validate(sale);
+            entityManager.merge(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to update entity, check inner exception", ex);
+        }
     }
 
     @Override
-    public void delete(Sale sale) {
-        entityManager.remove(sale);
+    public void delete(Sale sale) throws EntityValidationException {
+        try {
+            validator.validate(sale);
+            entityManager.remove(sale);
+            entityManager.flush();
+        } catch (javax.persistence.PersistenceException ex) {
+            throw new EntityValidationException("Failed to delete entity, check inner exception", ex);
+        }
     }
 
     @Override
@@ -62,6 +84,14 @@ public class SaleRepositoryImpl implements SaleRepository {
         if (filter.getDateSold() != null) {
             Predicate dateSold = builder.equal(root.get(Sale_.dateSold), filter.getDateSold());
             validPredicates.add(dateSold);
+        }
+        if (filter.getDateSoldFrom() != null) {
+            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Sale_.dateSold), filter.getDateSoldFrom());
+            validPredicates.add(dateSoldFrom);
+        }
+        if (filter.getDateSoldTo() != null) {
+            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Sale_.dateSold), filter.getDateSoldTo());
+            validPredicates.add(dateSoldTo);
         }
         if (filter.getItem() != null) {
             Predicate item = builder.equal(root.get(Sale_.item), filter.getItem());

@@ -10,6 +10,8 @@ public class ShipmentFilter {
     private Date dateImported;
     private Item item;
     private Category category;
+    private Date dateImportedFrom;
+    private Date dateImportedTo;
 
     public Long getId() {
         return id;
@@ -41,5 +43,21 @@ public class ShipmentFilter {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Date getDateImportedFrom() {
+        return dateImportedFrom;
+    }
+
+    public void setDateImportedFrom(Date dateImportedFrom) {
+        this.dateImportedFrom = dateImportedFrom;
+    }
+
+    public Date getDateImportedTo() {
+        return dateImportedTo;
+    }
+
+    public void setDateImportedTo(Date dateImportedTo) {
+        this.dateImportedTo = dateImportedTo;
     }
 }

@@ -22,10 +22,27 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+    <bean id="constraintValidator" class="pb138.dal.repository.validation.ConstraintValidatorImpl">
+    </bean>
 
     <bean id="saleRepository" class="pb138.dal.repository.SaleRepositoryImpl">
         <constructor-arg name="entityManager" ref="entityManager"/>
+        <constructor-arg name="validator" ref="constraintValidator"/>
     </bean>
 
+    <bean id="categoryRepository" class="pb138.dal.repository.CategoryRepositoryImpl">
+        <constructor-arg name="entityManager" ref="entityManager"/>
+        <constructor-arg name="validator" ref="constraintValidator"/>
+    </bean>
+
+    <bean id="itemRepository" class="pb138.dal.repository.ItemRepositoryImpl">
+        <constructor-arg name="entityManager" ref="entityManager"/>
+        <constructor-arg name="validator" ref="constraintValidator"/>
+    </bean>
+
+    <bean id="shipmentRepository" class="pb138.dal.repository.ShipmentRepositoryImpl">
+        <constructor-arg name="entityManager" ref="entityManager"/>
+        <constructor-arg name="validator" ref="constraintValidator"/>
+    </bean>
 
 </beans>

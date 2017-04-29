@@ -3,11 +3,13 @@ package pb138.dal.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -18,10 +20,11 @@ public class Sale {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Item item;
     @NotNull
+    @Min(0)
     private int quantitySold;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -67,18 +70,16 @@ public class Sale {
 
         Sale sale = (Sale) o;
 
-        if (getId() != sale.getId()) return false;
         if (getQuantitySold() != sale.getQuantitySold()) return false;
-        if (!getItem().equals(sale.getItem())) return false;
-        return getDateSold().equals(sale.getDateSold());
+        if (getItem() != null ? !getItem().equals(sale.getItem()) : sale.getItem() != null) return false;
+        return getDateSold() != null ? getDateSold().equals(sale.getDateSold()) : sale.getDateSold() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getItem().hashCode();
+        int result = getItem() != null ? getItem().hashCode() : 0;
         result = 31 * result + getQuantitySold();
-        result = 31 * result + getDateSold().hashCode();
+        result = 31 * result + (getDateSold() != null ? getDateSold().hashCode() : 0);
         return result;
     }
 }
