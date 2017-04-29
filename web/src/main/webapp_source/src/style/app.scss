@@ -1,0 +1,9 @@
+@import "~foundation-sites/scss/foundation";
+@include foundation-everything;
+
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+@import './dashboard-layout.scss';
+@import './dashboard-nav-card.scss';
+@import './dashboard-table.scss';
