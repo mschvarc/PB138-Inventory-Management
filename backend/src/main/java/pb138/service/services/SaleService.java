@@ -1,14 +1,15 @@
 package pb138.service.services;
 
 import pb138.dal.entities.Sale;
+import pb138.service.exceptions.ServiceException;
 
 
 public interface SaleService {
-    int create(Sale sale);
+    long create(Sale sale) throws ServiceException;
 
-    void delete(Sale sale);
+    void delete(Sale sale) throws ServiceException;
 
-    void update(Sale sale);
+    void update(Sale sale) throws ServiceException;
 
     Sale getById(long id);
 }
