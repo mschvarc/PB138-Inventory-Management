@@ -13,6 +13,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+//no unique business key (yet)
 @Entity
 public class Sale {
     @Id

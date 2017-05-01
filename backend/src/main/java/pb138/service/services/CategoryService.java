@@ -1,13 +1,14 @@
 package pb138.service.services;
 
 import pb138.dal.entities.Category;
+import pb138.service.exceptions.ServiceException;
 
 public interface CategoryService {
-    int create(Category category);
+    long create(Category category) throws ServiceException;
 
-    void delete(Category category);
+    void delete(Category category) throws ServiceException;
 
-    void update(Category category);
+    void update(Category category) throws ServiceException;
 
     Category getById(long id);
 }

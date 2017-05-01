@@ -3,9 +3,10 @@ package pb138.service.dto;
 
 import java.util.Date;
 
+//no unique business key (yet)
 public class ShipmentDto {
     private Long id;
-    private ItemDto itemDto;
+    private ItemDto item;
     private int quantityImported;
 
     private Date dateImported;
@@ -18,12 +19,12 @@ public class ShipmentDto {
         this.id = id;
     }
 
-    public ItemDto getItemDto() {
-        return itemDto;
+    public ItemDto getItem() {
+        return item;
     }
 
-    public void setItemDto(ItemDto itemDto) {
-        this.itemDto = itemDto;
+    public void setItem(ItemDto item) {
+        this.item = item;
     }
 
     public int getQuantityImported() {

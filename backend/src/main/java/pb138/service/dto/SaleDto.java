@@ -2,12 +2,11 @@ package pb138.service.dto;
 
 import java.util.Date;
 
-
+//no unique business key
 public class SaleDto {
     private Long id;
-    private ItemDto itemDto;
+    private ItemDto item;
     private int quantitySold;
-
     private Date dateSold;
 
     public Long getId() {
@@ -18,12 +17,12 @@ public class SaleDto {
         this.id = id;
     }
 
-    public ItemDto getItemDto() {
-        return itemDto;
+    public ItemDto getItem() {
+        return item;
     }
 
-    public void setItemDto(ItemDto itemDto) {
-        this.itemDto = itemDto;
+    public void setItem(ItemDto item) {
+        this.item = item;
     }
 
     public int getQuantitySold() {
