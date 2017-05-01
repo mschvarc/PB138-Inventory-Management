@@ -5,12 +5,11 @@ public class ItemDto {
     private Long id;
     private String name;
     private String description;
-    private CategoryDto categoryDto;
+    private CategoryDto category;
     private Integer alertThreshold;
-
     private String unit;
-
-    private int ean;
+    private int currentCount;
+    private int ean; //unique business key
 
     public Long getId() {
         return id;
@@ -36,12 +35,12 @@ public class ItemDto {
         this.description = description;
     }
 
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
+    public CategoryDto getCategory() {
+        return category;
     }
 
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
+    public void setCategory(CategoryDto category) {
+        this.category = category;
     }
 
     public Integer getAlertThreshold() {
@@ -66,5 +65,13 @@ public class ItemDto {
 
     public void setEan(int ean) {
         this.ean = ean;
+    }
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+
+    public void setCurrentCount(int currentCount) {
+        this.currentCount = currentCount;
     }
 }

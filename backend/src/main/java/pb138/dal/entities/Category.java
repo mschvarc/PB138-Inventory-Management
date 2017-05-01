@@ -21,7 +21,7 @@ public class Category {
     @Length(min = 1)
     private String description;
 
-    //business key
+    //unique business key
     @NotNull
     @Length(min = 1)
     @Column(unique = true)
