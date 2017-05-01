@@ -3,6 +3,10 @@ import {Link} from 'react-router';
 
 class Home extends Component {
 	render() {
+
+		var items = this.props.route.items;
+		var categories = this.props.route.categories;
+
 		return <div className="page-home row">
       <div className="small-12 columns">
         <h2>Welcome to Inventory Management!</h2>
@@ -24,13 +28,13 @@ class Home extends Component {
 					<div className="columns">
 		        <Link className="dashboard-nav-card" to="inventory">
 		          <i className="dashboard-nav-card-icon fa fa-cubes" aria-hidden="true"></i>
-		          <h3 className="dashboard-nav-card-title">321 items</h3>
+		          <h3 className="dashboard-nav-card-title">{items.length} items</h3>
 		        </Link>
 		      </div>
 		      <div className="columns">
 		        <Link className="dashboard-nav-card" to="categories">
 		          <i className="dashboard-nav-card-icon fa fa-folder-open-o" aria-hidden="true"></i>
-		          <h3 className="dashboard-nav-card-title">21 categories</h3>
+		          <h3 className="dashboard-nav-card-title">{categories.length} categories</h3>
 		        </Link>
 		      </div>
 		      <div className="columns">

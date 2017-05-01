@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "ean": 8593026341407,
+      "name": "Bear In Whimsical Wild",
+      "description": "Fine Jersey T-shirts are made with 100% fine jersey cotton combed for softness and comfort. On front of T-shirt there is colorful geometric landscape with bear.",
+      "category": "T-shirts",
+      "currentCount": 3,
+      "unit": "ks",
+      "alertThreshold": 2
+    },
+    {
+      "id": 2,
+      "ean": 8593026341408,
+      "name": "Cute Totoro",
+      "description": "Tri-Blend Jersey T-Shirts are made with 50% Polyester, 25% Cotton and 25% Rayon. Enjoy everything you love about the fit, feel and durability of a vintage T-shirt.",
+      "category": "T-shirts",
+      "currentCount": 1,
+      "unit": "ks",
+      "alertThreshold": 2
+    },
+    {
+      "id": 3,
+      "ean": 8593026341409,
+      "name": "Origami Heart",
+      "description": "California Fleece Zip-up Hoody made with a 100% California Fleece cotton. Complete with kangaroo pocket this stretchy, comfortable fit, unisex cut includes double-stitched cuffs and hem.",
+      "category": "Hoodies",
+      "currentCount": 5,
+      "unit": "ks",
+      "alertThreshold": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "T-shirts",
+      "description": "Long T-shirts category description.."
+    },
+    {
+      "id": 2,
+      "name": "Hoodies",
+      "description": "Long Hoodies category description.."
+    },
+    {
+      "id": 3,
+      "name": "Pillows",
+      "description": "Long Pillows category description.."
+    }
+  ]
+}
