@@ -11,4 +11,6 @@ public interface ItemService {
     void delete(Item item) throws ServiceException;
 
     Item getById(long id) ;
+
+    Item getByEan(int ean);
 }

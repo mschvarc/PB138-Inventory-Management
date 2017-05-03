@@ -10,7 +10,7 @@ import pb138.service.exceptions.ServiceException;
  *
  */
 public class ShipmentServiceImpl implements ShipmentService{
-    ShipmentRepository shipmentRepository;
+    private ShipmentRepository shipmentRepository;
 
     public ShipmentServiceImpl(ShipmentRepository shipmentRepository) {
         this.shipmentRepository = shipmentRepository;

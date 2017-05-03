@@ -1,5 +1,6 @@
 package pb138.service.services;
 
+import com.google.common.collect.Iterables;
 import org.hibernate.jpa.internal.EntityManagerImpl;
 import pb138.dal.entities.Category;
 import pb138.dal.repository.CategoryRepository;
@@ -7,6 +8,7 @@ import pb138.dal.repository.CategoryRepositoryImpl;
 import pb138.dal.repository.validation.ConstraintValidatorImpl;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.exceptions.ServiceException;
+import pb138.service.filters.CategoryFilter;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -50,5 +52,13 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Category getById(long id) {
         return categoryRepository.getById(id);
+    }
+
+    @Override
+    public Category getByName(String name) {
+        CategoryFilter filter = new CategoryFilter();
+        filter.setName(name);
+        Iterable<Category> result = categoryRepository.find(filter);
+        return Iterables.getFirst(result, null);
     }
 }

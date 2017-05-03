@@ -11,4 +11,6 @@ public interface CategoryService {
     void update(Category category) throws ServiceException;
 
     Category getById(long id);
+
+    Category getByName(String name);
 }
