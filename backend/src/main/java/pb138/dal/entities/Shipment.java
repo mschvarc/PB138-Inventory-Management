@@ -68,14 +68,23 @@ public class Shipment {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Shipment)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Shipment)) {
+            return false;
+        }
 
         Shipment shipment = (Shipment) o;
 
-        if (getQuantityImported() != shipment.getQuantityImported()) return false;
-        if (getItem() != null ? !getItem().equals(shipment.getItem()) : shipment.getItem() != null) return false;
-        return getDateImported() != null ? getDateImported().equals(shipment.getDateImported()) : shipment.getDateImported() == null;
+        if (getQuantityImported() != shipment.getQuantityImported()) {
+            return false;
+        }
+        if (getItem() != null ? !getItem().equals(shipment.getItem()) : shipment.getItem() != null) {
+            return false;
+        }
+        return getDateImported() != null ?
+                getDateImported().equals(shipment.getDateImported()) : shipment.getDateImported() == null;
     }
 
     @Override

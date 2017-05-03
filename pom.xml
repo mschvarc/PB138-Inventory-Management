@@ -13,7 +13,7 @@
 
     <modules>
         <module>backend</module>
-		<module>web</module>
+        <module>web</module>
     </modules>
 
     <properties>
@@ -23,6 +23,7 @@
         <mockito.version>2.0.2-beta</mockito.version>
         <dozer.version>5.5.1</dozer.version>
         <slf4j.version>1.7.22</slf4j.version>
+        <version.plugin.checkstyle>2.17</version.plugin.checkstyle>
         <checkstyle.fail>false</checkstyle.fail>
     </properties>
 
@@ -59,6 +60,13 @@
                 <artifactId>hibernate-jpamodelgen</artifactId>
                 <version>5.2.10.Final</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>{$version.plugin.checkstyle}</version>
+                <type>maven-plugin</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -75,8 +83,27 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version.plugin.checkstyle}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>checkstyle.xml</configLocation>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failOnViolation>false</failOnViolation>
+                            <failsOnError>false</failsOnError>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -94,32 +121,20 @@
                         </annotationProcessors>
                     </configuration>
                 </plugin>
-
-                <!-- Check code style -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${version.plugin.checkstyle}</version>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <configLocation>checkstyle.xml</configLocation>
-                                <encoding>UTF-8</encoding>
-                                <consoleOutput>true</consoleOutput>
-                                <failOnViolation>${checkstyle.fail}</failOnViolation>
-                                <violationSeverity>warning</violationSeverity>
-                                <includeTestSourceDirectory>false</includeTestSourceDirectory>
-                                <excludes>*/**/Test*</excludes>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version.plugin.checkstyle}</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <headerLocation>LICENSE.txt</headerLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
