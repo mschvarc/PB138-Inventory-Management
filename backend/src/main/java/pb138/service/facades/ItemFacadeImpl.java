@@ -2,8 +2,8 @@ package pb138.service.facades;
 
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
-import pb138.dal.repository.SaleRepository;
-import pb138.service.exceptions.AlreadyExistsException;
+import pb138.service.exceptions.EntityAlreadyExistsException;
+import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
@@ -24,9 +24,9 @@ public class ItemFacadeImpl implements ItemFacade {
 
     @Override
     public Item createItem(String name, String description, String categoryName, String categoryDescription,
-                           int alertThreshold, String unit, int ean, int currentStock)  throws AlreadyExistsException, ServiceException {
+                           int alertThreshold, String unit, int ean, int currentStock)  throws EntityAlreadyExistsException, ServiceException {
         if (itemService.getByEan(ean) != null) {
-            throw new AlreadyExistsException("This item already exists in database");
+            throw new EntityAlreadyExistsException("This item already exists in database");
         }
         Item i = new Item();
         i.setName(name);
@@ -53,12 +53,12 @@ public class ItemFacadeImpl implements ItemFacade {
     @Override
     public Item changeItem(String name, String description, String categoryName,
                            String categoryDescription, int alertThreshold, String unit, int ean, int stockDelta)
-            throws AlreadyExistsException, ServiceException {
+            throws ServiceException, EntityDoesNotExistException {
         Item i = getItemByEan(ean);
         if (i == null) {
             //exceptions will be changed later, i was just lazy to create new and i didnt want to have it underlined
             //It shouldn't happen anyway, since this method will be always called when knowing the item exist
-            throw new ServiceException("Item doesn't exist");
+            throw new EntityDoesNotExistException("Item doesn't exist");
         }
         Category c = i.getCategory();
         if (c.getName().equalsIgnoreCase(categoryName)) {
@@ -74,6 +74,17 @@ public class ItemFacadeImpl implements ItemFacade {
         i.setAlertThreshold(alertThreshold);
         i.setUnit(unit);
         i.setCurrentCount(i.getCurrentCount() + /*it will be negative number in case of sales*/stockDelta);
+        return i;
+    }
+
+    @Override
+    public Item changeQuantityOfItem(long id, int newQuantity) throws EntityDoesNotExistException, ServiceException {
+        Item i  = itemService.getById(id);
+        if (i == null) {
+            throw new EntityDoesNotExistException("Item does not exist");
+        }
+        i.setCurrentCount(newQuantity);
+        itemService.update(i);
         return i;
     }
 
