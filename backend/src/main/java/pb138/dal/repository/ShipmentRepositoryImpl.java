@@ -84,11 +84,13 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
             validPredicates.add(item);
         }
         if (filter.getDateImportedFrom() != null) {
-            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
+            Predicate dateSoldFrom =
+                    builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
             validPredicates.add(dateSoldFrom);
         }
         if (filter.getDateImportedTo() != null) {
-            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
+            Predicate dateSoldTo =
+                    builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
             validPredicates.add(dateSoldTo);
         }
         if (filter.getCategory() != null) {

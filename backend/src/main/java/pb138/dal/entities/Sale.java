@@ -66,13 +66,21 @@ public class Sale {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Sale)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Sale)) {
+            return false;
+        }
 
         Sale sale = (Sale) o;
 
-        if (getQuantitySold() != sale.getQuantitySold()) return false;
-        if (getItem() != null ? !getItem().equals(sale.getItem()) : sale.getItem() != null) return false;
+        if (getQuantitySold() != sale.getQuantitySold()) {
+            return false;
+        }
+        if (getItem() != null ? !getItem().equals(sale.getItem()) : sale.getItem() != null) {
+            return false;
+        }
         return getDateSold() != null ? getDateSold().equals(sale.getDateSold()) : sale.getDateSold() == null;
     }
 
