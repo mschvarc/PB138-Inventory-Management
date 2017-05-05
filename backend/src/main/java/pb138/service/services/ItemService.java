@@ -1,7 +1,10 @@
 package pb138.service.services;
 
+import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.service.exceptions.ServiceException;
+
+import java.util.List;
 
 public interface ItemService {
     long create(Item item) throws ServiceException;
@@ -13,4 +16,6 @@ public interface ItemService {
     Item getById(long id) ;
 
     Item getByEan(int ean);
+
+    List<Item> getByCategory(Category c);
 }
