@@ -18,4 +18,6 @@ public interface ItemService {
     Item getByEan(int ean);
 
     List<Item> getByCategory(Category c);
+
+    List<Item> getAllItems();
 }

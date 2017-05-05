@@ -77,4 +77,11 @@ public class ItemServiceImpl implements ItemService{
         Iterable<Item> result = itemRepository.find(filter);
         return Lists.newArrayList(result);
     }
+
+    @Override
+    public List<Item> getAllItems() {
+        ItemFilter filter = new ItemFilter();
+        Iterable<Item> result = itemRepository.find(filter);
+        return Lists.newArrayList(result);
+    }
 }

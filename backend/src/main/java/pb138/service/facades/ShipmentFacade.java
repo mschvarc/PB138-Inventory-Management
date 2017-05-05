@@ -6,8 +6,8 @@ import java.util.Date;
 
 /**
  * Created by Honza on 30.04.2017.
- *
+ * Facade for working with shipments;
  */
 public interface ShipmentFacade {
-    public Shipment addShipment(long productId, Date date, int arrived);
+    Shipment addShipment(int ean, Date date, int arrived);
 }

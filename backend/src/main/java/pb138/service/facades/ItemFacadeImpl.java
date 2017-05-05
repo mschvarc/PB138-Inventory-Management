@@ -26,18 +26,48 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public Item createItem(String name, String description, String categoryName, Integer alertThreshold, String unit, int ean) throws EntityAlreadyExistsException, ServiceException {
-        return null;
+    public Item createItem(String name, String description, String categoryName,
+                           Integer alertThreshold, String unit, int ean) throws EntityDoesNotExistException {
+        if (exists(ean)) {
+            return changeItem(ean, name, description, categoryName, alertThreshold, unit);
+        }
+        Item i = new Item();
+        i.setName(name);
+        i.setDescription(description);
+        Category c = categoryService.getByName(categoryName);
+        if (c == null) {
+            throw new EntityDoesNotExistException("Category is not in db");
+        }
+        i.setCategory(c);
+        i.setAlertThreshold(alertThreshold);
+        i.setUnit(unit);
+        i.setEan(ean);
+        return i;
+
     }
 
     @Override
-    public Item changeItem(int ean, String newName, String newDescription, String newCategory, Integer newAlertThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException {
-        return null;
+    public Item changeItem(int ean, String newName, String newDescription, String newCategory, Integer newAlertThreshold, String newUnit) throws EntityDoesNotExistException {
+        Item i = itemService.getByEan(ean);
+        if (i == null) {
+            throw new EntityDoesNotExistException("This item doesn't exist");
+        }
+        i.setName(newName);
+        i.setDescription(newDescription);
+        Category c = categoryService.getByName(newCategory);
+        if (c == null) {
+            throw new EntityDoesNotExistException("Category is not in db");
+        }
+        i.setCategory(c);
+        i.setAlertThreshold(newAlertThreshold);
+        i.setUnit(newUnit);
+        return i;
+
     }
 
     @Override
-    public List<Item> getAllItems() throws ServiceException, EntityDoesNotExistException {
-        return null;
+    public List<Item> getAllItems() throws ServiceException {
+        return itemService.getAllItems();
     }
 
     @Override
@@ -71,5 +101,17 @@ public class ItemFacadeImpl implements ItemFacade {
     @Override
     public boolean exists(int ean) {
         return getItemByEan(ean) != null;
+    }
+
+    @Override
+    public Item storeItemInDb(Item i) throws ServiceException {
+        itemService.create(i);
+        return i;
+    }
+
+    @Override
+    public Item updateItemInDb(Item i) throws ServiceException {
+        itemService.update(i);
+        return i;
     }
 }

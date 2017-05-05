@@ -18,7 +18,7 @@ import java.util.List;
 public interface ItemFacade {
 
     /**
-     * Creates a new item
+     * Creates a new item, or updates it if it already exist but doesn't do the actual storing in db
      * @param name name of item
      * @param description description of item, null if there should be none
      * @param categoryName name of category of this item, must be already in db, cause @EntityDoesNotExistException if it is not there
@@ -27,13 +27,13 @@ public interface ItemFacade {
      * @param ean ean of item, unique identifier
      * @return Item that was created
      * @throws EntityDoesNotExistException if category is not in db
-     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
+     *
      */
     Item createItem(String name, String description, String categoryName, Integer alertThreshold, String unit, int ean)
-            throws EntityDoesNotExistException, ServiceException;
+            throws EntityDoesNotExistException;
 
     /**
-     * Updates existing item
+     * Updates existing item, but doesn't store it in db
      * @param ean ean of item to be changed
      * @param newName New name of item
      * @param newDescription New description of item, null if there should be none
@@ -41,11 +41,11 @@ public interface ItemFacade {
      * @param newAlertThreshold New alert threshold of item, or null
      * @param newUnit New unit of item
      * @return Item that was changed
-     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
+     *
      * @throws EntityDoesNotExistException if category is not in db
      */
     Item changeItem(int ean, String newName, String newDescription, String newCategory, Integer newAlertThreshold,
-                    String newUnit) throws ServiceException, EntityDoesNotExistException;
+                    String newUnit) throws EntityDoesNotExistException;
 
     /**
      * Gets item by its ean
@@ -73,17 +73,40 @@ public interface ItemFacade {
 
 
     /**
-     *
-     * @param ean
-     * @param newAmount
-     * @param newThreshold
-     * @param newUnit
-     * @return
-     * @throws ServiceException
-     * @throws EntityDoesNotExistException
+     * For updating items from web interface
+     * @param ean ean of item to be updated
+     * @param newAmount new amount of item
+     * @param newThreshold new threshold, null if it will be left unfilled or something
+     * @param newUnit new unit
+     * @return item that was updated
+     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
+     * @throws EntityDoesNotExistException if item with this ean is not in db
      */
     Item updateItemFromWeb(int ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException;
 
+    /**
+     * return if item with this ean exists
+     * @param ean ean of item
+     * @return true if it exists, false otherwise
+     */
     boolean exists(int ean);
+
+    /**
+     * Item will be created in db
+     * @param i item to be created
+     * @return item that was created
+     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
+     */
+    Item storeItemInDb(Item i) throws ServiceException;
+
+    /**
+     * Item will be updated in db
+     * @param i item to be updated
+     * @return item that was updated
+     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
+     */
+    Item updateItemInDb(Item i) throws ServiceException;
+
+
 
 }
