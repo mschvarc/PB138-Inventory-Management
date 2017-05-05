@@ -1,12 +1,16 @@
 package pb138.service.services;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.repository.CategoryRepository;
 import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.filters.ItemFilter;
+
+import java.util.List;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -64,5 +68,20 @@ public class ItemServiceImpl implements ItemService{
         filter.setEan(ean);
         Iterable<Item> result = itemRepository.find(filter);
         return Iterables.getFirst(result, null);
+    }
+
+    @Override
+    public List<Item> getByCategory(Category c) {
+        ItemFilter filter = new ItemFilter();
+        filter.setCategory(c);
+        Iterable<Item> result = itemRepository.find(filter);
+        return Lists.newArrayList(result);
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        ItemFilter filter = new ItemFilter();
+        Iterable<Item> result = itemRepository.find(filter);
+        return Lists.newArrayList(result);
     }
 }
