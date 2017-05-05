@@ -1,5 +1,7 @@
 package pb138.dal.repository;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Shipment;
 import pb138.dal.entities.Shipment_;
@@ -8,6 +10,7 @@ import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ShipmentFilter;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -15,12 +18,19 @@ import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
+@Repository
 public class ShipmentRepositoryImpl implements ShipmentRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
+
     private final ConstraintValidator validator;
 
     public ShipmentRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
+        if (entityManager == null || validator == null) {
+            throw new IllegalArgumentException("entitymanager or validator is null");
+        }
         this.entityManager = entityManager;
         this.validator = validator;
     }
@@ -37,7 +47,7 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
             entityManager.persist(shipment);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
-            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+            throw new EntityValidationException("Failed to create entity, check inner exception: " + ex.getCause() + ex.getMessage(), ex);
         }
     }
 
@@ -84,13 +94,11 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
             validPredicates.add(item);
         }
         if (filter.getDateImportedFrom() != null) {
-            Predicate dateSoldFrom =
-                    builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
+            Predicate dateSoldFrom = builder.greaterThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedFrom());
             validPredicates.add(dateSoldFrom);
         }
         if (filter.getDateImportedTo() != null) {
-            Predicate dateSoldTo =
-                    builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
+            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
             validPredicates.add(dateSoldTo);
         }
         if (filter.getCategory() != null) {

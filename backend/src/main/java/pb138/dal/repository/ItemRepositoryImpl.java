@@ -1,5 +1,7 @@
 package pb138.dal.repository;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Item_;
 import pb138.dal.repository.validation.ConstraintValidator;
@@ -7,6 +9,7 @@ import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.ItemFilter;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -14,12 +17,19 @@ import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
+@Repository
 public class ItemRepositoryImpl implements ItemRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
+
     private final ConstraintValidator validator;
 
     public ItemRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
+        if (entityManager == null || validator == null) {
+            throw new IllegalArgumentException("entitymanager or validator is null");
+        }
         this.entityManager = entityManager;
         this.validator = validator;
     }
@@ -36,7 +46,7 @@ public class ItemRepositoryImpl implements ItemRepository {
             entityManager.persist(item);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
-            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+            throw new EntityValidationException("Failed to create entity, check inner exception: " + ex.getCause() + ex.getMessage(), ex);
         }
     }
 

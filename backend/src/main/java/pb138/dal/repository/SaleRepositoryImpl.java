@@ -1,5 +1,6 @@
 package pb138.dal.repository;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item_;
 import pb138.dal.entities.Sale;
@@ -9,6 +10,7 @@ import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.SaleFilter;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -19,13 +21,20 @@ import java.util.List;
 
 //Source: http://spring.io/blog/2011/04/26/advanced-spring-data-jpa-specifications-and-querydsl/
 
+
+@Component
 @Repository
 public class SaleRepositoryImpl implements SaleRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
+
     private final ConstraintValidator validator;
 
     public SaleRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
+        if (entityManager == null || validator == null) {
+            throw new IllegalArgumentException("entitymanager or validator is null");
+        }
         this.entityManager = entityManager;
         this.validator = validator;
     }
@@ -42,7 +51,7 @@ public class SaleRepositoryImpl implements SaleRepository {
             entityManager.persist(sale);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
-            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+            throw new EntityValidationException("Failed to create entity, check inner exception: " + ex.getCause() + ex.getMessage(), ex);
         }
     }
 
