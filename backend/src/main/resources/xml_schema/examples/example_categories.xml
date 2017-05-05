@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<categories>
+
+    <category>
+        <name>sweet-stuff</name>
+        <description>Foodstuffs: chocolate, candies atc.</description>
+    </category>
+
+    <category>
+        <name>drinks</name>
+        <description>Nonalcoholic drinks.</description>
+    </category>
+
+    <category>
+        <name>office supplies</name>
+    </category>
+
+</categories>

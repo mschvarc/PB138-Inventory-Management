@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="items" type="itemsType">
+        <xs:key name="eanKey">
+            <xs:selector xpath="./item"/>
+            <xs:field xpath="ean"/>
+        </xs:key>
+    </xs:element>
+
+    <xs:complexType name="itemsType">
+        <xs:sequence>
+            <xs:element name="item" type="itemType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="itemType">
+        <xs:sequence>
+            <xs:element name="ean" type="nonNegativeInteger"/>
+            <xs:element name="name" type="nonEmptyString"/>
+            <xs:element name="threshold" type="nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="unit" type="nonEmptyString"/>
+            <xs:element name="description" type="nonEmptyString" minOccurs="0"/>
+            <xs:element name="category" type="nonEmptyString"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonNegativeInteger">
+        <xs:restriction base="xs:integer">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="nonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

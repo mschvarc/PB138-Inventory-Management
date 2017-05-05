@@ -33,7 +33,7 @@ public class XmlValidatorImpl implements XmlValidator {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             schema = schemaFactory.newSchema(xmlSchema);
         } catch (SAXException e) {
-            throw new IllegalArgumentException("Invalid schema " + xmlSchema.getFile(), e);
+            throw new IllegalArgumentException("Invalid schema " + e.getMessage(), e);
         }
 
         Validator validator = schema.newValidator();
@@ -41,7 +41,7 @@ public class XmlValidatorImpl implements XmlValidator {
         try {
             validator.validate(xmlStreamSource);
         } catch (SAXException | IOException e) {
-            throw new XmlValidationException("Invalid xml", e);
+            throw new XmlValidationException("Invalid xml " + e.getMessage(), e);
         }
     }
 

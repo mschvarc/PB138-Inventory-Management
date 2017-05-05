@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+
+    <item>
+        <ean>7614500010013</ean>
+        <name>Toblerone Milk Chocolate</name>
+        <unit>packet</unit>
+        <category>sweet-stuff</category>
+    </item>
+
+    <item>
+        <ean>0042238302211</ean>
+        <name>Haribo Gold Bears</name>
+        <unit>packet</unit>
+        <category>sweet-stuff</category>
+    </item>
+
+    <item>
+        <ean>5011898007328</ean>
+        <name>Juice</name>
+        <unit>box</unit>
+        <description>Types: apple, strawbery or orange.</description>
+        <category>drinks</category>
+    </item>
+
+    <item>
+        <ean>4960999047034</ean>
+        <name>Paper Pack for Canon Printer</name>
+        <threshold>50</threshold>
+        <unit>pack</unit>
+        <description>Canon KP-36IP Paper Pack for Canon Printer (36 Sheets).</description>
+        <category>office supplies</category>
+    </item>
+
+</items>
