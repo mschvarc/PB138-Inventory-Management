@@ -1,5 +1,7 @@
 package pb138.dal.repository;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Item_;
@@ -15,6 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +27,8 @@ import java.util.List;
 
 @Component
 @Repository
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 public class SaleRepositoryImpl implements SaleRepository {
 
     @PersistenceContext

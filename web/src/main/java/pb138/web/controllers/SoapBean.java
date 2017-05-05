@@ -35,6 +35,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.transaction.Transactional;
 import java.util.Date;
 
 
@@ -43,6 +44,7 @@ import java.util.Date;
 @WebService(name = "SoapBean", serviceName = "SoapBean", targetNamespace = "pb138.web")
 @SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED, use = SOAPBinding.Use.ENCODED)
 @ImportResource(locations = "classpath:META-INF/persistence-config.xml")
+@Transactional
 public class SoapBean extends SpringBeanAutowiringSupport {
 
     @Autowired
@@ -58,6 +60,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     @Autowired
     private ConstraintValidator validator;
 
+    @WebMethod(exclude = true)
     @PostConstruct
     public void postConstruct() {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -122,7 +125,6 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    //@Transactional //TODO: doesn't work
     public Category saveCategory(@WebParam String name) throws EntityValidationException {
         Category cat = new Category();
         cat.setDescription("desc " + name);
