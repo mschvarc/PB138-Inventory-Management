@@ -18,7 +18,7 @@ public interface CategoryFacade {
      * @return Category that was created/updated
      * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
      */
-    Category createCategory(String name, String desctription) throws ServiceException;
+    Category createOrUpdateCategory(String name, String desctription) throws ServiceException;
 
 
     /**

@@ -19,7 +19,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
     }
 
     @Override
-    public Category createCategory(String name, String desctription) throws ServiceException {
+    public Category createOrUpdateCategory(String name, String desctription) throws ServiceException {
         Category c = categoryService.getByName(name);
         if (c != null) {
             return changeCategory(c, desctription);
