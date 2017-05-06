@@ -2,6 +2,8 @@ package pb138.service.facades;
 
 import pb138.dal.entities.Sale;
 import pb138.service.exceptions.EntityDoesNotExistException;
+import pb138.service.exceptions.NotEnoughStoredException;
+import pb138.service.exceptions.ServiceException;
 
 import java.util.Date;
 import java.util.List;
@@ -14,9 +16,9 @@ public interface SaleFacade {
 
 
     //Must be solved - what if the total amount of sales is greater than current stock?
-    Sale addSale(int ean, Date date, int sold);
+    Sale addSale(int ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException;
 
-    Sale storeSaleInDb(Sale s);
+    Sale storeSaleInDb(Sale s) throws ServiceException;
 
     // Pro Marketku, ty to zrejme budes exportovat do xml, nazev kategorie/ ean produktu a data ti prijdou z webove vrstvy,
     // (asi na to Dominikovi nachystej nejaky interface, neco jako xmlExporter) vratim ti to jako list, do XML uz si to pak nejak zpracuj :)

@@ -1,6 +1,5 @@
 package pb138.service.facades;
 
-import javafx.util.Pair;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Shipment;
 import pb138.service.exceptions.EntityDoesNotExistException;
@@ -24,7 +23,7 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
     }
 
     @Override
-    public Pair<Shipment, Integer> addShipment(int ean, Date date, int arrived) throws EntityDoesNotExistException {
+    public Shipment addShipment(int ean, Date date, int arrived) throws EntityDoesNotExistException {
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("Cannot create shipment for item with EAN "
@@ -35,14 +34,14 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
         s.setItem(i);
         s.setQuantityImported(arrived);
         i.setCurrentCount(i.getCurrentCount() + arrived);
-        return new Pair<>(s, arrived);
+        return s;
 
     }
 
     @Override
-    public Shipment storeShipmentInDb(Shipment s, int count) throws ServiceException {
+    public Shipment storeShipmentInDb(Shipment s) throws ServiceException {
         Item i = s.getItem();
-        i.setCurrentCount(i.getCurrentCount() + count);
+        i.setCurrentCount(i.getCurrentCount() + s.getQuantityImported());
         itemService.update(i);
         shipmentService.create(s);
         return s;

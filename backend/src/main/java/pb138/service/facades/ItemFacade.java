@@ -58,18 +58,16 @@ public interface ItemFacade {
     /**
      * Return all items
      * @return All items in db
-     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
      */
-    List<Item> getAllItems() throws ServiceException;
+    List<Item> getAllItems();
 
     /**
      * Return all items with given category
      * @param categoryName name of the category
      * @return list of items belonging to the category
-     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
      * @throws EntityDoesNotExistException if category is not in the db
      */
-    List<Item> getAllItemsByCategory(String categoryName) throws ServiceException, EntityDoesNotExistException;
+    List<Item> getAllItemsByCategory(String categoryName) throws EntityDoesNotExistException;
 
 
     /**
