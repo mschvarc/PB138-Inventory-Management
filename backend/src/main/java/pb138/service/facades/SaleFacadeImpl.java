@@ -4,6 +4,8 @@ import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
 import pb138.service.exceptions.EntityDoesNotExistException;
+import pb138.service.exceptions.NotEnoughStoredException;
+import pb138.service.exceptions.ServiceException;
 import pb138.service.filters.SaleFilter;
 import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
@@ -29,13 +31,29 @@ public class SaleFacadeImpl implements SaleFacade {
     }
 
     @Override
-    public Sale addSale(int ean, Date date, int sold) {
-        throw new NotImplementedException();
+    public Sale addSale(int ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException {
+        Item i = itemService.getByEan(ean);
+        if (i == null) {
+            throw new EntityDoesNotExistException("Item with EAN " + ean + " does not exist");
+        }
+        if (i.getCurrentCount() < sold) {
+            throw new NotEnoughStoredException("There is not enough of " + i.getName() + " stored,"
+            + i.getCurrentCount() +  " " + i.getUnit() + " stored");
+        }
+        Sale s = new Sale();
+        s.setItem(i);
+        s.setDateSold(date);
+        s.setQuantitySold(sold);
+        return s;
     }
 
     @Override
-    public Sale storeSaleInDb(Sale s) {
-        throw new NotImplementedException();
+    public Sale storeSaleInDb(Sale s) throws ServiceException{
+        saleService.create(s);
+        Item i = s.getItem();
+        i.setCurrentCount(i.getCurrentCount() - s.getQuantitySold());
+        itemService.update(i);
+        return s;
     }
 
     @Override

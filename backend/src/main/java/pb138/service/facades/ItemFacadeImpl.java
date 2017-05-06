@@ -68,12 +68,12 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public List<Item> getAllItems() throws ServiceException {
+    public List<Item> getAllItems() {
         return itemService.getAllItems();
     }
 
     @Override
-    public List<Item> getAllItemsByCategory(String categoryName) throws ServiceException, EntityDoesNotExistException {
+    public List<Item> getAllItemsByCategory(String categoryName) throws EntityDoesNotExistException {
         Category c = categoryService.getByName(categoryName);
         if (c == null) {
             throw new EntityDoesNotExistException("This category doesn't exist");

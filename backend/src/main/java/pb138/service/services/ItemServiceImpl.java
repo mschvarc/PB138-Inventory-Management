@@ -18,20 +18,16 @@ import java.util.List;
  */
 public class ItemServiceImpl implements ItemService{
     private ItemRepository itemRepository;
-    private CategoryRepository categoryRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, CategoryRepository categoryRepository ) {
+
+    public ItemServiceImpl(ItemRepository itemRepository ) {
         this.itemRepository = itemRepository;
-        this.categoryRepository = categoryRepository;
+
     }
 
     @Override
     public long create(Item item) throws ServiceException {
         try {
-            long catId = item.getCategory().getId();
-            if (categoryRepository.getById(catId) == null) {
-                throw new ServiceException("Category does not exist");
-            }
             itemRepository.create(item);
             return item.getId();
         } catch (EntityValidationException e) {
