@@ -36,7 +36,8 @@ public class ItemFacadeImpl implements ItemFacade {
         i.setDescription(description);
         Category c = categoryService.getByName(categoryName);
         if (c == null) {
-            throw new EntityDoesNotExistException("Category is not in db");
+            throw new EntityDoesNotExistException("Problem when creating item " + name + " with EAN "
+                    + ean + ", category " + categoryName +" is not in db");
         }
         i.setCategory(c);
         i.setAlertThreshold(alertThreshold);
@@ -56,7 +57,8 @@ public class ItemFacadeImpl implements ItemFacade {
         i.setDescription(newDescription);
         Category c = categoryService.getByName(newCategory);
         if (c == null) {
-            throw new EntityDoesNotExistException("Category is not in db");
+            throw new EntityDoesNotExistException("Problem when updating item " + newName + " with EAN "
+                    + ean + ", category " + newCategory +" is not in db");
         }
         i.setCategory(c);
         i.setAlertThreshold(newAlertThreshold);
