@@ -24,7 +24,6 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.8.9</version>
         </dependency>
 
         <dependency>
@@ -41,7 +40,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- uncomment below exclusions to deploy on standalone Tomcat -->
+            <!--
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+            -->
+            <!-- uncomment the above exclusions to deploy on Tomcat -->
         </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <!-- <scope>provided</scope> -->
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

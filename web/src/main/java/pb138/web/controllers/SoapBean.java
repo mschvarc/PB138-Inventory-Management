@@ -42,7 +42,7 @@ import java.util.Date;
 @Service
 @Component
 @WebService(name = "SoapBean", serviceName = "SoapBean", targetNamespace = "pb138.web")
-@SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED, use = SOAPBinding.Use.ENCODED)
+@SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED, use = SOAPBinding.Use.LITERAL)
 @ImportResource(locations = "classpath:META-INF/persistence-config.xml")
 @Transactional
 public class SoapBean extends SpringBeanAutowiringSupport {
