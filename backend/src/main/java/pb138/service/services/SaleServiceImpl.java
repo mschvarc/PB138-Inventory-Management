@@ -1,9 +1,13 @@
 package pb138.service.services;
 
+import com.google.common.collect.Lists;
 import pb138.dal.entities.Sale;
 import pb138.dal.repository.SaleRepository;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.exceptions.ServiceException;
+import pb138.service.filters.SaleFilter;
+
+import java.util.List;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -47,5 +51,11 @@ public class SaleServiceImpl implements SaleService{
     @Override
     public Sale getById(long id) {
         return saleRepository.getById(id);
+    }
+
+    @Override
+    public List<Sale> getByFilter(SaleFilter filter) {
+        Iterable<Sale> result = saleRepository.find(filter);
+        return Lists.newArrayList(result);
     }
 }
