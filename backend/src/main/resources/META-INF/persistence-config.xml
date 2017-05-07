@@ -90,4 +90,7 @@
         <constructor-arg name="shipmentService" ref="shipmentService"/>
     </bean>
 
+    <bean id="xmlExporter" class="pb138.service.XmlImportExport.XmlExporterImpl">
+        <constructor-arg name="itemFacade" ref="itemFacade"/>
+    </bean>
 </beans>

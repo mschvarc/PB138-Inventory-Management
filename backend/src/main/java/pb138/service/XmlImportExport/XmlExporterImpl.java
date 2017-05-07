@@ -8,6 +8,10 @@ import pb138.service.facades.ItemFacade;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 import java.util.List;
 
 /**
@@ -22,7 +26,7 @@ public class XmlExporterImpl implements XmlExporter {
     }
 
     @Override
-    public Document ExportXml() throws ParserConfigurationException {
+    public Document ExportXmlToDoc() throws ParserConfigurationException {
         List<Item> items = itemFacade.getAllItems();
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -74,6 +78,24 @@ public class XmlExporterImpl implements XmlExporter {
             rootElement.appendChild(itemElement);
         }
         return doc;
+
+    }
+
+    @Override
+    public String ExportXmlToString() throws ParserConfigurationException, TransformerException {
+        Document doc = ExportXmlToDoc();
+
+            StringWriter sw = new StringWriter();
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+
+            transformer.transform(new DOMSource(doc), new StreamResult(sw));
+            return sw.toString();
 
     }
 }

@@ -20,6 +20,12 @@ public class CategoryFacadeImpl implements CategoryFacade {
 
     @Override
     public Category createOrUpdateCategory(String name, String desctription) throws ServiceException {
+        if (name == null) {
+            throw new IllegalArgumentException("Name must not be null");
+        }
+        if (desctription == null) {
+            throw new IllegalArgumentException("Description must not be null");
+        }
         Category c = categoryService.getByName(name);
         if (c != null) {
             return changeCategory(c, desctription);

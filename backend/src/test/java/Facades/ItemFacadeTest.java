@@ -16,6 +16,7 @@ import pb138.service.facades.CreateOrUpdate;
 import pb138.service.facades.ItemFacade;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 
 import java.util.List;
 
@@ -108,5 +109,11 @@ public class ItemFacadeTest  extends TestCase{
         assertThat(result.contains(i2.getKey()), is(true));
         assertThat(result.contains(i4.getKey()), is(false));
 
+    }
+
+    @Test
+    public void getByNonExistingEan() {
+        Item i = itemFacade.getItemByEan(123);
+        assertNull(i);
     }
 }
