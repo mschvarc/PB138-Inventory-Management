@@ -13,7 +13,7 @@ public interface XmlExporter {
     /**
      * Exports all items in database to xml file
      * @return xml in Document format (may be changed)
-     * @throws ParserConfigurationException I have no idea why could this happen
+     * @throws ParserConfigurationException I have no idea why this could happen
      */
     Document ExportXml() throws ParserConfigurationException;
 }
