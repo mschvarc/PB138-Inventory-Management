@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sales>
+
+    <sale>
+        <itemEan>0042238302211</itemEan>
+        <amount>20</amount>
+        <date>2017-05-05</date>
+    </sale>
+
+    <sale>
+        <itemEan>5011898007328</itemEan>
+        <amount>50</amount>
+        <date>2017-05-05</date>
+    </sale>
+
+    <sale>
+        <itemEan>4960999047034</itemEan>
+        <amount>25</amount>
+        <date>2017-05-05</date>
+    </sale>
+
+</sales>
