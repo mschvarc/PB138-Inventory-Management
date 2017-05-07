@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="categories" type="categoriesType">
+        <xs:key name="nameKey">
+            <xs:selector xpath="./category"/>
+            <xs:field xpath="name"/>
+        </xs:key>
+    </xs:element>
+
+    <xs:complexType name="categoriesType">
+        <xs:sequence>
+            <xs:element name="category" type="categoryType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="categoryType">
+        <xs:sequence>
+            <xs:element name="name" type="nonEmptyString"/>
+            <xs:element name="description" type="nonEmptyString" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

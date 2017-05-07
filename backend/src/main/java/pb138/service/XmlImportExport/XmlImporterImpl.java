@@ -23,10 +23,12 @@ import java.io.StringReader;
  * Implements XmlImporter
  */
 public class XmlImporterImpl implements XmlImporter{
+
     private XmlValidator xmlValidator;
 
-
-
+    public XmlImporterImpl(XmlValidator xmlValidator) {
+        this.xmlValidator = xmlValidator;
+    }
 
     @Override
     public boolean importXml(String xmlFile) throws XmlValidationException, EntityDoesNotExistException, NotEnoughStoredException, ServiceException {
@@ -37,21 +39,22 @@ public class XmlImporterImpl implements XmlImporter{
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(xmlFile)));
             Element root = document.getDocumentElement();
+            ClassLoader classLoader = getClass().getClassLoader();
             if (root == null) {
                 throw new XmlValidationException("Xml has no root");
             }
             switch (root.getTagName()){
                 case "categories":
-                    xmlValidator.validate(xmlFile, null /*categories scheme here*/);
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/categories_xml_schema.xsd"));
                     break;
                 case "items":
-                    xmlValidator.validate(xmlFile, null /*items scheme here*/);
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/items_xml_schema.xsd") );
                     break;
                 case "sales":
-                    xmlValidator.validate(xmlFile, null /*sales scheme here*/);
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/sales_xml_schema.xsd"));
                     break;
                 case "shipments":
-                    xmlValidator.validate(xmlFile, null /*shipments scheme here*/);
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments.xsd"));
                     break;
                 default:
                     throw new XmlValidationException("Root is different than it should be");
