@@ -27,6 +27,7 @@ import pb138.dal.entities.Sale;
 import pb138.dal.repository.CategoryRepository;
 import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.SaleRepository;
+import pb138.dal.repository.ShipmentRepository;
 import pb138.dal.repository.validation.ConstraintValidator;
 import pb138.dal.repository.validation.EntityValidationException;
 
@@ -58,6 +59,9 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private ShipmentRepository shipmentRepository;
+
+    @Autowired
     private ConstraintValidator validator;
 
     @WebMethod(exclude = true)
@@ -68,8 +72,13 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
 
     @WebMethod
-    public String echo(@WebParam String input) {
-        return "SoapBean pojo: " + input;
+    public String testCorrectDeployment(@WebParam String input) {
+        int counter = 0;
+        counter += categoryRepository != null ? 1 : 0;
+        counter += itemRepository != null ? 1 : 0;
+        counter += saleRepository != null ? 1 : 0;
+        counter += shipmentRepository != null ? 1 : 0;
+        return "ECHO: " + input + ";; Valid entities: " + counter + " / 4";
     }
 
     @WebMethod
