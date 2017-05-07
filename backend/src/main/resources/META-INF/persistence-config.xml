@@ -54,4 +54,40 @@
         <constructor-arg name="validator" ref="constraintValidator"/>
     </bean>
 
+    <bean id="categoryService" class = "pb138.service.services.CategoryServiceImpl">
+        <constructor-arg name="categoryRepository" ref="categoryRepository"/>
+    </bean>
+
+    <bean id="itemService" class="pb138.service.services.ItemServiceImpl">
+        <constructor-arg name="itemRepository" ref="itemRepository"/>
+    </bean>
+
+    <bean id="saleService" class="pb138.service.services.SaleServiceImpl">
+        <constructor-arg name="saleRepository" ref = "saleRepository"/>
+    </bean>
+
+    <bean id="shipmentService" class="pb138.service.services.ShipmentServiceImpl">
+        <constructor-arg name="shipmentRepository" ref = "shipmentRepository"/>
+    </bean>
+
+    <bean id="categoryFacade" class="pb138.service.facades.CategoryFacadeImpl">
+        <constructor-arg name="categoryService" ref="categoryService"/>
+    </bean>
+
+    <bean id="itemFacade" class="pb138.service.facades.ItemFacadeImpl">
+        <constructor-arg name="categoryService" ref="categoryService"/>
+        <constructor-arg name="itemService" ref="itemService"/>
+    </bean>
+
+    <bean id="saleFacade" class="pb138.service.facades.SaleFacadeImpl">
+        <constructor-arg name="categoryService" ref="categoryService"/>
+        <constructor-arg name="itemService" ref="itemService"/>
+        <constructor-arg name="saleService" ref="saleService"/>
+    </bean>
+
+    <bean id="shipmentFacade" class="pb138.service.facades.ShipmentFacadeImpl">
+        <constructor-arg name="itemService" ref="itemService"/>
+        <constructor-arg name="shipmentService" ref="shipmentService"/>
+    </bean>
+
 </beans>

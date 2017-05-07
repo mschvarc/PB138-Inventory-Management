@@ -1,11 +1,10 @@
 package pb138.service.facades;
 
+import javafx.util.Pair;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
-import pb138.service.exceptions.EntityAlreadyExistsException;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
-import pb138.service.filters.ItemFilter;
 import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 
@@ -26,52 +25,52 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public Item createItem(String name, String description, String categoryName,
-                           Integer alertThreshold, String unit, int ean) throws EntityDoesNotExistException {
-        if (exists(ean)) {
-            return changeItem(ean, name, description, categoryName, alertThreshold, unit);
+    public Pair<Item, CreateOrUpdate> createOrUpdateItem(String name, String description, String categoryName,
+                                                         Integer alertThreshold, String unit, int ean) throws EntityDoesNotExistException {
+        Item i = itemService.getByEan(ean);
+        if (i != null) {
+            i = changeItem(name, description, categoryName, alertThreshold, unit, i);
+            return new Pair<>(i, CreateOrUpdate.UPDATE);
         }
-        Item i = new Item();
+        i = new Item();
         i.setName(name);
         i.setDescription(description);
         Category c = categoryService.getByName(categoryName);
         if (c == null) {
-            throw new EntityDoesNotExistException("Category is not in db");
+            throw new EntityDoesNotExistException("Problem when creating item " + name + " with EAN "
+                    + ean + ", category " + categoryName +" is not in db");
         }
         i.setCategory(c);
         i.setAlertThreshold(alertThreshold);
         i.setUnit(unit);
         i.setEan(ean);
-        return i;
+        return new Pair<>(i, CreateOrUpdate.CREATE);
 
     }
 
     @Override
-    public Item changeItem(int ean, String newName, String newDescription, String newCategory, Integer newAlertThreshold, String newUnit) throws EntityDoesNotExistException {
-        Item i = itemService.getByEan(ean);
-        if (i == null) {
-            throw new EntityDoesNotExistException("This item doesn't exist");
-        }
-        i.setName(newName);
-        i.setDescription(newDescription);
+    public Item changeItem(String newName, String newDescription, String newCategory, Integer newAlertThreshold, String newUnit, Item item) throws EntityDoesNotExistException {
+        item.setName(newName);
+        item.setDescription(newDescription);
         Category c = categoryService.getByName(newCategory);
         if (c == null) {
-            throw new EntityDoesNotExistException("Category is not in db");
+            throw new EntityDoesNotExistException("Problem when updating item " + newName + " with EAN "
+                    + item.getEan() + ", category " + newCategory +" is not in db");
         }
-        i.setCategory(c);
-        i.setAlertThreshold(newAlertThreshold);
-        i.setUnit(newUnit);
-        return i;
+        item.setCategory(c);
+        item.setAlertThreshold(newAlertThreshold);
+        item.setUnit(newUnit);
+        return item;
 
     }
 
     @Override
-    public List<Item> getAllItems() throws ServiceException {
+    public List<Item> getAllItems() {
         return itemService.getAllItems();
     }
 
     @Override
-    public List<Item> getAllItemsByCategory(String categoryName) throws ServiceException, EntityDoesNotExistException {
+    public List<Item> getAllItemsByCategory(String categoryName) throws EntityDoesNotExistException {
         Category c = categoryService.getByName(categoryName);
         if (c == null) {
             throw new EntityDoesNotExistException("This category doesn't exist");
@@ -104,14 +103,14 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public Item storeItemInDb(Item i) throws ServiceException {
-        itemService.create(i);
-        return i;
+    public Item storeItemInDb(Pair<Item, CreateOrUpdate> i) throws ServiceException {
+        if (i.getValue() == CreateOrUpdate.CREATE) {
+            itemService.create(i.getKey());
+            return i.getKey();
+        }
+        itemService.update(i.getKey());
+        return i.getKey();
     }
 
-    @Override
-    public Item updateItemInDb(Item i) throws ServiceException {
-        itemService.update(i);
-        return i;
-    }
+
 }
