@@ -1,26 +1,17 @@
 package Facades;
 
-import javafx.util.Pair;
 import junit.framework.TestCase;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pb138.dal.entities.Category;
-import pb138.dal.entities.Item;
-import pb138.dal.repository.CategoryRepository;
-import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.facades.CategoryFacade;
-import pb138.service.facades.CreateOrUpdate;
-import pb138.service.facades.ItemFacade;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -59,4 +50,6 @@ public class CategoryFacadeTest extends TestCase {
         assertThat(result.get(0).getDescription(), is("Some other generic description"));
 
     }
+
+
 }

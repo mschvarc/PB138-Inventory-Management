@@ -24,6 +24,12 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
 
     @Override
     public Shipment addShipment(int ean, Date date, int arrived) throws EntityDoesNotExistException {
+        if (date == null) {
+            throw new IllegalArgumentException("Date cannot be null");
+        }
+        if (arrived < 0) {
+            throw new IllegalArgumentException("Arrived cannot be negative");
+        }
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("Cannot create shipment for item with EAN "
@@ -33,7 +39,6 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
         s.setDateImported(date);
         s.setItem(i);
         s.setQuantityImported(arrived);
-        i.setCurrentCount(i.getCurrentCount() + arrived);
         return s;
 
     }
