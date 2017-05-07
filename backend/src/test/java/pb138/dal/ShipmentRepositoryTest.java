@@ -72,7 +72,7 @@ public class ShipmentRepositoryTest extends TestCase {
 
         insertedShipment = new Shipment();
         insertedShipment.setQuantityImported(5);
-        insertedShipment.setDateImported(date(600L));
+        insertedShipment.setDateImported(date(600*1000L));
         insertedShipment.setItem(item);
         validator.validate(insertedShipment);
         manager.persist(insertedShipment);
@@ -159,12 +159,12 @@ public class ShipmentRepositoryTest extends TestCase {
     public void dateFilteringTestFrom() throws Exception {
         Shipment shipment = new Shipment();
         shipment.setQuantityImported(5);
-        shipment.setDateImported(date(550L));
+        shipment.setDateImported(date(550*1000L));
         shipment.setItem(item);
         repository.create(shipment);
 
         ShipmentFilter filter = new ShipmentFilter();
-        filter.setDateImportedFrom(date(300));
+        filter.setDateImportedFrom(date(300*1000L));
         Iterable<Shipment> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(2L));
         assertThat(result, hasItems(shipment, insertedShipment));
@@ -174,13 +174,13 @@ public class ShipmentRepositoryTest extends TestCase {
     public void dateFilteringTestFromTo() throws Exception {
         Shipment shipment = new Shipment();
         shipment.setQuantityImported(5);
-        shipment.setDateImported(date(550L));
+        shipment.setDateImported(date(550*1000L));
         shipment.setItem(item);
         repository.create(shipment);
 
         ShipmentFilter filter = new ShipmentFilter();
-        filter.setDateImportedFrom(date(300));
-        filter.setDateImportedTo(date(580));
+        filter.setDateImportedFrom(date(300*1000L));
+        filter.setDateImportedTo(date(580*1000L));
         Iterable<Shipment> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(1L));
         assertThat(result, hasItems(shipment));

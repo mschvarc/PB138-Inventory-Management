@@ -15,7 +15,16 @@
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
         <property name="persistenceUnitName" value="H2_INMEMORY_DB"/>
         <property name="packagesToScan" value="pb138"/>
-
+        <property name="jpaProperties">
+            <props>
+                <!-- http://stackoverflow.com/questions/306806/hibernate-automatically-creating-updating-the-db-tables-based-on-entity-classes -->
+                <!-- For MySQL deployment -->
+                <!--
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                -->
+            </props>
+        </property>
     </bean>
 
     <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">

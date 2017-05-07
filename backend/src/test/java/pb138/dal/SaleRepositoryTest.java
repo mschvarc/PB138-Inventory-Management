@@ -72,9 +72,7 @@ public class SaleRepositoryTest extends TestCase {
 
         insertedSale = new Sale();
         insertedSale.setQuantitySold(5);
-        Date date = new Date();
-        date.setTime(600L);
-        insertedSale.setDateSold(date);
+        insertedSale.setDateSold(date(600*1000L));
         insertedSale.setItem(item);
         validator.validate(item);
         manager.persist(insertedSale);
@@ -120,15 +118,13 @@ public class SaleRepositoryTest extends TestCase {
     public void complexFilteringTest() throws Exception {
         Sale sale = new Sale();
         sale.setQuantitySold(25);
-        Date date = new Date();
-        date.setTime(500L);
-        sale.setDateSold(date);
+        sale.setDateSold(date(500*1000L));
         sale.setItem(item);
         sale.getItem().setCategory(category);
         repository.create(sale);
 
         SaleFilter filter = new SaleFilter();
-        filter.setDateSold(date);
+        filter.setDateSold(date(500*1000L));
         filter.setCategory(category);
         filter.setItem(item);
         filter.setId(sale.getId());
@@ -157,7 +153,7 @@ public class SaleRepositoryTest extends TestCase {
         Sale sale = new Sale();
         sale.setQuantitySold(25);
         Date dateSold = new Date();
-        sale.setDateSold(date(500L));
+        sale.setDateSold(date(500*1000L));
         sale.setItem(item);
         sale.getItem().setCategory(category);
         repository.create(sale);
@@ -165,7 +161,7 @@ public class SaleRepositoryTest extends TestCase {
         SaleFilter filter = new SaleFilter();
         filter.setCategory(category);
 
-        filter.setDateSoldFrom(date(400L));
+        filter.setDateSoldFrom(date(450*1000L));
         Iterable<Sale> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(equalTo(2L)));
         assertThat(result, hasItems(sale, insertedSale));
@@ -176,7 +172,7 @@ public class SaleRepositoryTest extends TestCase {
         Sale sale = new Sale();
         sale.setQuantitySold(25);
         Date dateSold = new Date();
-        sale.setDateSold(date(500L));
+        sale.setDateSold(date(500*1000L));
         sale.setItem(item);
         sale.getItem().setCategory(category);
         repository.create(sale);
@@ -184,8 +180,8 @@ public class SaleRepositoryTest extends TestCase {
         SaleFilter filter = new SaleFilter();
         filter.setCategory(category);
 
-        filter.setDateSoldFrom(date(400L));
-        filter.setDateSoldTo(date(550L));
+        filter.setDateSoldFrom(date(400*1000L));
+        filter.setDateSoldTo(date(550*1000L));
         Iterable<Sale> result = repository.find(filter);
         assertThat(result.spliterator().getExactSizeIfKnown(), is(1L));
         assertThat(result, hasItem(sale));
@@ -209,7 +205,7 @@ public class SaleRepositoryTest extends TestCase {
         Sale sale = new Sale();
         sale.setQuantitySold(25);
         Date dateSold = new Date();
-        sale.setDateSold(date(500L));
+        sale.setDateSold(date(500*1000L));
         sale.setItem(item);
         sale.getItem().setCategory(category);
         repository.create(sale);
@@ -217,12 +213,12 @@ public class SaleRepositoryTest extends TestCase {
         Sale saleRetrieved = repository.getById(sale.getId());
         assertNotNull(sale);
         saleRetrieved.setQuantitySold(100);
-        saleRetrieved.setDateSold(date(900));
+        saleRetrieved.setDateSold(date(900*1000L));
         repository.update(saleRetrieved);
 
         Sale saleUpdatedRetrieved = repository.getById(sale.getId());
         assertThat(saleUpdatedRetrieved.getQuantitySold(), is(100));
-        assertThat(saleUpdatedRetrieved.getDateSold(), is(date(900)));
+        assertThat(saleUpdatedRetrieved.getDateSold(), is(date(900*1000L)));
         assertThat(saleRetrieved, is(saleUpdatedRetrieved));
     }
 
