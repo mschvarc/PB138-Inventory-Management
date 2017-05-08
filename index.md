@@ -1,3 +1,9 @@
+---
+layout: default
+---
+
+
+
 # PB138 Inventory Management System
 
 [![Build Status](https://travis-ci.org/mschvarc/PB138-Inventory-Management.svg?branch=master)](https://travis-ci.org/mschvarc/PB138-Inventory-Management)
