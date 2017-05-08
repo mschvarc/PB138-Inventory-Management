@@ -291,5 +291,10 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
     }
 
+    @WebMethod
+    public ItemDto changeItem(int ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
+        Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
+        return automapper.mapTo(item, ItemDto.class);
+    }
 
 }
