@@ -5,6 +5,7 @@ import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -28,4 +29,6 @@ public interface ShipmentFacade {
      * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
      */
     Shipment storeShipmentInDb(Shipment s) throws ServiceException;
+
+    List<Shipment> getAllShipments();
 }

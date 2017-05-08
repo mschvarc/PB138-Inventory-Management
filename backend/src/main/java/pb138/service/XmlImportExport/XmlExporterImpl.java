@@ -42,7 +42,9 @@ public class XmlExporterImpl implements XmlExporter {
             itemElement.appendChild(nameElement);
 
             Element eanElement = doc.createElement("ean");
-            eanElement.appendChild(doc.createTextNode(Integer.toString(i.getEan())));
+            long ean = i.getEan();
+            String eanString = String.format("%1$013d", ean);
+            eanElement.appendChild(doc.createTextNode(eanString));
             itemElement.appendChild(eanElement);
 
             Element descriptionElement = doc.createElement("description");

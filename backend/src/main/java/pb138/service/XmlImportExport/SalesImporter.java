@@ -10,5 +10,5 @@ import org.jdom2.*;
  *
  */
 public interface SalesImporter {
-    boolean importSales(Element e);
+    void importSales(Element e);
 }

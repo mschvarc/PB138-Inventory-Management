@@ -96,7 +96,12 @@
 
     <bean id="xmlValidator" class="pb138.service.xmlvalidator.XmlValidatorImpl"/>
 
+    <bean id="shipmentImporter" class="pb138.service.XmlImportExport.ShipmentImporterImpl">
+        <constructor-arg name="shipmentFacade" ref="shipmentFacade"/>
+    </bean>
+
     <bean id="xmlImporter" class="pb138.service.XmlImportExport.XmlImporterImpl">
         <constructor-arg name="xmlValidator" ref="xmlValidator"/>
+        <constructor-arg name="shipmentImporter" ref="shipmentImporter"/>
     </bean>
 </beans>

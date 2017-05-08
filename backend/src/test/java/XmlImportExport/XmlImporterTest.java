@@ -35,6 +35,8 @@ public class XmlImporterTest {
     @Autowired
     private XmlImporter xmlImporter;
 
+    @Autowired CategoryFacade categoryFacade;
+
     @Test
     public void testItems() throws Exception{
         ClassLoader classLoader = getClass().getClassLoader();
@@ -42,4 +44,6 @@ public class XmlImporterTest {
         xmlImporter.importXml(s);
 
     }
+
+
 }

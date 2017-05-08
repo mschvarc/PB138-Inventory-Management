@@ -8,6 +8,7 @@ import pb138.service.services.ItemService;
 import pb138.service.services.ShipmentService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jan on 06.05.2017.
@@ -50,5 +51,10 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
         itemService.update(i);
         shipmentService.create(s);
         return s;
+    }
+
+    @Override
+    public List<Shipment> getAllShipments() {
+        return shipmentService.getAllShipments();
     }
 }

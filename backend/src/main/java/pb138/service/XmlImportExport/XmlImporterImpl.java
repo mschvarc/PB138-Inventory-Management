@@ -26,8 +26,11 @@ public class XmlImporterImpl implements XmlImporter{
 
     private XmlValidator xmlValidator;
 
-    public XmlImporterImpl(XmlValidator xmlValidator) {
+    private ShipmentImporter shipmentImporter;
+
+    public XmlImporterImpl(XmlValidator xmlValidator, ShipmentImporter shipmentImporter) {
         this.xmlValidator = xmlValidator;
+        this.shipmentImporter = shipmentImporter;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class XmlImporterImpl implements XmlImporter{
                     break;
                 case "shipments":
                     xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments.xsd"));
+                    shipmentImporter.importShipments(root);
                     break;
                 default:
                     throw new XmlValidationException("Root is different than it should be");
