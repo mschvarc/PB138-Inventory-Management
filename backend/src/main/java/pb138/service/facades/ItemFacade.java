@@ -28,7 +28,7 @@ public interface ItemFacade {
      * @throws EntityDoesNotExistException if category is not in db
      *
      */
-    Pair<Item, CreateOrUpdate> createOrUpdateItem(String name, String description, String categoryName, Integer alertThreshold, String unit, int ean)
+    Pair<Item, CreateOrUpdate> createOrUpdateItem(String name, String description, String categoryName, Integer alertThreshold, String unit, long ean)
             throws EntityDoesNotExistException;
 
     /**
@@ -51,7 +51,7 @@ public interface ItemFacade {
      * @param ean ean of item
      * @return Item with given ean
      */
-    Item getItemByEan(int ean);
+    Item getItemByEan(long ean);
 
 
     /**
@@ -79,14 +79,14 @@ public interface ItemFacade {
      * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
      * @throws EntityDoesNotExistException if item with this ean is not in db
      */
-    Item updateItemFromWeb(int ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException;
+    Item updateItemFromWeb(long ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException;
 
     /**
      * return if item with this ean exists
      * @param ean ean of item
      * @return true if it exists, false otherwise
      */
-    boolean exists(int ean);
+    boolean exists(long ean);
 
     /**
      * Item will be created in db

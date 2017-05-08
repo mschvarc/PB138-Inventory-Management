@@ -268,17 +268,17 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getDailySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getWeeklySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getMonthlySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
@@ -298,7 +298,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public ItemDto changeItem(int ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
+    public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
         return automapper.mapTo(item, ItemDto.class);
     }

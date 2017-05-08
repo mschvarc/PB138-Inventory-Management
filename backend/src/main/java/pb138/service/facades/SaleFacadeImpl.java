@@ -10,7 +10,6 @@ import pb138.service.filters.SaleFilter;
 import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 import pb138.service.services.SaleService;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +30,7 @@ public class SaleFacadeImpl implements SaleFacade {
     }
 
     @Override
-    public Sale addSale(int ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException {
+    public Sale addSale(long ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException {
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("Item with EAN " + ean + " does not exist");
@@ -70,7 +69,7 @@ public class SaleFacadeImpl implements SaleFacade {
     }
 
     @Override
-    public List<Sale> getSalesForProduct(int ean, Date from, Date to) throws EntityDoesNotExistException{
+    public List<Sale> getSalesForProduct(long ean, Date from, Date to) throws EntityDoesNotExistException{
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("Item with ean " + ean + " does not exist");

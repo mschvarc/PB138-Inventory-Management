@@ -16,7 +16,7 @@ public interface SaleFacade {
 
 
     //Must be solved - what if the total amount of sales is greater than current stock?
-    Sale addSale(int ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException;
+    Sale addSale(long ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException;
 
     Sale storeSaleInDb(Sale s) throws ServiceException;
 
@@ -41,5 +41,5 @@ public interface SaleFacade {
      * @return list of sales
      * @throws EntityDoesNotExistException if there is no such item
      */
-    List<Sale> getSalesForProduct(int ean, Date from, Date to) throws EntityDoesNotExistException;
+    List<Sale> getSalesForProduct(long ean, Date from, Date to) throws EntityDoesNotExistException;
 }
