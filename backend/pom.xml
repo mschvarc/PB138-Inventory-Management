@@ -113,6 +113,15 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
+        <!-- Dozer object mapper -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.craftsman</groupId>
+            <artifactId>dozer-jdk8-support</artifactId>
+        </dependency>
 
         <!-- Testing libraries -->
         <dependency>

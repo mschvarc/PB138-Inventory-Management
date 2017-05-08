@@ -30,6 +30,21 @@ import pb138.dal.repository.SaleRepository;
 import pb138.dal.repository.ShipmentRepository;
 import pb138.dal.repository.validation.ConstraintValidator;
 import pb138.dal.repository.validation.EntityValidationException;
+import pb138.service.XmlImportExport.XmlExporter;
+import pb138.service.XmlImportExport.XmlImporter;
+import pb138.service.dto.CategoryDto;
+import pb138.service.dto.ItemDto;
+import pb138.service.exceptions.EntityDoesNotExistException;
+import pb138.service.exceptions.NotEnoughStoredException;
+import pb138.service.exceptions.ServiceException;
+import pb138.service.exceptions.XmlValidationException;
+import pb138.service.facades.CategoryFacade;
+import pb138.service.facades.ItemFacade;
+import pb138.service.facades.SaleFacade;
+import pb138.service.facades.ShipmentFacade;
+import pb138.service.mapper.Automapper;
+import pb138.service.overview.OverviewProvider;
+import pb138.service.overview.OverviewResult;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -37,7 +52,10 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -46,23 +64,35 @@ import java.util.Date;
 @SOAPBinding(style = SOAPBinding.Style.RPC, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED, use = SOAPBinding.Use.LITERAL)
 @ImportResource(locations = "classpath:META-INF/persistence-config.xml")
 @Transactional
+@SuppressWarnings("unused")
 public class SoapBean extends SpringBeanAutowiringSupport {
 
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
-
     private SaleRepository saleRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ShipmentRepository shipmentRepository;
-
     @Autowired
     private ConstraintValidator validator;
+    //@Autowired //TODO: once done, autowire
+    private OverviewProvider overviewProvider;
+    @Autowired
+    private CategoryFacade categoryFacade;
+    @Autowired
+    private ItemFacade itemFacade;
+    @Autowired
+    private SaleFacade saleFacade;
+    @Autowired
+    private ShipmentFacade shipmentFacade;
+    @Autowired
+    private XmlImporter xmlImporter;
+    @Autowired
+    private XmlExporter xmlExporter;
+    @Autowired
+    private Automapper automapper;
 
     @WebMethod(exclude = true)
     @PostConstruct
@@ -70,6 +100,50 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    @WebMethod
+    public void addTestData(@WebParam Object nullObject) throws EntityValidationException {
+        Category cat = new Category();
+        cat.setDescription("desc");
+        cat.setName("cat name");
+        categoryRepository.create(cat);
+
+        Item item = new Item();
+        item.setDescription("i desc");
+        item.setName("i name0");
+        item.setCategory(cat);
+        item.setCurrentCount(25);
+        item.setAlertThreshold(30);
+        item.setEan(123);
+        item.setUnit("kg");
+        itemRepository.create(item);
+
+        Item item1 = new Item();
+        item1.setDescription("i desc");
+        item1.setName("i name1");
+        item1.setCategory(cat);
+        item1.setCurrentCount(25);
+        item1.setAlertThreshold(30);
+        item1.setEan(124);
+        item1.setUnit("kg");
+        itemRepository.create(item1);
+
+        Item item2 = new Item();
+        item2.setDescription("i desc");
+        item2.setName("i name2");
+        item2.setCategory(cat);
+        item2.setCurrentCount(25);
+        item2.setAlertThreshold(30);
+        item2.setEan(125);
+        item2.setUnit("kg");
+        itemRepository.create(item2);
+
+        Sale sale = new Sale();
+        sale.setDateSold(new Date());
+        sale.setQuantitySold(10);
+        sale.setItem(item2);
+        saleRepository.create(sale);
+
+    }
 
     @WebMethod
     public String testCorrectDeployment(@WebParam String input) {
@@ -78,11 +152,12 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         counter += itemRepository != null ? 1 : 0;
         counter += saleRepository != null ? 1 : 0;
         counter += shipmentRepository != null ? 1 : 0;
-        return "ECHO: " + input + ";; Valid entities: " + counter + " / 4";
+        return "ECHO: " + input + "\r\nValid entities: " + counter + " / 4";
     }
 
+    /*
     @WebMethod
-    public Category returnCategory(@WebParam String input) {
+    public Category debugReturnCategory(@WebParam String input) {
         Category cat = new Category();
         cat.setDescription("desc");
         cat.setName("cat name");
@@ -90,7 +165,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public Item returnItem(@WebParam String input) {
+    public Item debugReturnItem(@WebParam String input) {
 
         Item test = itemRepository.getById(1);
 
@@ -111,7 +186,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public Sale returnSale(@WebParam String input) {
+    public Sale debugReturnSale(@WebParam String input) {
         Category cat = new Category();
         cat.setDescription("desc");
         cat.setName("cat name");
@@ -134,27 +209,89 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public Category saveCategory(@WebParam String name) throws EntityValidationException {
+    public Sale debugReturnSaleWrapped(@WebParam String input) {
         Category cat = new Category();
-        cat.setDescription("desc " + name);
-        cat.setName("cat name: " + name);
-        categoryRepository.create(cat);
-        return cat;
+        cat.setDescription("desc");
+        cat.setName("cat name");
+
+        Item item = new Item();
+        item.setDescription("i desc");
+        item.setName("i name");
+        item.setCategory(cat);
+        item.setCurrentCount(25);
+        item.setAlertThreshold(30);
+        item.setEan(123);
+        item.setUnit("kg");
+
+        Sale sale = new Sale();
+        sale.setDateSold(new Date());
+        sale.setQuantitySold(10);
+        sale.setItem(item);
+
+        return sale;
+    }
+    */
+
+
+    @WebMethod
+    public void importXml(@WebParam String xmlToImport) throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException, XmlValidationException {
+        xmlImporter.importXml(xmlToImport);
     }
 
     @WebMethod
-    public Category getCategory(@WebParam int id) throws EntityValidationException {
-        return categoryRepository.getById(id);
+    public String exportAllItemsToXml() throws TransformerException, ParserConfigurationException {
+        return xmlExporter.ExportXmlToString();
     }
-
 
     @WebMethod
-    public Category validateCategory(@WebParam Category category) throws EntityValidationException {
-        if (category == null || category.getDescription() == null || category.getName() == null) {
-            throw new EntityValidationException("null parameters found: ");
-        }
-        validator.validate(category);
-        return category;
+    public List<ItemDto> getAllItems(@WebParam Object nullObject) {
+        List<Item> allItems = itemFacade.getAllItems();
+
+        List<ItemDto> itemDtos = automapper.mapTo(allItems, ItemDto.class);
+        return itemDtos;
     }
+
+    @WebMethod
+    public List<ItemDto> getAllItemsForCategory(@WebParam String categoryName) throws EntityDoesNotExistException {
+        List<Item> allItems = itemFacade.getAllItemsByCategory(categoryName);
+        return automapper.mapTo(allItems, ItemDto.class);
+    }
+
+    @WebMethod
+    public List<CategoryDto> getAllCategories(@WebParam Object nullObject) {
+        List<Category> allCategories = categoryFacade.getAllCategories();
+        return automapper.mapTo(allCategories, CategoryDto.class);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getDailySalesForItem(int ean, Date dayStart, int numberOfDays) {
+        return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getWeeklySalesForItem(int ean, Date dayStart, int numberOfDays) {
+        return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getMonthlySalesForItem(int ean, Date dayStart, int numberOfDays) {
+        return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getDailySalesForCategory(String category, Date dayStart, int numberOfDays){
+        return overviewProvider.getDailySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getWeeklySalesForCategory(String category, Date dayStart, int numberOfDays){
+        return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResult> getMonthlySalesForCategory(String category, Date dayStart, int numberOfDays){
+        return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+    }
+
 
 }

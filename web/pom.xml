@@ -41,21 +41,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <!-- uncomment below exclusions to deploy on standalone Tomcat -->
-            <!--
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
-            -->
             <!-- uncomment the above exclusions to deploy on Tomcat -->
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <!-- <scope>provided</scope> -->
+             <scope>provided</scope>
         </dependency>
 
 

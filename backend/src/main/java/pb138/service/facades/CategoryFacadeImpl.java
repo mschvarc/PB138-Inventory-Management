@@ -1,7 +1,6 @@
 package pb138.service.facades;
 
 import pb138.dal.entities.Category;
-import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.services.CategoryService;
 
@@ -48,6 +47,11 @@ public class CategoryFacadeImpl implements CategoryFacade {
     @Override
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @Override
+    public Category getCategoryByName(String name) {
+        return categoryService.getByName(name);
     }
 
 
