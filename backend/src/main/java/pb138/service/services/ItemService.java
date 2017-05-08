@@ -15,7 +15,7 @@ public interface ItemService {
 
     Item getById(long id) ;
 
-    Item getByEan(int ean);
+    Item getByEan(long ean);
 
     List<Item> getByCategory(Category c);
 

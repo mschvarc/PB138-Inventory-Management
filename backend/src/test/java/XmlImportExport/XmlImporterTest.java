@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pb138.service.XmlImportExport.XmlImporter;
+import pb138.service.facades.CategoryFacade;
 
 import javax.transaction.Transactional;
 
@@ -23,7 +24,8 @@ public class XmlImporterTest {
     @Autowired
     private XmlImporter xmlImporter;
 
-    @Autowired CategoryFacade categoryFacade;
+    @Autowired
+    CategoryFacade categoryFacade;
 
     @Test
     public void testItems() throws Exception{

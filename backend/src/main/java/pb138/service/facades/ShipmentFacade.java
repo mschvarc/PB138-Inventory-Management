@@ -20,7 +20,7 @@ public interface ShipmentFacade {
      * @return shipment that was created
      * @throws EntityDoesNotExistException when item does not exist
      */
-    Shipment addShipment(int ean, Date date, int arrived) throws EntityDoesNotExistException;
+    Shipment addShipment(long ean, Date date, int arrived) throws EntityDoesNotExistException;
 
     /**
      * Actually stores correctly created shipment in the db

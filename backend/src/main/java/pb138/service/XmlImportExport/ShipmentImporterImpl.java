@@ -26,7 +26,7 @@ public class ShipmentImporterImpl implements ShipmentImporter {
 
     @Override
     public void importShipments(Element e) throws EntityDoesNotExistException, ServiceException {
-        NodeList shipments = e.getChildNodes();
+        NodeList shipments = e.getElementsByTagName("shipment");
         List<Shipment> shipmentList = new ArrayList<>();
         for (int i = 0; i < shipments.getLength(); i++) {
             Element shipment = (Element) shipments.item(i);

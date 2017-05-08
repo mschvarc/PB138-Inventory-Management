@@ -34,7 +34,7 @@ public class XmlImporterImpl implements XmlImporter{
     }
 
     @Override
-    public boolean importXml(String xmlFile) throws XmlValidationException, EntityDoesNotExistException, NotEnoughStoredException, ServiceException {
+    public void importXml(String xmlFile) throws XmlValidationException, EntityDoesNotExistException, NotEnoughStoredException, ServiceException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -57,7 +57,7 @@ public class XmlImporterImpl implements XmlImporter{
                     xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/sales_xml_schema.xsd"));
                     break;
                 case "shipments":
-                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments.xsd"));
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments_xml_schema.xsd"));
                     shipmentImporter.importShipments(root);
                     break;
                 default:
@@ -68,6 +68,6 @@ public class XmlImporterImpl implements XmlImporter{
         } catch (ParserConfigurationException|SAXException|IOException e ) {
             throw new XmlValidationException("Unable to parse XML", e);
         }
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }

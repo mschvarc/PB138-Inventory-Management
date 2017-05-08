@@ -26,7 +26,7 @@ public class ItemFacadeImpl implements ItemFacade {
 
     @Override
     public Pair<Item, CreateOrUpdate> createOrUpdateItem(String name, String description, String categoryName,
-                                                         Integer alertThreshold, String unit, int ean) throws EntityDoesNotExistException {
+                                                         Integer alertThreshold, String unit, long ean) throws EntityDoesNotExistException {
         if (name == null) {
             throw new IllegalArgumentException("Name must not be null");
         }
@@ -97,7 +97,7 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public Item updateItemFromWeb(int ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException {
+    public Item updateItemFromWeb(long ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException {
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("This item does not exist");
@@ -110,14 +110,11 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public Item getItemByEan(int ean) {
+    public Item getItemByEan(long ean) {
         return itemService.getByEan(ean);
     }
 
-    @Override
-    public boolean exists(int ean) {
-        return getItemByEan(ean) != null;
-    }
+
 
     @Override
     public Item storeItemInDb(Pair<Item, CreateOrUpdate> i) throws ServiceException {
