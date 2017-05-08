@@ -101,7 +101,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public void addTestData(@WebParam Object nullObject) throws EntityValidationException {
+    public void addTestData() throws EntityValidationException {
         Category cat = new Category();
         cat.setDescription("desc");
         cat.setName("cat name");
@@ -244,11 +244,9 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<ItemDto> getAllItems(@WebParam Object nullObject) {
+    public List<ItemDto> getAllItems() {
         List<Item> allItems = itemFacade.getAllItems();
-
-        List<ItemDto> itemDtos = automapper.mapTo(allItems, ItemDto.class);
-        return itemDtos;
+        return automapper.mapTo(allItems, ItemDto.class);
     }
 
     @WebMethod
@@ -258,7 +256,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<CategoryDto> getAllCategories(@WebParam Object nullObject) {
+    public List<CategoryDto> getAllCategories() {
         List<Category> allCategories = categoryFacade.getAllCategories();
         return automapper.mapTo(allCategories, CategoryDto.class);
     }
