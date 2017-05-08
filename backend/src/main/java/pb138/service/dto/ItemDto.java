@@ -8,7 +8,7 @@ public class ItemDto {
     private Integer alertThreshold;
     private String unit;
     private int currentCount;
-    private int ean; //unique business key
+    private long ean; //unique business key
 
 
     public String getName() {
@@ -51,11 +51,11 @@ public class ItemDto {
         this.unit = unit;
     }
 
-    public int getEan() {
+    public long getEan() {
         return ean;
     }
 
-    public void setEan(int ean) {
+    public void setEan(long ean) {
         this.ean = ean;
     }
 
