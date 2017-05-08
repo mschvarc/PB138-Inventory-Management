@@ -1,6 +1,5 @@
 package XmlImportExport;
 
-import javafx.util.Pair;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import pb138.service.XmlImportExport.XmlExporter;
 import pb138.service.facades.CategoryFacade;
 import pb138.service.facades.CreateOrUpdate;
 import pb138.service.facades.ItemFacade;
+import pb138.utils.Pair;
 
 import javax.transaction.Transactional;
 
