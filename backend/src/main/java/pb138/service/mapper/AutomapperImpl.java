@@ -8,42 +8,47 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * {@inheritDoc}
+ *
  * @author Dominik Gmiterko
  */
 public class AutomapperImpl implements Automapper {
 
     private final Mapper dozer;
 
+    /**
+     * {@inheritDoc}
+     */
     public AutomapperImpl(DozerBeanMapper dozer) {
+        if (dozer == null) {
+            throw new IllegalArgumentException("Unsatisfied dependency on dozer bean");
+        }
         this.dozer = dozer;
-
         List<String> mappingFiles = new ArrayList<>();
         mappingFiles.add("dozerJdk8Converters.xml");
-
         dozer.setMappingFiles(mappingFiles);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass) {
-        if (objects == null) {
+    public <T> List<T> mapTo(Collection<?> beanCollection, Class<T> targetClass) {
+        if (beanCollection == null) {
             return null;
         }
-
         List<T> mappedCollection = new ArrayList<>();
-
-        for (Object object : objects) {
-            mappedCollection.add(mapTo(object, mapToClass));
+        for (Object object : beanCollection) {
+            mappedCollection.add(mapTo(object, targetClass));
         }
-
         return mappedCollection;
     }
 
     @Override
-    public <T> T mapTo(Object object, Class<T> mapToClass) {
-        if (object == null) {
+    public <T> T mapTo(Object bean, Class<T> targetClass) {
+        if (bean == null) {
             return null;
         }
-
-        return dozer.map(object, mapToClass);
+        return dozer.map(bean, targetClass);
     }
 }

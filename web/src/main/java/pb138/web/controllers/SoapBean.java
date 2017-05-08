@@ -24,6 +24,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
+import pb138.dal.entities.Shipment;
 import pb138.dal.repository.CategoryRepository;
 import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.SaleRepository;
@@ -101,7 +102,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public void addTestData(@WebParam Object nullObject) throws EntityValidationException {
+    public void addTestData() throws EntityValidationException {
         Category cat = new Category();
         cat.setDescription("desc");
         cat.setName("cat name");
@@ -114,7 +115,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         item.setCurrentCount(25);
         item.setAlertThreshold(30);
         item.setEan(123);
-        item.setUnit("kg");
+        item.setUnit("gram");
         itemRepository.create(item);
 
         Item item1 = new Item();
@@ -131,10 +132,10 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         item2.setDescription("i desc");
         item2.setName("i name2");
         item2.setCategory(cat);
-        item2.setCurrentCount(25);
+        item2.setCurrentCount(10);
         item2.setAlertThreshold(30);
         item2.setEan(125);
-        item2.setUnit("kg");
+        item2.setUnit("pcs");
         itemRepository.create(item2);
 
         Sale sale = new Sale();
@@ -143,6 +144,11 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         sale.setItem(item2);
         saleRepository.create(sale);
 
+        Shipment shipment = new Shipment();
+        shipment.setDateImported(new Date());
+        shipment.setQuantityImported(10);
+        shipment.setItem(item);
+        shipmentRepository.create(shipment);
     }
 
     @WebMethod
@@ -155,83 +161,6 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return "ECHO: " + input + "\r\nValid entities: " + counter + " / 4";
     }
 
-    /*
-    @WebMethod
-    public Category debugReturnCategory(@WebParam String input) {
-        Category cat = new Category();
-        cat.setDescription("desc");
-        cat.setName("cat name");
-        return cat;
-    }
-
-    @WebMethod
-    public Item debugReturnItem(@WebParam String input) {
-
-        Item test = itemRepository.getById(1);
-
-        Category cat = new Category();
-        cat.setDescription("desc");
-        cat.setName("cat name");
-
-        Item item = new Item();
-        item.setDescription("i desc");
-        item.setName("i name");
-        item.setCategory(cat);
-        item.setCurrentCount(25);
-        item.setAlertThreshold(30);
-        item.setEan(123);
-        item.setUnit("kg");
-
-        return item;
-    }
-
-    @WebMethod
-    public Sale debugReturnSale(@WebParam String input) {
-        Category cat = new Category();
-        cat.setDescription("desc");
-        cat.setName("cat name");
-
-        Item item = new Item();
-        item.setDescription("i desc");
-        item.setName("i name");
-        item.setCategory(cat);
-        item.setCurrentCount(25);
-        item.setAlertThreshold(30);
-        item.setEan(123);
-        item.setUnit("kg");
-
-        Sale sale = new Sale();
-        sale.setDateSold(new Date());
-        sale.setQuantitySold(10);
-        sale.setItem(item);
-
-        return sale;
-    }
-
-    @WebMethod
-    public Sale debugReturnSaleWrapped(@WebParam String input) {
-        Category cat = new Category();
-        cat.setDescription("desc");
-        cat.setName("cat name");
-
-        Item item = new Item();
-        item.setDescription("i desc");
-        item.setName("i name");
-        item.setCategory(cat);
-        item.setCurrentCount(25);
-        item.setAlertThreshold(30);
-        item.setEan(123);
-        item.setUnit("kg");
-
-        Sale sale = new Sale();
-        sale.setDateSold(new Date());
-        sale.setQuantitySold(10);
-        sale.setItem(item);
-
-        return sale;
-    }
-    */
-
 
     @WebMethod
     public void importXml(@WebParam String xmlToImport) throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException, XmlValidationException {
@@ -239,12 +168,12 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public String exportAllItemsToXml(@WebParam Object nullObject) throws TransformerException, ParserConfigurationException {
+    public String exportAllItemsToXml() throws TransformerException, ParserConfigurationException {
         return xmlExporter.ExportXmlToString();
     }
 
     @WebMethod
-    public List<ItemDto> getAllItems(@WebParam Object nullObject) {
+    public List<ItemDto> getAllItems() {
         List<Item> allItems = itemFacade.getAllItems();
         return automapper.mapTo(allItems, ItemDto.class);
     }
@@ -256,7 +185,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<CategoryDto> getAllCategories(@WebParam Object nullObject) {
+    public List<CategoryDto> getAllCategories() {
         List<Category> allCategories = categoryFacade.getAllCategories();
         return automapper.mapTo(allCategories, CategoryDto.class);
     }
@@ -268,17 +197,17 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getDailySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getWeeklySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForItem(int ean, Date dayStart, int numberOfDays) {
+    public List<OverviewResult> getMonthlySalesForItem(long ean, Date dayStart, int numberOfDays) {
         return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
     }
 
@@ -298,7 +227,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public ItemDto changeItem(int ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
+    public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
         return automapper.mapTo(item, ItemDto.class);
     }
