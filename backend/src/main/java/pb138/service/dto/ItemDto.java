@@ -2,7 +2,6 @@ package pb138.service.dto;
 
 
 public class ItemDto {
-    private Long id;
     private String name;
     private String description;
     private CategoryDto category;
@@ -11,13 +10,6 @@ public class ItemDto {
     private int currentCount;
     private int ean; //unique business key
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

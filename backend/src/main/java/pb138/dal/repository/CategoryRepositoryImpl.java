@@ -48,6 +48,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public void create(Category category) throws EntityValidationException {
         try {
             validator.validate(category);
+            //manual UNIQUE check
+            CategoryFilter filter = new CategoryFilter();
+            filter.setName(category.getName());
+            if (!find(filter).isEmpty()) {
+                throw new EntityValidationException("Failed to create entity, duplicate category name");
+            }
             entityManager.persist(category);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
@@ -78,7 +84,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Iterable<Category> find(CategoryFilter filter) {
+    public List<Category> find(CategoryFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> criteria = builder.createQuery(Category.class);
         Root<Category> root = criteria.from(Category.class);
