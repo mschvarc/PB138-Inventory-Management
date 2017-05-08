@@ -1,5 +1,7 @@
 # PB138 Inventory Management System
 
+[![Build Status](https://travis-ci.org/mschvarc/PB138-Inventory-Management.svg?branch=master)](https://travis-ci.org/mschvarc/PB138-Inventory-Management)
+
 ## [Project Wiki](https://github.com/mschvarc/PB138-Inventory-Management/wiki)
 
 ## [Project Website](https://mschvarc.github.io/PB138-Inventory-Management/)

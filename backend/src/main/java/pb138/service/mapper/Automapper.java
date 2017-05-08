@@ -3,10 +3,30 @@ package pb138.service.mapper;
 import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * Interface for mapping between DAL Entities and DTOs in Web layer
+ *
+ * @author Dominik Gmiterko, Martin Schvarcbacher
+ */
 public interface Automapper {
 
-    <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass);
+    /**
+     * Maps a generic collection of one Bean type onto targetClass Bean
+     *
+     * @param beanCollection input
+     * @param targetClass    target type
+     * @param <Bean>         output target type
+     * @return mapped collection
+     */
+    <Bean> List<Bean> mapTo(Collection<?> beanCollection, Class<Bean> targetClass);
 
-    <T> T mapTo(Object object, Class<T> mapToClass);
+    /**
+     * Maps one bean to another
+     *
+     * @param bean        input
+     * @param targetClass target type
+     * @param <Bean>      output target type
+     * @return mapped bean
+     */
+    <Bean> Bean mapTo(Object bean, Class<Bean> targetClass);
 }

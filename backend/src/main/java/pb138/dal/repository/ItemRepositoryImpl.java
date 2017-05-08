@@ -48,6 +48,12 @@ public class ItemRepositoryImpl implements ItemRepository {
     public void create(Item item) throws EntityValidationException {
         try {
             validator.validate(item);
+            //manual UNIQUE check
+            ItemFilter filter = new ItemFilter();
+            filter.setEan(item.getEan());
+            if (!find(filter).isEmpty()) {
+                throw new EntityValidationException("Failed to create entity, duplicate EAN");
+            }
             entityManager.persist(item);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
@@ -78,7 +84,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Iterable<Item> find(ItemFilter filter) {
+    public List<Item> find(ItemFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Item> criteria = builder.createQuery(Item.class);
         Root<Item> root = criteria.from(Item.class);

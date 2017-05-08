@@ -23,7 +23,7 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
     }
 
     @Override
-    public Shipment addShipment(int ean, Date date, int arrived) throws EntityDoesNotExistException {
+    public Shipment addShipment(long ean, Date date, int arrived) throws EntityDoesNotExistException {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null");
         }

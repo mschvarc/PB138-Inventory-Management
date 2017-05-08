@@ -89,6 +89,30 @@ public class CategoryRepositoryTest extends TestCase {
         assertThat(result, hasItem(category));
     }
 
+    @Test
+    public void multipleCategoryFilter() throws Exception {
+        Category category1 = new Category();
+        category1.setDescription("dd");
+        category1.setName("category_name1");
+        repository.create(category1);
+
+        Category category2 = new Category();
+        category2.setDescription("dd");
+        category2.setName("category_name2");
+        repository.create(category2);
+
+        Category category3 = new Category();
+        category3.setDescription("dd");
+        category3.setName("category_name3");
+        repository.create(category3);
+
+        CategoryFilter filter = new CategoryFilter();
+
+        Iterable<Category> result = repository.find(filter);
+        assertThat(result.spliterator().getExactSizeIfKnown(), is(4L));
+        assertThat(result, hasItem(category1));
+    }
+
 
     @Test
     public void basicRetrieveTest() {

@@ -7,7 +7,7 @@ public class ItemFilter {
     private Category category;
     private String name;
     private Boolean fetchItemsBelowThreshold;
-    private Integer ean;
+    private Long ean;
 
     /**
      * Items with count below specified threshold will be selected
@@ -49,11 +49,11 @@ public class ItemFilter {
         this.id = id;
     }
 
-    public Integer getEan() {
+    public Long getEan() {
         return ean;
     }
 
-    public void setEan(Integer ean) {
+    public void setEan(Long ean) {
         this.ean = ean;
     }
 }
