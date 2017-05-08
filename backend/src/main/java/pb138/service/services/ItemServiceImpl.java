@@ -4,7 +4,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
-import pb138.dal.repository.CategoryRepository;
 import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.exceptions.ServiceException;
@@ -59,7 +58,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public Item getByEan(int ean) {
+    public Item getByEan(long ean) {
         ItemFilter filter = new ItemFilter();
         filter.setEan(ean);
         Iterable<Item> result = itemRepository.find(filter);
