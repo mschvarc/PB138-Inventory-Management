@@ -2,22 +2,14 @@ package pb138.service.dto;
 
 
 public class ItemDto {
-    private Long id;
     private String name;
     private String description;
     private CategoryDto category;
     private Integer alertThreshold;
     private String unit;
     private int currentCount;
-    private int ean; //unique business key
+    private long ean; //unique business key
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -59,11 +51,11 @@ public class ItemDto {
         this.unit = unit;
     }
 
-    public int getEan() {
+    public long getEan() {
         return ean;
     }
 
-    public void setEan(int ean) {
+    public void setEan(long ean) {
         this.ean = ean;
     }
 

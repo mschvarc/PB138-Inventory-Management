@@ -1,7 +1,6 @@
 package pb138.service.facades;
 
 import pb138.dal.entities.Category;
-import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
 
 import java.util.List;
@@ -31,5 +30,7 @@ public interface CategoryFacade {
     Category changeCategory(Category c, String newDescription) throws ServiceException;
 
     List<Category> getAllCategories();
+
+    Category getCategoryByName(String name);
 
 }

@@ -1,9 +1,9 @@
 package pb138.service.facades;
 
-import javafx.util.Pair;
 import pb138.dal.entities.Item;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.ServiceException;
+import pb138.utils.Pair;
 
 import java.util.List;
 

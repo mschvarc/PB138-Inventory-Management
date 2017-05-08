@@ -1,6 +1,5 @@
 package Facades;
 
-import javafx.util.Pair;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +13,12 @@ import pb138.dal.repository.CategoryRepository;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.facades.CreateOrUpdate;
 import pb138.service.facades.ItemFacade;
+import pb138.utils.Pair;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 

@@ -39,6 +39,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+                <version>3.1.7</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>${mockito.version}</version>
@@ -73,6 +78,13 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.22</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.craftsman</groupId>
+                <artifactId>dozer-jdk8-support</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

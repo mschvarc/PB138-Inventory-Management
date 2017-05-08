@@ -44,7 +44,7 @@ public class Item {
     @Min(0)
     @NotNull
     @Column(nullable = false, unique = true)
-    private int ean;
+    private long ean;
 
     @NotNull
     private int currentCount;
@@ -97,11 +97,11 @@ public class Item {
         this.unit = unit;
     }
 
-    public int getEan() {
+    public long getEan() {
         return ean;
     }
 
-    public void setEan(int ean) {
+    public void setEan(long ean) {
         this.ean = ean;
     }
 
@@ -129,6 +129,6 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return getEan();
+        return (int) (getEan() ^ (getEan() >>> 32));
     }
 }

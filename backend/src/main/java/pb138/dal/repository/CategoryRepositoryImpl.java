@@ -1,5 +1,9 @@
 package pb138.dal.repository;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Category_;
 import pb138.dal.repository.validation.ConstraintValidator;
@@ -7,20 +11,30 @@ import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.filters.CategoryFilter;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
+@Repository
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 public class CategoryRepositoryImpl implements CategoryRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
     private final ConstraintValidator validator;
 
 
     public CategoryRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
+        if (entityManager == null || validator == null) {
+            throw new IllegalArgumentException("entitymanager or validator is null");
+        }
         this.entityManager = entityManager;
         this.validator = validator;
     }
@@ -34,10 +48,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public void create(Category category) throws EntityValidationException {
         try {
             validator.validate(category);
+            //manual UNIQUE check
+            CategoryFilter filter = new CategoryFilter();
+            filter.setName(category.getName());
+            if (!find(filter).isEmpty()) {
+                throw new EntityValidationException("Failed to create entity, duplicate category name");
+            }
             entityManager.persist(category);
             entityManager.flush();
         } catch (javax.persistence.PersistenceException ex) {
-            throw new EntityValidationException("Failed to create entity, check inner exception", ex);
+            throw new EntityValidationException("Failed to create entity, check inner exception: " + ex.getCause() + ex.getMessage(), ex);
         }
     }
 
@@ -64,7 +84,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Iterable<Category> find(CategoryFilter filter) {
+    public List<Category> find(CategoryFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> criteria = builder.createQuery(Category.class);
         Root<Category> root = criteria.from(Category.class);

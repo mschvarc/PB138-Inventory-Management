@@ -104,4 +104,10 @@
         <constructor-arg name="xmlValidator" ref="xmlValidator"/>
         <constructor-arg name="shipmentImporter" ref="shipmentImporter"/>
     </bean>
+
+    <bean id="automapper" class="pb138.service.mapper.AutomapperImpl">
+        <constructor-arg name="dozer">
+            <bean class="org.dozer.DozerBeanMapper"/>
+        </constructor-arg>
+    </bean>
 </beans>
