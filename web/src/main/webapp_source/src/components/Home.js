@@ -4,8 +4,9 @@ import {Link} from 'react-router';
 class Home extends Component {
 	render() {
 
-		var items = this.props.route.items;
-		var categories = this.props.route.categories;
+		var items = this.props.items;
+		var categories = this.props.categories;
+
 
 		return <div className="page-home row">
       <div className="small-12 columns">

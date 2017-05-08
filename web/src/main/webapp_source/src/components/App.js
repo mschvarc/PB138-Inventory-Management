@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
+import Data from '../services/Data';
+
 import Layout from './Layout';
 import Home from './Home';
 import Inventory from './Inventory';
@@ -15,23 +17,46 @@ export class App extends Component {
 
 	constructor() {
 		super();
+		window.app = this;
 
-		this.state = require("../testingData.json");
+		this.state = {
+		       error: undefined,
+		       items: [],
+		       categories: []
+		};
+		this.data = new Data(this);
 	}
 
 	render() {
-		return <Router history={hashHistory}>
-					<Route path="/" component={Layout} >
-						<IndexRoute component={Home} items={this.state.items} categories={this.state.categories}/>
-						<Route path="inventory" component={Inventory} items={this.state.items} categories={this.state.categories} />
-						<Route path="item/:item" component={Item} items={this.state.items} categories={this.state.categories} />
-						<Route path="categories" component={Categories} categories={this.state.categories} />
-						<Route path="category/:category" component={Category} items={this.state.items} categories={this.state.categories} />
-						<Route path="import-export" component={ImportExport} />
-						<Route path="sales" component={Sales} />
-						<Route path="*" component={NotFound} />
-					</Route>
-				</Router>
+		if(this.state.error) {
+
+			var children = <div className="page-not-found row">
+						<div className="small-12 columns">
+			      	<h2>Error!</h2>
+			        <p>{this.state.error}</p>
+			        <ul>
+			        	<li><a href="/">Reload</a></li>
+			        </ul>
+						</div>
+			    </div>
+			return <Layout children={children} />
+
+		} else {
+
+			return <Router history={hashHistory}>
+						<Route path="/" component={Layout}>
+							<IndexRoute component={routeProps => <Home items={this.state.items} categories={this.state.categories} />} />
+							<Route path="inventory" component={routeProps => <Inventory items={this.state.items} categories={this.state.categories} />} />
+							<Route path="item/:item" component={routeProps => <Item items={this.state.items} categories={this.state.categories} paramItem={routeProps.params.item} />} />
+							<Route path="categories" component={routeProps => <Categories categories={this.state.categories} />} />
+							<Route path="category/:category" component={routeProps => <Category items={this.state.items} categories={this.state.categories} paramCategory={routeProps.params.category} />} />
+							<Route path="import-export" component={routeProps => <ImportExport />} />
+							<Route path="sales" component={routeProps => <Sales />} />
+							<Route path="*" component={routeProps => <NotFound />} />
+						</Route>
+					</Router>
+
+		}
 	}
 }
 
