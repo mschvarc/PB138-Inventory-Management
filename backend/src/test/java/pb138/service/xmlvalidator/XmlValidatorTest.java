@@ -67,6 +67,19 @@ public class XmlValidatorTest {
     }
 
     @Test
+    public void validateNullXml() {
+        assertThatThrownBy(() -> xmlValidator.validate(null, xmlSchemaItems))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void validateWithNullSchema() throws IOException, URISyntaxException {
+        String testXml = getTextContent("xml_schema/examples/example_sales.xml");
+        assertThatThrownBy(() -> xmlValidator.validate(testXml, null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     public void validateNotXml() {
         assertThatThrownBy(() -> xmlValidator.validate("something what is not xml", xmlSchemaItems))
                 .isInstanceOf(XmlValidationException.class);
@@ -82,6 +95,13 @@ public class XmlValidatorTest {
     @Test
     public void validateInvalidXml() throws IOException, URISyntaxException {
         String testXml = getTextContent("xml_schema/examples/example_sales.xml");
+        assertThatThrownBy(() -> xmlValidator.validate(testXml, xmlSchemaItems))
+                .isInstanceOf(XmlValidationException.class);
+    }
+
+    @Test
+    public void validateItemsWithWrongEan() throws IOException, URISyntaxException, XmlValidationException {
+        String testXml = getTextContent("xml_schema/examples/items_wrong_ean.xml");
         assertThatThrownBy(() -> xmlValidator.validate(testXml, xmlSchemaItems))
                 .isInstanceOf(XmlValidationException.class);
     }
