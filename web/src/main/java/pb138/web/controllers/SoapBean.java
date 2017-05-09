@@ -46,6 +46,7 @@ import pb138.service.facades.ShipmentFacade;
 import pb138.service.mapper.Automapper;
 import pb138.service.overview.OverviewProvider;
 import pb138.service.overview.OverviewResult;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -55,6 +56,8 @@ import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -196,34 +199,94 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return automapper.mapTo(category, CategoryDto.class);
     }
 
+    private List<OverviewResult> testOverviewDEBUG(int timespan, boolean isCategory){
+        try{
+            addTestData();
+        }
+        catch (Throwable t ){
+            //errors expected here, debug only until OverviewProvider is implemented
+        }
+
+        List<OverviewResult> results = new ArrayList<>();
+        if(isCategory) {
+            switch (timespan) {
+                case 0:
+                    results.add(new OverviewResult(Period.ofDays(2), date(514455), categoryFacade.getAllCategories().get(0), 10));
+                    results.add(new OverviewResult(Period.ofDays(2), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 30));
+                    break;
+                case 1:
+                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455), categoryFacade.getAllCategories().get(0), 5));
+                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 100));
+                    break;
+                case 2:
+                    results.add(new OverviewResult(Period.ofMonths(1), date(514455), categoryFacade.getAllCategories().get(0), 25));
+                    results.add(new OverviewResult(Period.ofMonths(1), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 55));
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        else {
+            switch (timespan) {
+                case 0:
+                    results.add(new OverviewResult(Period.ofDays(1), date(514455), itemFacade.getAllItems().get(0), 10));
+                    results.add(new OverviewResult(Period.ofDays(1), date(514455 + 100000), itemFacade.getAllItems().get(0), 30));
+                    break;
+                case 1:
+                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455), itemFacade.getAllItems().get(0), 5));
+                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455 + 100000),itemFacade.getAllItems().get(0), 100));
+                    break;
+                case 2:
+                    results.add(new OverviewResult(Period.ofMonths(1), date(514455), itemFacade.getAllItems().get(0), 25));
+                    results.add(new OverviewResult(Period.ofMonths(1), date(514455 + 100000), itemFacade.getAllItems().get(0), 55));
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        return results;
+    }
+
+    private static Date date(long time){
+        Date v = new Date();
+        v.setTime(time);
+        return v;
+    }
+
     @WebMethod
     public List<OverviewResult> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        //return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        return testOverviewDEBUG(0, false);
     }
 
     @WebMethod
     public List<OverviewResult> getWeeklySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        //return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        return testOverviewDEBUG(1, false);
     }
 
     @WebMethod
     public List<OverviewResult> getMonthlySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        //return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+        return testOverviewDEBUG(2, false);
     }
 
     @WebMethod
     public List<OverviewResult> getDailySalesForCategory(String category, Date dayStart, int numberOfDays){
-        return overviewProvider.getDailySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        //return overviewProvider.getDailySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        return testOverviewDEBUG(0, true);
     }
 
     @WebMethod
     public List<OverviewResult> getWeeklySalesForCategory(String category, Date dayStart, int numberOfDays){
-        return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        //return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        return testOverviewDEBUG(1, true);
     }
 
     @WebMethod
     public List<OverviewResult> getMonthlySalesForCategory(String category, Date dayStart, int numberOfDays){
-        return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+        return testOverviewDEBUG(2, true);
     }
 
     @WebMethod
