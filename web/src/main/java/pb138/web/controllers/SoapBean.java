@@ -202,13 +202,13 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    public List<OverviewResult> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) {
+        return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), weekStart, numberOfWeeks);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    public List<OverviewResult> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) {
+        return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), monthStart, numberOfMonths);
     }
 
     @WebMethod
@@ -217,13 +217,13 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForCategory(String category, Date dayStart, int numberOfDays){
-        return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+    public List<OverviewResult> getWeeklySalesForCategory(String category, Date weekStart, int numberOfWeeks){
+        return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), weekStart, numberOfWeeks);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForCategory(String category, Date dayStart, int numberOfDays){
-        return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
+    public List<OverviewResult> getMonthlySalesForCategory(String category, Date monthStart, int numberOfMonths){
+        return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), monthStart, numberOfMonths);
     }
 
     @WebMethod

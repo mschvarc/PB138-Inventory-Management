@@ -22,7 +22,8 @@ export class App extends Component {
 		this.state = {
 		       error: undefined,
 		       items: [],
-		       categories: []
+		       categories: [],
+					 sales: ""
 		};
 		this.data = new Data(this);
 	}
@@ -51,7 +52,7 @@ export class App extends Component {
 							<Route path="categories" component={routeProps => <Categories categories={this.state.categories} />} />
 							<Route path="category/:category" component={routeProps => <Category items={this.state.items} categories={this.state.categories} paramCategory={routeProps.params.category} />} />
 							<Route path="import-export" component={routeProps => <ImportExport import={this.data.import.bind(this.data)} export={this.data.export.bind(this.data)} importState={this.state.importState} exportState={this.state.exportState} />} />
-							<Route path="sales" component={routeProps => <Sales />} />
+							<Route path="sales" component={routeProps => <Sales sales={this.state.sales} loadSales={this.data.loadSales.bind(this.data)} />} />
 							<Route path="*" component={routeProps => <NotFound />} />
 						</Route>
 					</Router>

@@ -50,6 +50,19 @@ export default class Data {
     });
   }
 
+  loadSales(timeUnit, entityType, entityId, dateStart, numberOfTimeUnit) {
+    var fname = "get"+timeUnit+"SalesFor"+entityType;
+
+    this.client[fname]({arg0: entityId, arg1: dateStart, arg2: numberOfTimeUnit}, (err, result) => {
+      if(err) {
+        this.app.setState({error: "Cannot retrive sales"});
+      } else {
+        console.log("sales", result);
+        this.app.setState({sales: this.resultArray(result.return.item)});
+      }
+    });
+  }
+
   import(xmlToImport) {
     this.client.importXml({arg0: xmlToImport}, (err, result) => {
       if(err) {
