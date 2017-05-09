@@ -20,7 +20,7 @@
     <xs:complexType name="categoryType">
         <xs:sequence>
             <xs:element name="name" type="nonEmptyString"/>
-            <xs:element name="description" type="nonEmptyString" minOccurs="0"/>
+            <xs:element name="description" type="nonEmptyString"/>
         </xs:sequence>
     </xs:complexType>
 

@@ -3,7 +3,7 @@
 <items>
 
     <item>
-        <ean>7614500010013</ean>
+        <ean>76145000100135</ean>   <!-- ean with 14 digits -->
         <name>Toblerone Milk Chocolate</name>
         <unit>packet</unit>
         <description>Milk chocolate.</description>
