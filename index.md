@@ -23,8 +23,12 @@ Create a web application, which will allow a shop owner to keep track of the cur
 
 
 ## Class Diagram:
+[Full size](https://mschvarc.github.io/PB138-Inventory-Management/images/ClassDiagram1.png)
+
 
 ![](https://mschvarc.github.io/PB138-Inventory-Management/images/ClassDiagram1.png)
 
 ## Use Case Diagram:
+[Full size](https://mschvarc.github.io/PB138-Inventory-Management/images/UseCaseDiagram1.png)
+
 ![](https://mschvarc.github.io/PB138-Inventory-Management/images/UseCaseDiagram1.png)
