@@ -10,6 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+/**
+ * ORM Category
+ * PK: id
+ * BK: name
+ */
 @Entity
 public class Category {
     @Id
@@ -27,26 +32,56 @@ public class Category {
     @Column(unique = true)
     private String name;
 
+    /**
+     * Gets id
+     *
+     * @return value of id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets id
+     *
+     * @param id id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Gets description
+     *
+     * @return value of description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description
+     *
+     * @param description description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets name
+     *
+     * @return value of name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name
+     *
+     * @param name name
+     */
     public void setName(String name) {
         this.name = name;
     }

@@ -20,6 +20,9 @@ import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @Repository
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -31,6 +34,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private final ConstraintValidator validator;
 
 
+    /**
+     * Constructor
+     *
+     * @param entityManager entityManager
+     * @param validator     validator
+     */
     public CategoryRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         if (entityManager == null || validator == null) {
             throw new IllegalArgumentException("entitymanager or validator is null");
@@ -39,11 +48,17 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         this.validator = validator;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Category getById(long id) {
         return entityManager.find(Category.class, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Category category) throws EntityValidationException {
         try {
@@ -61,6 +76,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(Category category) throws EntityValidationException {
         try {
@@ -72,6 +90,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Category category) throws EntityValidationException {
         try {
@@ -83,6 +104,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Category> find(CategoryFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

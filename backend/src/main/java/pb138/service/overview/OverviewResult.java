@@ -6,16 +6,16 @@ import pb138.dal.entities.Item;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.Period;
 import java.util.Date;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @SuppressWarnings({"unused"})
-public class OverviewResult {
+public class OverviewResult implements Serializable {
 
     @XmlJavaTypeAdapter(PeriodXmlAdapter.class)
     private Period timespan;
@@ -44,42 +44,92 @@ public class OverviewResult {
     }
 
 
+    /**
+     * Gets timespan
+     *
+     * @return value of timespan
+     */
     public Period getTimespan() {
         return timespan;
     }
 
+    /**
+     * Sets timespan
+     *
+     * @param timespan timespan
+     */
     public void setTimespan(Period timespan) {
         this.timespan = timespan;
     }
 
+    /**
+     * Gets startDate
+     *
+     * @return value of startDate
+     */
     public Date getStartDate() {
         return startDate;
     }
 
+    /**
+     * Sets startDate
+     *
+     * @param startDate startDate
+     */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
+    /**
+     * Gets category
+     *
+     * @return value of category
+     */
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * Sets category
+     *
+     * @param category category
+     */
     public void setCategory(Category category) {
         this.category = category;
     }
 
+    /**
+     * Gets item
+     *
+     * @return value of item
+     */
     public Item getItem() {
         return item;
     }
 
+    /**
+     * Sets item
+     *
+     * @param item item
+     */
     public void setItem(Item item) {
         this.item = item;
     }
 
+    /**
+     * Gets entityCount
+     *
+     * @return value of entityCount
+     */
     public int getEntityCount() {
         return entityCount;
     }
 
+    /**
+     * Sets entityCount
+     *
+     * @param entityCount entityCount
+     */
     public void setEntityCount(int entityCount) {
         this.entityCount = entityCount;
     }
