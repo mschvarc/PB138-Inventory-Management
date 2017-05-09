@@ -50,6 +50,28 @@ export default class Data {
     });
   }
 
+  import(xmlToImport) {
+    this.client.importXml({arg0: xmlToImport}, (err, result) => {
+      if(err) {
+        console.log(result)
+        this.app.setState({importState: "Cannot import XML file: "+(result.Body.Fault.faultstring || err)});
+      } else {
+        this.app.setState({importState: "Import successfull"});
+      }
+    });
+  }
+
+  export(callback) {
+    this.client.exportAllItemsToXml((err, result) => {
+      if(err) {
+        this.app.setState({exportState: "Cannot export XML file: "+(result.Body.Fault.faultstring || err)});
+      } else {
+        this.app.setState({exportState: "Export successfull"});
+        callback(result.return);
+      }
+    });
+  }
+
   resultArray(data) {
     //0
     if(!data) {

@@ -46,11 +46,11 @@ export class App extends Component {
 			return <Router history={hashHistory}>
 						<Route path="/" component={Layout}>
 							<IndexRoute component={routeProps => <Home items={this.state.items} categories={this.state.categories} />} />
-							<Route path="inventory" component={routeProps => <Inventory items={this.state.items} categories={this.state.categories} />} />
-							<Route path="item/:item" component={routeProps => <Item items={this.state.items} categories={this.state.categories} paramItem={routeProps.params.item} />} />
+							<Route path="inventory" component={routeProps => <Inventory items={this.state.items} />} />
+							<Route path="item/:item" component={routeProps => <Item items={this.state.items} paramItem={routeProps.params.item} />} />
 							<Route path="categories" component={routeProps => <Categories categories={this.state.categories} />} />
 							<Route path="category/:category" component={routeProps => <Category items={this.state.items} categories={this.state.categories} paramCategory={routeProps.params.category} />} />
-							<Route path="import-export" component={routeProps => <ImportExport />} />
+							<Route path="import-export" component={routeProps => <ImportExport import={this.data.import.bind(this.data)} export={this.data.export.bind(this.data)} importState={this.state.importState} exportState={this.state.exportState} />} />
 							<Route path="sales" component={routeProps => <Sales />} />
 							<Route path="*" component={routeProps => <NotFound />} />
 						</Route>
