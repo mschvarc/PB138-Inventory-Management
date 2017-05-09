@@ -47,7 +47,7 @@ class Home extends Component {
 		      <div className="columns">
 		        <Link className="dashboard-nav-card" to="sales">
 		          <i className="dashboard-nav-card-icon fa fa-bar-chart" aria-hidden="true"></i>
-		          <h3 className="dashboard-nav-card-title">42 EUR sales</h3>
+		          <h3 className="dashboard-nav-card-title">Sales</h3>
 		        </Link>
 		      </div>
 				</div>

@@ -260,14 +260,14 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        //return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    public List<OverviewResult> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) {
+        //return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), weekStart, numberOfWeeks);
         return testOverviewDEBUG(1, false);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        //return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
+    public List<OverviewResult> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) {
+        //return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), monthStart, numberOfMonths);
         return testOverviewDEBUG(2, false);
     }
 
@@ -278,15 +278,15 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     @WebMethod
-    public List<OverviewResult> getWeeklySalesForCategory(String category, Date dayStart, int numberOfDays){
-        //return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
-        return testOverviewDEBUG(1, true);
+    public List<OverviewResult> getWeeklySalesForCategory(String category, Date weekStart, int numberOfWeeks){
+       // return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), weekStart, numberOfWeeks);
+        return testOverviewDEBUG(0, true);
     }
 
     @WebMethod
-    public List<OverviewResult> getMonthlySalesForCategory(String category, Date dayStart, int numberOfDays){
-        //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
-        return testOverviewDEBUG(2, true);
+    public List<OverviewResult> getMonthlySalesForCategory(String category, Date monthStart, int numberOfMonths){
+        //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), monthStart, numberOfMonths);
+        return testOverviewDEBUG(0, true);
     }
 
     @WebMethod

@@ -26,14 +26,26 @@ class ImportExport extends Component {
 
 	render() {
 
-		var importState = this.props.importState ? <span className="label warning">{this.props.importState}</span> : null;
-		var exportState = this.props.exportState ? <span className="label warning">{this.props.exportState}</span> : null;
+		var importState = this.props.importState ? <div className="callout warning">{this.props.importState}</div> : null;
+		var exportState = this.props.exportState ? <div className="callout warning">{this.props.exportState}</div> : null;
+
+		var importAreaStyle = {
+			width: '100%',
+      	borderWidth: 3,
+      	borderColor: '#888',
+      	color: '#888',
+      	borderStyle: 'dashed',
+			borderRadius: 16,
+			textAlign: 'center',
+			padding: '4em',
+			cursor: 'pointer'
+		}
 
 		return <div className="page-import-export row">
       <div className="small-12 medium-6 columns">
 				<h2>Import</h2>
 				<p>You can import all 4 types of XML files by dropping them here. Documentation of files can be found on <a href="https://github.com/mschvarc/PB138-Inventory-Management/wiki/XML-Data-format">wiki</a></p>
-				<Dropzone multiple={true} onDrop={this.onImport.bind(this)}>
+				<Dropzone style={importAreaStyle} multiple={true} onDrop={this.onImport.bind(this)}>
           <div>Try dropping some files here, or click to select files to upload.</div>
         </Dropzone>
 				{importState}
@@ -41,9 +53,9 @@ class ImportExport extends Component {
 			<div className="small-12 medium-6 columns">
 				<h2>Export</h2>
 				<p>This function will allow you to download actual state of your inventory.</p>
-				<a className="button" onClick={this.onExport.bind(this)}>Download</a>
+				<a className="button large expanded success" onClick={this.onExport.bind(this)}>Download</a>
+				{exportState}
 			</div>
-			{exportState}
     </div>
 	}
 }
