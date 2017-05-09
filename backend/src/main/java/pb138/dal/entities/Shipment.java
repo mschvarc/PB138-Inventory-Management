@@ -15,6 +15,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 //no unique business key (yet)
+
+/**
+ * ORM Shipment
+ * PK: id
+ */
 @Entity
 public class Shipment {
     @Id
@@ -34,34 +39,74 @@ public class Shipment {
     @NotNull
     private Date dateImported;
 
+    /**
+     * Gets id
+     *
+     * @return value of id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets id
+     *
+     * @param id id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Gets item
+     *
+     * @return value of item
+     */
     public Item getItem() {
         return item;
     }
 
+    /**
+     * Sets item
+     *
+     * @param item item
+     */
     public void setItem(Item item) {
         this.item = item;
     }
 
+    /**
+     * Gets quantityImported
+     *
+     * @return value of quantityImported
+     */
     public int getQuantityImported() {
         return quantityImported;
     }
 
+    /**
+     * Sets quantityImported
+     *
+     * @param quantityImported quantityImported
+     */
     public void setQuantityImported(int quantityImported) {
         this.quantityImported = quantityImported;
     }
 
+    /**
+     * Gets dateImported
+     *
+     * @return value of dateImported
+     */
     public Date getDateImported() {
         return dateImported;
     }
 
+    /**
+     * Sets dateImported
+     *
+     * @param dateImported dateImported
+     */
     public void setDateImported(Date dateImported) {
         this.dateImported = dateImported;
     }

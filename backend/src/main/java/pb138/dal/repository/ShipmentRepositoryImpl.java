@@ -21,6 +21,9 @@ import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @Repository
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -32,6 +35,12 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
 
     private final ConstraintValidator validator;
 
+    /**
+     * Constructor
+     *
+     * @param entityManager entityManager
+     * @param validator     validator
+     */
     public ShipmentRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         if (entityManager == null || validator == null) {
             throw new IllegalArgumentException("entitymanager or validator is null");
@@ -40,11 +49,17 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         this.validator = validator;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Shipment getById(long id) {
         return entityManager.find(Shipment.class, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Shipment shipment) throws EntityValidationException {
         try {
@@ -56,6 +71,9 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(Shipment shipment) throws EntityValidationException {
         try {
@@ -67,6 +85,9 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Shipment shipment) throws EntityValidationException {
         try {
@@ -78,6 +99,9 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<Shipment> find(ShipmentFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

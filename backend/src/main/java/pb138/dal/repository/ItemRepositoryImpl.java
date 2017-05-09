@@ -20,6 +20,9 @@ import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @Repository
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -31,6 +34,12 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     private final ConstraintValidator validator;
 
+    /**
+     * Constructor
+     *
+     * @param entityManager entityManager
+     * @param validator     validator
+     */
     public ItemRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         if (entityManager == null || validator == null) {
             throw new IllegalArgumentException("entitymanager or validator is null");
@@ -39,11 +48,17 @@ public class ItemRepositoryImpl implements ItemRepository {
         this.validator = validator;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Item getById(long id) {
         return entityManager.find(Item.class, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Item item) throws EntityValidationException {
         try {
@@ -61,6 +76,9 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(Item item) throws EntityValidationException {
         try {
@@ -72,6 +90,9 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Item item) throws EntityValidationException {
         try {
@@ -83,6 +104,9 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Item> find(ItemFilter filter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
