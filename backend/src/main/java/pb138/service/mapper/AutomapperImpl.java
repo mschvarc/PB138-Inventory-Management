@@ -44,6 +44,9 @@ public class AutomapperImpl implements Automapper {
         return mappedCollection;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <T> T mapTo(Object bean, Class<T> targetClass) {
         if (bean == null) {

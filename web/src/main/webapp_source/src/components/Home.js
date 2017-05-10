@@ -4,8 +4,9 @@ import {Link} from 'react-router';
 class Home extends Component {
 	render() {
 
-		var items = this.props.route.items;
-		var categories = this.props.route.categories;
+		var items = this.props.items;
+		var categories = this.props.categories;
+
 
 		return <div className="page-home row">
       <div className="small-12 columns">
@@ -46,7 +47,7 @@ class Home extends Component {
 		      <div className="columns">
 		        <Link className="dashboard-nav-card" to="sales">
 		          <i className="dashboard-nav-card-icon fa fa-bar-chart" aria-hidden="true"></i>
-		          <h3 className="dashboard-nav-card-title">42 EUR sales</h3>
+		          <h3 className="dashboard-nav-card-title">Sales</h3>
 		        </Link>
 		      </div>
 				</div>

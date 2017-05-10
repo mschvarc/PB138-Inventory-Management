@@ -24,7 +24,9 @@ import java.util.List;
 
 //Source: http://spring.io/blog/2011/04/26/advanced-spring-data-jpa-specifications-and-querydsl/
 
-
+/**
+ * {@inheritDoc}
+ */
 @Component
 @Repository
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -36,6 +38,12 @@ public class SaleRepositoryImpl implements SaleRepository {
 
     private final ConstraintValidator validator;
 
+    /**
+     * Constructor
+     *
+     * @param entityManager entityManager
+     * @param validator     validator
+     */
     public SaleRepositoryImpl(EntityManager entityManager, ConstraintValidator validator) {
         if (entityManager == null || validator == null) {
             throw new IllegalArgumentException("entitymanager or validator is null");
@@ -44,11 +52,17 @@ public class SaleRepositoryImpl implements SaleRepository {
         this.validator = validator;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Sale getById(long id) {
         return entityManager.find(Sale.class, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Sale sale) throws EntityValidationException {
         try {
@@ -60,6 +74,9 @@ public class SaleRepositoryImpl implements SaleRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(Sale sale) throws EntityValidationException {
         try {
@@ -71,6 +88,9 @@ public class SaleRepositoryImpl implements SaleRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(Sale sale) throws EntityValidationException {
         try {
@@ -82,6 +102,9 @@ public class SaleRepositoryImpl implements SaleRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<Sale> find(SaleFilter filter) {
 

@@ -7,16 +7,25 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 //Source: https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single
+
+/**
+ * {@inheritDoc}
+ */
 public class ConstraintValidatorImpl implements ConstraintValidator {
 
     private final Validator validator;
 
+    /**
+     * Constructs a default validator
+     */
     public ConstraintValidatorImpl() {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         this.validator = validatorFactory.getValidator();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <T> void validate(T entity) throws EntityValidationException {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);

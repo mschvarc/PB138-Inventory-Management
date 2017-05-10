@@ -141,6 +141,18 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
         </dependency>
 
+        <!-- JAXB Timespan marshalling -->
+        <dependency>
+            <groupId>com.migesok</groupId>
+            <artifactId>jaxb-java-time-adapters</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.6.2</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
 </project>

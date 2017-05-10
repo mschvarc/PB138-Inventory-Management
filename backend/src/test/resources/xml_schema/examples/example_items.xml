@@ -6,14 +6,16 @@
         <ean>7614500010013</ean>
         <name>Toblerone Milk Chocolate</name>
         <unit>packet</unit>
-        <category>sweet-stuff</category>
+        <description>Milk chocolate.</description>
+        <categoryName>sweet-stuff</categoryName>
     </item>
 
     <item>
         <ean>0042238302211</ean>
         <name>Haribo Gold Bears</name>
         <unit>packet</unit>
-        <category>sweet-stuff</category>
+        <description>Gummy bears.</description>
+        <categoryName>sweet-stuff</categoryName>
     </item>
 
     <item>
@@ -21,16 +23,16 @@
         <name>Juice</name>
         <unit>box</unit>
         <description>Types: apple, strawbery or orange.</description>
-        <category>drinks</category>
+        <categoryName>drinks</categoryName>
     </item>
 
     <item>
         <ean>4960999047034</ean>
         <name>Paper Pack for Canon Printer</name>
-        <threshold>50</threshold>
         <unit>pack</unit>
         <description>Canon KP-36IP Paper Pack for Canon Printer (36 Sheets).</description>
-        <category>office supplies</category>
+        <categoryName>office supplies</categoryName>
+        <threshold>50</threshold>
     </item>
 
 </items>
