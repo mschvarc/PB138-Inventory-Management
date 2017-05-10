@@ -81,12 +81,6 @@ public interface ItemFacade {
      */
     Item updateItemFromWeb(long ean, int newAmount, Integer newThreshold, String newUnit) throws ServiceException, EntityDoesNotExistException;
 
-    /**
-     * return if item with this ean exists
-     * @param ean ean of item
-     * @return true if it exists, false otherwise
-     */
-    boolean exists(long ean);
 
     /**
      * Item will be created in db

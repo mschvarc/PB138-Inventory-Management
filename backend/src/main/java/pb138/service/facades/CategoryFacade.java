@@ -20,14 +20,8 @@ public interface CategoryFacade {
     Category createOrUpdateCategory(String name, String desctription) throws ServiceException;
 
 
-    /**
-     * Updates category
-     * @param c category to be updated
-     * @param newDescription new description of the category
-     * @return category that was updated
-     * @throws ServiceException if something goes wrong on the db layer and service layer cannot deal with it
-     */
-    Category changeCategory(Category c, String newDescription) throws ServiceException;
+
+
 
     List<Category> getAllCategories();
 
