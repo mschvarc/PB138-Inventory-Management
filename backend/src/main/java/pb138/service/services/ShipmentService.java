@@ -4,6 +4,8 @@ package pb138.service.services;
 import pb138.dal.entities.Shipment;
 import pb138.service.exceptions.ServiceException;
 
+import java.util.List;
+
 public interface ShipmentService {
 
     long create(Shipment shipment) throws ServiceException; //return new ID
@@ -13,4 +15,6 @@ public interface ShipmentService {
     void update(Shipment shipment) throws ServiceException;
 
     Shipment getById(long id);
+
+    List<Shipment> getAllShipments();
 }

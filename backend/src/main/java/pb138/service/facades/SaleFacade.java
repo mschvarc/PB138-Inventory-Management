@@ -42,4 +42,10 @@ public interface SaleFacade {
      * @throws EntityDoesNotExistException if there is no such item
      */
     List<Sale> getSalesForProduct(long ean, Date from, Date to) throws EntityDoesNotExistException;
+
+    /**
+     * Get all sales
+     * @return all sales
+     */
+    List<Sale> getAllSales();
 }

@@ -96,13 +96,33 @@
 
     <bean id="xmlValidator" class="pb138.service.xmlvalidator.XmlValidatorImpl"/>
 
+    <bean id="shipmentImporter" class="pb138.service.XmlImportExport.ShipmentImporterImpl">
+        <constructor-arg name="shipmentFacade" ref="shipmentFacade"/>
+    </bean>
+
     <bean id="xmlImporter" class="pb138.service.XmlImportExport.XmlImporterImpl">
         <constructor-arg name="xmlValidator" ref="xmlValidator"/>
+        <constructor-arg name="shipmentImporter" ref="shipmentImporter"/>
+        <constructor-arg name="categoryImporter" ref="categoryImporter"/>
+        <constructor-arg name="itemImporter" ref="itemImporter"/>
+        <constructor-arg name="salesImporter" ref="salesImporter"/>
     </bean>
 
     <bean id="automapper" class="pb138.service.mapper.AutomapperImpl">
         <constructor-arg name="dozer">
             <bean class="org.dozer.DozerBeanMapper"/>
         </constructor-arg>
+    </bean>
+
+    <bean id="categoryImporter" class="pb138.service.XmlImportExport.CategoryImporterImpl">
+        <constructor-arg name="categoryFacade" ref="categoryFacade"/>
+    </bean>
+
+    <bean id="itemImporter" class="pb138.service.XmlImportExport.ItemImporterImpl">
+        <constructor-arg name="itemFacade" ref="itemFacade"/>
+    </bean>
+
+    <bean id="salesImporter" class="pb138.service.XmlImportExport.SalesImporterImpl">
+        <constructor-arg name="saleFacade" ref="saleFacade"/>
     </bean>
 </beans>

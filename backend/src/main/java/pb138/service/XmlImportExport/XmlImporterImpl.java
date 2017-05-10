@@ -26,12 +26,25 @@ public class XmlImporterImpl implements XmlImporter{
 
     private XmlValidator xmlValidator;
 
-    public XmlImporterImpl(XmlValidator xmlValidator) {
+    private ShipmentImporter shipmentImporter;
+
+    private CategoryImporter categoryImporter;
+
+    private ItemImporter itemImporter;
+
+    private SalesImporter salesImporter;
+
+    public XmlImporterImpl(XmlValidator xmlValidator, ShipmentImporter shipmentImporter,
+                           CategoryImporter categoryImporter, ItemImporter itemImporter, SalesImporter salesImporter) {
         this.xmlValidator = xmlValidator;
+        this.shipmentImporter = shipmentImporter;
+        this.categoryImporter = categoryImporter;
+        this.itemImporter = itemImporter;
+        this.salesImporter = salesImporter;
     }
 
     @Override
-    public boolean importXml(String xmlFile) throws XmlValidationException, EntityDoesNotExistException, NotEnoughStoredException, ServiceException {
+    public void importXml(String xmlFile) throws XmlValidationException, EntityDoesNotExistException, NotEnoughStoredException, ServiceException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -46,15 +59,19 @@ public class XmlImporterImpl implements XmlImporter{
             switch (root.getTagName()){
                 case "categories":
                     xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/categories_xml_schema.xsd"));
+                    categoryImporter.importCategories(root);
                     break;
                 case "items":
                     xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/items_xml_schema.xsd") );
+                    itemImporter.importItems(root);
                     break;
                 case "sales":
                     xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/sales_xml_schema.xsd"));
+                    salesImporter.importSales(root);
                     break;
                 case "shipments":
-                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments.xsd"));
+                    xmlValidator.validate(xmlFile, classLoader.getResource("xml_schema/shipments_xml_schema.xsd"));
+                    shipmentImporter.importShipments(root);
                     break;
                 default:
                     throw new XmlValidationException("Root is different than it should be");
@@ -64,6 +81,6 @@ public class XmlImporterImpl implements XmlImporter{
         } catch (ParserConfigurationException|SAXException|IOException e ) {
             throw new XmlValidationException("Unable to parse XML", e);
         }
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }

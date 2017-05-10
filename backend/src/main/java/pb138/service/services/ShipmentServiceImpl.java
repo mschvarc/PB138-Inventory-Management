@@ -1,9 +1,13 @@
 package pb138.service.services;
 
+import com.google.common.collect.Lists;
 import pb138.dal.entities.Shipment;
 import pb138.dal.repository.ShipmentRepository;
 import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.exceptions.ServiceException;
+import pb138.service.filters.ShipmentFilter;
+
+import java.util.List;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -47,5 +51,12 @@ public class ShipmentServiceImpl implements ShipmentService{
     @Override
     public Shipment getById(long id) {
         return shipmentRepository.getById(id);
+    }
+
+    @Override
+    public List<Shipment> getAllShipments() {
+        ShipmentFilter filter = new ShipmentFilter();
+        Iterable<Shipment> result = shipmentRepository.find(filter);
+        return Lists.newArrayList(result);
     }
 }
