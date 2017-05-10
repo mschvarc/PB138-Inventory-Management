@@ -45,8 +45,6 @@ import pb138.service.facades.SaleFacade;
 import pb138.service.facades.ShipmentFacade;
 import pb138.service.mapper.Automapper;
 import pb138.service.overview.OverviewProvider;
-import pb138.service.overview.OverviewResult;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -56,8 +54,6 @@ import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.time.Period;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -199,6 +195,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return automapper.mapTo(category, CategoryDto.class);
     }
 
+    /*
     private List<OverviewResult> testOverviewDEBUG(int timespan, boolean isCategory){
         try{
             addTestData();
@@ -288,6 +285,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), monthStart, numberOfMonths);
         return testOverviewDEBUG(0, true);
     }
+    */
 
     @WebMethod
     public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {

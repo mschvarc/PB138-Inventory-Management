@@ -4,6 +4,9 @@ import java.util.List;
 
 public interface OverviewXmlExporter {
 
-    String exportToXml(List<OverviewResult> results);
+    String exportCategoryResultToXml(List<OverviewResultCategory> results);
+
+    String exportItemResultToXml(List<OverviewResultItem> results);
+
 
 }
