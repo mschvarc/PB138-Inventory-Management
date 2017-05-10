@@ -1,14 +1,17 @@
 package pb138.service.XmlImportExport;
-import org.jdom2.Element;
+
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
-import org.jdom2.*;
+
+import pb138.service.exceptions.EntityDoesNotExistException;
+import pb138.service.exceptions.NotEnoughStoredException;
+import pb138.service.exceptions.ServiceException;
 
 /**
  * Created by Jan on 03.05.2017.
  *
  */
 public interface SalesImporter {
-    void importSales(Element e);
+    void importSales(Element e) throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException;
 }

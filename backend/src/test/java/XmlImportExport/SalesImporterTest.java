@@ -16,10 +16,7 @@ import pb138.dal.entities.Item;
 import pb138.dal.entities.Shipment;
 import pb138.service.XmlImportExport.XmlImporter;
 import pb138.service.exceptions.EntityDoesNotExistException;
-import pb138.service.facades.CategoryFacade;
-import pb138.service.facades.CreateOrUpdate;
-import pb138.service.facades.ItemFacade;
-import pb138.service.facades.ShipmentFacade;
+import pb138.service.facades.*;
 import pb138.utils.Pair;
 
 import javax.transaction.Transactional;
@@ -38,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:META-INF/persistence-config.xml")
 @Transactional
-public class ShipmentImportingTest extends TestCase{
+public class SalesImporterTest  extends TestCase{
     @Autowired
     private XmlImporter xmlImporter;
 
@@ -49,7 +46,7 @@ public class ShipmentImportingTest extends TestCase{
     private ItemFacade itemFacade;
 
     @Autowired
-    private ShipmentFacade shipmentFacade;
+    private SaleFacade saleFacade;
 
     @Before
     public void before() throws Exception {
@@ -61,41 +58,37 @@ public class ShipmentImportingTest extends TestCase{
         itemFacade.storeItemInDb(i3);
         Pair<Item, CreateOrUpdate> i2 = itemFacade.createOrUpdateItem("Paper pack", "for printing", "office supplies", null, "packs", 4960999047034L);
         itemFacade.storeItemInDb(i2);
-        Pair<Item, CreateOrUpdate> i4 = itemFacade.createOrUpdateItem("Juice", "orange juice", "drinks", null, "box", 5011898007328L);
-        itemFacade.storeItemInDb(i4);
+
     }
 
     @Test
-    public void loadShipments() throws Exception {
+    public void loadSales() throws Exception {
         Pair<Item, CreateOrUpdate> i1 = itemFacade.createOrUpdateItem("Chocolate", "Milk chocolate", "sweet-stuff", null, "pieces", 7614500010013L);
         itemFacade.storeItemInDb(i1);
-        ClassLoader classLoader = getClass().getClassLoader();
-        String s = Resources.toString(Resources.getResource("xml_schema/examples/example_shipments.xml"), Charsets.UTF_8);
+        Pair<Item, CreateOrUpdate> i4 = itemFacade.createOrUpdateItem("Juice", "orange juice", "drinks", null, "box", 5011898007328L);
+        itemFacade.storeItemInDb(i4);
+        itemFacade.updateItemFromWeb(42238302211L, 40, null, "packet");
+        itemFacade.updateItemFromWeb(5011898007328L, 400, null, "box");
+        itemFacade.updateItemFromWeb(4960999047034L, 400, null, "packs");
+        String s = Resources.toString(Resources.getResource("xml_schema/examples/example_sales.xml"), Charsets.UTF_8);
         xmlImporter.importXml(s);
-        Item i = itemFacade.getItemByEan(7614500010013L);
-        assertThat(i.getCurrentCount(), is(500));
-        Item i2 = itemFacade.getItemByEan(4960999047034L);
-        assertThat(i2.getCurrentCount(), is(800));
-        List<Shipment> shipments = shipmentFacade.getAllShipments();
-        assertThat(shipments.size(), is(2));
+        assertThat(saleFacade.getAllSales().size(), is(3));
+        assertThat(itemFacade.getItemByEan(42238302211L).getCurrentCount(), is(20));
+        assertThat(itemFacade.getItemByEan(5011898007328L).getCurrentCount(), is(350));
     }
 
     @Test
-    public void loadBadShipments() throws Exception {
+    public void loadBadSales() throws Exception {
         try {
-            String s = Resources.toString(Resources.getResource("xml_schema/examples/example_shipments.xml"), Charsets.UTF_8);
+            itemFacade.updateItemFromWeb(42238302211L, 40, null, "packet");
+            itemFacade.updateItemFromWeb(4960999047034L, 400, null, "packs");
+            String s = Resources.toString(Resources.getResource("xml_schema/examples/example_sales.xml"), Charsets.UTF_8);
             xmlImporter.importXml(s);
             fail();
-        } catch (EntityDoesNotExistException e){
-            List<Shipment> shipments = shipmentFacade.getAllShipments();
-            assertThat(shipments.size(), is(0));
-            assertThat(itemFacade.getItemByEan(4960999047034L).getCurrentCount(), is(0));
+        } catch (EntityDoesNotExistException e) {
+            assertThat(saleFacade.getAllSales().size(), is(0));
         }
+
     }
-
-
-
-
-
 
 }

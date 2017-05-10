@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shipments>
+
+    <shipment>
+        <itemEan>7614500010013</itemEan>
+        <amount>500</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+    <shipment>
+        <itemEan>4960999047034</itemEan>
+        <amount>800</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+    <shipment>
+        <itemEan>0042238302211</itemEan>
+        <amount>100</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+    <shipment>
+        <itemEan>5011898007328</itemEan>
+        <amount>100</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+</shipments>

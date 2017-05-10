@@ -1,5 +1,6 @@
 package pb138.service.facades;
 
+
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.service.exceptions.EntityDoesNotExistException;
@@ -101,6 +102,9 @@ public class ItemFacadeImpl implements ItemFacade {
         Item i = itemService.getByEan(ean);
         if (i == null) {
             throw new EntityDoesNotExistException("This item does not exist");
+        }
+        if (newUnit.isEmpty()) {
+            throw new IllegalArgumentException("Unit must not be null");
         }
         i.setCurrentCount(newAmount);
         i.setAlertThreshold(newThreshold);

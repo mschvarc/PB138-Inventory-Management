@@ -87,17 +87,18 @@ public class XmlExporterImpl implements XmlExporter {
     public String ExportXmlToString() throws ParserConfigurationException, TransformerException {
         Document doc = ExportXmlToDoc();
 
-            StringWriter sw = new StringWriter();
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        StringWriter sw = new StringWriter();
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
 
-            transformer.transform(new DOMSource(doc), new StreamResult(sw));
-            return sw.toString();
+        transformer.transform(new DOMSource(doc), new StreamResult(sw));
+        //TODO validate it
+        return sw.toString();
 
     }
 }
