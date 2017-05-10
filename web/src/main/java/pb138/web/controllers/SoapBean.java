@@ -93,6 +93,8 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private XmlExporter xmlExporter;
     @Autowired
     private Automapper automapper;
+    //@Autowired
+    //private EmailSender emailSender;
 
     @WebMethod(exclude = true)
     @PostConstruct
