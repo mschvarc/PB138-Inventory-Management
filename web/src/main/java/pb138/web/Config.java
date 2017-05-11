@@ -16,6 +16,7 @@ import pb138.service.services.EmailSender;
 import pb138.service.services.ItemCountWatchdogService;
 import pb138.service.services.ItemCountWatchdogServiceImpl;
 import pb138.service.services.ItemService;
+import pb138.web.controllers.MainController;
 import pb138.web.controllers.SoapBean;
 import pb138.web.email.EmailConfigLoader;
 import pb138.web.email.EmailScheduler;
@@ -34,6 +35,9 @@ public class Config {
     private SoapBean soapBean;
 
     @Autowired
+    private MainController mainController;
+
+    @Autowired
     private Bus bus;
 
     @Autowired
@@ -50,12 +54,20 @@ public class Config {
 
 
     @Bean
-    public Endpoint endpoint() {
+    public Endpoint endpointSoap() {
         EndpointImpl endpoint = new EndpointImpl(bus, soapBean);
         //endpoint.setAddress("/soap");
         endpoint.publish("/soap");
         return endpoint;
     }
+
+    /*@Bean
+    public Endpoint endpointMain() {
+        EndpointImpl endpoint = new EndpointImpl(bus, mainController);
+        //endpoint.setAddress("/soap");
+        endpoint.publish("/soap");
+        return endpoint;
+    }*/
 
 
     @Bean

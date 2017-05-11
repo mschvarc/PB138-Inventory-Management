@@ -9,6 +9,6 @@
         <to>root@localhost</to>
         <subject>Item count warning</subject>
         <encoding>UTF-8</encoding>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </email>
 </config>

@@ -158,7 +158,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @return original message + debug data
      */
     @WebMethod
-    public String testCorrectDeployment(@WebParam String input) {
+    public String testCorrectDeployment(@WebParam(name = "input") String input) {
         int counter = 0;
         counter += categoryRepository != null ? 1 : 0;
         counter += itemRepository != null ? 1 : 0;
