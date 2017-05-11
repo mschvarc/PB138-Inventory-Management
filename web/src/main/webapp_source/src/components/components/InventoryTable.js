@@ -8,7 +8,6 @@ class InventoryTable extends Component {
 
     return <table className="dashboard-table">
       <colgroup>
-        <col width="80" />
         <col width="200" />
         <col width="100" />
         <col width="100" />
@@ -16,7 +15,6 @@ class InventoryTable extends Component {
       </colgroup>
       <thead>
         <tr>
-          <th><a href="#">Ean<i className="fa fa-caret-down"></i></a></th>
           <th><a href="#">Name<i className="fa fa-caret-down"></i></a></th>
           <th><a href="#">Current<i className="fa fa-caret-down"></i></a></th>
           <th><a href="#">Status<i className="fa fa-caret-down"></i></a></th>
@@ -39,7 +37,7 @@ class InventoryTable extends Component {
           <td className="bold"><Link to={"item/"+item.ean}>{item.name}</Link></td>
           <td>{item.currentCount} {item.unit}</td>
           <td>{item_status}</td>
-          <td><Link to={"category/"+item.category.id}>{item.category.name}</Link></td>
+          <td><Link to={"category/"+item.category.name}>{item.category.name}</Link></td>
         </tr>
       })}
       </tbody>

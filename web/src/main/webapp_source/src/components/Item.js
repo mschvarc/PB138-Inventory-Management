@@ -53,7 +53,7 @@ class Item extends Component {
 
 			return <div className="page-item row">
 	      <div className="small-12 columns">
-	        <h2>Item {item.name} <small>Id: {item.id} Ean: {item.ean}</small></h2>
+	        <h2>Item {item.name} <small>Ean: {item.ean}</small></h2>
 					<form onSubmit={this.changeItem.bind(this)}>
 						<dl>
 							<dt>Description</dt>
@@ -67,11 +67,11 @@ class Item extends Component {
 								</div>
 							</dd>
 		        	<dt>Category</dt>
-							<dd><Link to={"category/"+item.category.id}>{item.category.name}</Link></dd>
+							<dd><Link to={"category/"+item.category.name}>{item.category.name}</Link></dd>
 		        	<dt>Alert threshold</dt>
 							<dd><input type="number" min="-1" value={this.state.alertThreshold} onChange={this.onAlertThreshold.bind(this)} /></dd>
 						</dl>
-						<input type="submit" value="Update" />
+						<input type="submit" value="Update" className="button" />
 					</form>
 	      </div>
 	    </div>
