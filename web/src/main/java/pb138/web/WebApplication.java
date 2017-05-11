@@ -7,13 +7,17 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "pb138.web.controllers")
 @ImportResource(locations = {"classpath*:META-INF/persistence-config.xml"})
 //@EnableTransactionManagement
 @Import(Config.class)
-public class WebApplication extends SpringBootServletInitializer  {
+@EnableScheduling
+public class WebApplication extends SpringBootServletInitializer {
+
+    private static Class<WebApplication> applicationClass = WebApplication.class;
 
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
@@ -23,7 +27,5 @@ public class WebApplication extends SpringBootServletInitializer  {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(applicationClass);
     }
-
-    private static Class<WebApplication> applicationClass = WebApplication.class;
 
 }

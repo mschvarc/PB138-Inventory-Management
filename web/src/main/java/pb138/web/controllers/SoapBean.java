@@ -45,8 +45,6 @@ import pb138.service.facades.SaleFacade;
 import pb138.service.facades.ShipmentFacade;
 import pb138.service.mapper.Automapper;
 import pb138.service.overview.OverviewProvider;
-import pb138.service.overview.OverviewResult;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -56,8 +54,6 @@ import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.time.Period;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +93,8 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private XmlExporter xmlExporter;
     @Autowired
     private Automapper automapper;
+    //@Autowired
+    //private EmailSender emailSender;
 
     @WebMethod(exclude = true)
     @PostConstruct
@@ -154,6 +152,11 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         shipmentRepository.create(shipment);
     }
 
+    /**
+     * Tests if SOAP controller is correctly deployed
+     * @param input string to echo
+     * @return original message + debug data
+     */
     @WebMethod
     public String testCorrectDeployment(@WebParam String input) {
         int counter = 0;
@@ -165,40 +168,74 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
 
+    /**
+     * Import XML
+     * @param xmlToImport encoded string
+     * @throws ServiceException DB failure
+     * @throws EntityDoesNotExistException no such item in DB
+     * @throws NotEnoughStoredException import places stock in the negative
+     * @throws XmlValidationException invalid xml
+     */
     @WebMethod
     public void importXml(@WebParam String xmlToImport) throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException, XmlValidationException {
         xmlImporter.importXml(xmlToImport);
     }
 
+    /**
+     * Exports all items from DB
+     * @return all items in XML
+     * @throws TransformerException on internal error
+     * @throws ParserConfigurationException on internal error
+     */
     @WebMethod
     public String exportAllItemsToXml() throws TransformerException, ParserConfigurationException {
         return xmlExporter.ExportXmlToString();
     }
 
+    /**
+     * Returns a list of all items in DB
+     * @return all items
+     */
     @WebMethod
     public List<ItemDto> getAllItems() {
         List<Item> allItems = itemFacade.getAllItems();
         return automapper.mapTo(allItems, ItemDto.class);
     }
 
+    /**
+     * Gets all items in category
+     * @param categoryName name
+     * @return all items in category
+     * @throws EntityDoesNotExistException invalid category
+     */
     @WebMethod
     public List<ItemDto> getAllItemsForCategory(@WebParam String categoryName) throws EntityDoesNotExistException {
         List<Item> allItems = itemFacade.getAllItemsByCategory(categoryName);
         return automapper.mapTo(allItems, ItemDto.class);
     }
 
+    /**
+     * Returns all categories
+     * @return all categories
+     */
     @WebMethod
     public List<CategoryDto> getAllCategories() {
         List<Category> allCategories = categoryFacade.getAllCategories();
         return automapper.mapTo(allCategories, CategoryDto.class);
     }
 
+    /**
+     * Get category by name
+     * @param name name
+     * @return category
+     */
     @WebMethod
     public CategoryDto getCategoryByName(@WebParam String name) {
         Category category = categoryFacade.getCategoryByName(name);
         return automapper.mapTo(category, CategoryDto.class);
     }
 
+    /*
     private List<OverviewResult> testOverviewDEBUG(int timespan, boolean isCategory){
         try{
             addTestData();
@@ -288,7 +325,18 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), monthStart, numberOfMonths);
         return testOverviewDEBUG(0, true);
     }
+    */
 
+    /**
+     * Changes the parameters of an item
+     * @param ean ean
+     * @param currentCount current item count
+     * @param unit unit
+     * @param alertThreshold alert threshold
+     * @return changed item
+     * @throws ServiceException on internal failure
+     * @throws EntityDoesNotExistException no such entity
+     */
     @WebMethod
     public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);

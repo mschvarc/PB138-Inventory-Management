@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <email>
+        <username>root@localhost</username>
+        <password>root</password>
+        <host>localhost</host>
+        <domain>localhost</domain>
+        <from>root@localhost</from>
+        <to>root@localhost</to>
+        <subject>Item count warning</subject>
+        <encoding>UTF-8</encoding>
+        <enabled>false</enabled>
+    </email>
+</config>

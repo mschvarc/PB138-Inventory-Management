@@ -80,4 +80,10 @@ public class SaleFacadeImpl implements SaleFacade {
         filter.setDateSoldTo(to);
         return saleService.getByFilter(filter);
     }
+
+    @Override
+    public List<Sale> getAllSales() {
+        SaleFilter filter = new SaleFilter();
+        return saleService.getByFilter(filter);
+    }
 }

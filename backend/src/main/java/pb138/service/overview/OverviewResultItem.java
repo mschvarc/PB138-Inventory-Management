@@ -15,28 +15,19 @@ import java.util.Date;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @SuppressWarnings({"unused"})
-public class OverviewResult implements Serializable {
+public class OverviewResultItem implements Serializable {
 
     @XmlJavaTypeAdapter(PeriodXmlAdapter.class)
     private Period timespan;
-
     private Date startDate;
-    private Category category;
     private Item item;
     private int entityCount;
 
-    public OverviewResult() {
+    public OverviewResultItem() {
         //Class pb138.service.overview.OverviewResult does not have a default constructor which JAXB requires.
     }
 
-    public OverviewResult(Period timespan, Date startDate, Category category, int entityCount) {
-        this.timespan = timespan;
-        this.startDate = startDate;
-        this.category = category;
-        this.entityCount = entityCount;
-    }
-
-    public OverviewResult(Period timespan, Date startDate, Item item, int entityCount) {
+    public OverviewResultItem(Period timespan, Date startDate, Item item, int entityCount) {
         this.timespan = timespan;
         this.startDate = startDate;
         this.item = item;
@@ -78,24 +69,6 @@ public class OverviewResult implements Serializable {
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    /**
-     * Gets category
-     *
-     * @return value of category
-     */
-    public Category getCategory() {
-        return category;
-    }
-
-    /**
-     * Sets category
-     *
-     * @param category category
-     */
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     /**
