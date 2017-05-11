@@ -28,7 +28,7 @@ class InventoryTable extends Component {
         var item_status = <span className="label success">&#x2714;</span>
         if (item.currentCount === item.alertThreshold){
           item_status = <span className="label warning">&#x2715;</span>
-        } else if (item.currentCount < item.alertThreshold){
+        } else if (parseInt(item.currentCount, 10) < parseInt(item.alertThreshold, 10)){
           item_status = <span className="label alert">&#x2715;</span>
         }
 

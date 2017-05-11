@@ -45,7 +45,7 @@ class ImportExport extends Component {
       <div className="small-12 medium-6 columns">
 				<h2>Import</h2>
 				<p>You can import all 4 types of XML files by dropping them here. Documentation of files can be found on <a href="https://github.com/mschvarc/PB138-Inventory-Management/wiki/XML-Data-format">wiki</a></p>
-				<Dropzone style={importAreaStyle} multiple={true} onDrop={this.onImport.bind(this)}>
+				<Dropzone style={importAreaStyle} multiple={false} onDrop={this.onImport.bind(this)}>
           <div>Try dropping some files here, or click to select files to upload.</div>
         </Dropzone>
 				{importState}

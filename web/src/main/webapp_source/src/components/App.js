@@ -48,7 +48,7 @@ export class App extends Component {
 						<Route path="/" component={Layout}>
 							<IndexRoute component={routeProps => <Home items={this.state.items} categories={this.state.categories} />} />
 							<Route path="inventory" component={routeProps => <Inventory items={this.state.items} />} />
-							<Route path="item/:item" component={routeProps => <Item items={this.state.items} paramItem={routeProps.params.item} />} />
+							<Route path="item/:item" component={routeProps => <Item items={this.state.items} changeItem={this.data.changeItem.bind(this.data)} paramItem={routeProps.params.item} />} />
 							<Route path="categories" component={routeProps => <Categories categories={this.state.categories} />} />
 							<Route path="category/:category" component={routeProps => <Category items={this.state.items} categories={this.state.categories} paramCategory={routeProps.params.category} />} />
 							<Route path="import-export" component={routeProps => <ImportExport import={this.data.import.bind(this.data)} export={this.data.export.bind(this.data)} importState={this.state.importState} exportState={this.state.exportState} />} />

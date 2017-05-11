@@ -66,8 +66,7 @@ export default class Data {
   import(xmlToImport) {
     this.client.importXml({arg0: xmlToImport}, (err, result) => {
       if(err) {
-        console.log(result)
-        this.app.setState({importState: "Cannot import XML file: "+(result.Body.Fault.faultstring || err)});
+        this.app.setState({importState: "Cannot import XML file: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
         this.app.setState({importState: "Import successfull"});
       }
@@ -77,10 +76,28 @@ export default class Data {
   export(callback) {
     this.client.exportAllItemsToXml((err, result) => {
       if(err) {
-        this.app.setState({exportState: "Cannot export XML file: "+(result.Body.Fault.faultstring || err)});
+        this.app.setState({exportState: "Cannot export XML file: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
         this.app.setState({exportState: "Export successfull"});
         callback(result.return);
+      }
+    });
+  }
+
+  changeItem(ean, currentCount, unit, alertThreshold) {
+    this.client.changeItem({arg0: ean, arg1: currentCount, arg2: unit, arg3: alertThreshold}, (err, result) => {
+      if(err) {
+        this.app.setState({error: "Cannot update item! "+(result.Body ? result.Body.Fault.faultstring : err)});
+      } else {
+        var changedItems = this.app.state.items.map(function(item) {
+          if(item.ean === result.return.ean) {
+            item.currentCount = result.return.currentCount
+            item.unit = result.return.unit
+            item.alertThreshold = result.return.alertThreshold
+          }
+          return item;
+        });
+        this.app.setState({items: changedItems});
       }
     });
   }
