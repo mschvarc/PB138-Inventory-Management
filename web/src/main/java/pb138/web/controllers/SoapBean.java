@@ -52,8 +52,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.util.Date;
 import java.util.List;
 
@@ -106,7 +104,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     public void addTestData() throws EntityValidationException {
         Category cat = new Category();
         cat.setDescription("desc");
-        cat.setName("cat name");
+        cat.setName("category1");
         categoryRepository.create(cat);
 
         Item item = new Item();
@@ -164,11 +162,12 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Tests if SOAP controller is correctly deployed
+     *
      * @param input string to echo
      * @return original message + debug data
      */
     @WebMethod
-    public String testCorrectDeployment(@WebParam String input) {
+    public String testCorrectDeployment(@WebParam(name = "input") String input) {
         int counter = 0;
         counter += categoryRepository != null ? 1 : 0;
         counter += itemRepository != null ? 1 : 0;
@@ -180,22 +179,24 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Import XML
+     *
      * @param xmlToImport encoded string
-     * @throws ServiceException DB failure
+     * @throws ServiceException            DB failure
      * @throws EntityDoesNotExistException no such item in DB
-     * @throws NotEnoughStoredException import places stock in the negative
-     * @throws XmlValidationException invalid xml
+     * @throws NotEnoughStoredException    import places stock in the negative
+     * @throws XmlValidationException      invalid xml
      */
     @WebMethod
-    public void importXml(@WebParam String xmlToImport) throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException, XmlValidationException {
+    public void importXml(@WebParam(name = "xmlToImport") String xmlToImport)
+            throws ServiceException, EntityDoesNotExistException, NotEnoughStoredException, XmlValidationException {
         xmlImporter.importXml(xmlToImport);
     }
 
     /**
      * Exports all items from DB
+     *
      * @return all items in XML
-     * @throws TransformerException on internal error
-     * @throws ParserConfigurationException on internal error
+     * @throws XmlValidationException on internal error
      */
     @WebMethod
     public String exportAllItemsToXml() throws XmlValidationException {
@@ -204,6 +205,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Returns a list of all items in DB
+     *
      * @return all items
      */
     @WebMethod
@@ -214,18 +216,21 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Gets all items in category
-     * @param categoryName name
+     *
+     * @param categoryName categoryName
      * @return all items in category
      * @throws EntityDoesNotExistException invalid category
      */
     @WebMethod
-    public List<ItemDto> getAllItemsForCategory(@WebParam String categoryName) throws EntityDoesNotExistException {
+    public List<ItemDto> getAllItemsForCategory(@WebParam(name = "categoryName") String categoryName)
+            throws EntityDoesNotExistException {
         List<Item> allItems = itemFacade.getAllItemsByCategory(categoryName);
         return automapper.mapTo(allItems, ItemDto.class);
     }
 
     /**
      * Returns all categories
+     *
      * @return all categories
      */
     @WebMethod
@@ -235,13 +240,14 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     /**
-     * Get category by name
-     * @param name name
+     * Get category by categoryName
+     *
+     * @param categoryName categoryName
      * @return category
      */
     @WebMethod
-    public CategoryDto getCategoryByName(@WebParam String name) {
-        Category category = categoryFacade.getCategoryByName(name);
+    public CategoryDto getCategoryByName(@WebParam(name = "categoryName") String categoryName) {
+        Category category = categoryFacade.getCategoryByName(categoryName);
         return automapper.mapTo(category, CategoryDto.class);
     }
 
@@ -339,18 +345,24 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Changes the parameters of an item
-     * @param ean ean
-     * @param currentCount current item count
-     * @param unit unit
+     *
+     * @param ean            ean
+     * @param currentCount   current item count
+     * @param unit           unit
      * @param alertThreshold alert threshold
      * @return changed item
-     * @throws ServiceException on internal failure
+     * @throws ServiceException            on internal failure
      * @throws EntityDoesNotExistException no such entity
      */
     @WebMethod
-    public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
+    public ItemDto changeItem(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "currentCount") int currentCount,
+            @WebParam(name = "unit") String unit,
+            @WebParam(name = "alertThreshold") Integer alertThreshold)
+            throws ServiceException, EntityDoesNotExistException {
         //convert negative alert threshold to NULL internally
-        if(alertThreshold != null && alertThreshold <= 0){
+        if (alertThreshold != null && alertThreshold <= 0) {
             alertThreshold = null;
         }
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
