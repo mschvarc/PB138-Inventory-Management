@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="items" type="exportType">
+        <xs:key name="eanKey">
+            <xs:selector xpath="./item"/>
+            <xs:field xpath="ean"/>
+        </xs:key>
+    </xs:element>
+
+    <xs:complexType name="exportType">
+        <xs:sequence>
+            <xs:element name="item" type="itemExportType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="itemExportType">
+        <xs:sequence>
+            <xs:element name="name" type="nonEmptyString"/>
+            <xs:element name="ean" type="eanType"/>
+            <xs:element name="description" type="nonEmptyString"/>
+            <xs:element name="currentCount" type="nonNegativeInteger"/>
+            <xs:element name="unit" type="nonEmptyString"/>
+            <xs:element name="category" type="categoryType"/>
+            <xs:element name="alertThreshold" type="nonNegativeInteger" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="categoryType">
+        <xs:sequence>
+            <xs:element name="name" type="nonEmptyString"/>
+            <xs:element name="description" type="nonEmptyString"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="eanType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{13}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="nonNegativeInteger">
+        <xs:restriction base="xs:integer">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="nonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

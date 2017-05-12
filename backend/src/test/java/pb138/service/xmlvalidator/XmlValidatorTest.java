@@ -24,6 +24,7 @@ public class XmlValidatorTest {
     private URL xmlSchemaItems;
     private URL xmlSchemaSales;
     private URL xmlSchemaCategories;
+    private URL xmlSchemaExport;
 
     @Before
     public void beforeTest() throws MalformedURLException {
@@ -32,6 +33,7 @@ public class XmlValidatorTest {
         xmlSchemaItems = getClass().getClassLoader().getResource("xml_schema/items_xml_schema.xsd");
         xmlSchemaSales = getClass().getClassLoader().getResource("xml_schema/sales_xml_schema.xsd");
         xmlSchemaCategories = getClass().getClassLoader().getResource("xml_schema/categories_xml_schema.xsd");
+        xmlSchemaExport = getClass().getClassLoader().getResource("xml_schema/export_xml_schema.xsd");
     }
 
     private String getTextContent(String resource) throws IOException, URISyntaxException {
@@ -64,6 +66,13 @@ public class XmlValidatorTest {
         String testXml = getTextContent("xml_schema/examples/example_categories.xml");
         xmlValidator.validate(testXml, xmlSchemaCategories);
         assertTrue(xmlValidator.isValid(testXml, xmlSchemaCategories));
+    }
+
+    @Test
+    public void validateValidExport() throws IOException, URISyntaxException, XmlValidationException {
+        String testXml = getTextContent("xml_schema/examples/example_export.xml");
+        xmlValidator.validate(testXml, xmlSchemaExport);
+        assertTrue(xmlValidator.isValid(testXml, xmlSchemaExport));
     }
 
     @Test

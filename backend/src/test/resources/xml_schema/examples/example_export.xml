@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+
+    <item>
+        <name>Toblerone Milk Chocolate</name>
+        <ean>7614500010013</ean>
+        <description>Milk chocolate.</description>
+        <currentCount>100</currentCount>
+        <unit>packet</unit>
+        <category>
+            <name>sweet-stuff</name>
+            <description>Foodstuffs: chocolate, candies atc.</description>
+        </category>
+    </item>
+
+    <item>
+        <name>Paper Pack for Canon Printer</name>
+        <ean>4960999047034</ean>
+        <description>Canon KP-36IP Paper Pack for Canon Printer (36 Sheets).</description>
+        <currentCount>120</currentCount>
+        <unit>pack</unit>
+        <category>
+            <name>office supplies</name>
+            <description>Papers and pens...</description>
+        </category>
+        <alertThreshold>50</alertThreshold>
+    </item>
+
+</items>
