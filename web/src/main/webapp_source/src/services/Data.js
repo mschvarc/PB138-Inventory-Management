@@ -64,7 +64,7 @@ export default class Data {
   }
 
   import(xmlToImport) {
-    this.client.importXml({arg0: xmlToImport}, (err, result) => {
+    this.client.importXml({xmlToImport: xmlToImport}, (err, result) => {
       if(err) {
         this.app.setState({importState: "Cannot import XML file: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
@@ -85,7 +85,7 @@ export default class Data {
   }
 
   changeItem(ean, currentCount, unit, alertThreshold) {
-    this.client.changeItem({arg0: ean, arg1: currentCount, arg2: unit, arg3: alertThreshold}, (err, result) => {
+    this.client.changeItem({ean: ean, currentCount: currentCount, unit: unit, alertThreshold: alertThreshold}, (err, result) => {
       if(err) {
         this.app.setState({error: "Cannot update item! "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
