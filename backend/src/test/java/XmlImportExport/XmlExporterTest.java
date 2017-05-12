@@ -62,7 +62,6 @@ public class XmlExporterTest extends TestCase {
     @Test
     public void exportCorrectly() throws Exception {
         String s = xmlExporter.ExportXmlToString();
-        System.out.println(s);
         Document doc = xmlExporter.ExportXmlToDoc();
         Element root = doc.getDocumentElement();
         assertThat(root.getTagName(), is("items"));
