@@ -1,9 +1,9 @@
 package pb138.service.XmlImportExport;
 
 import org.w3c.dom.Document;
+import pb138.service.exceptions.XmlValidationException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 /**
  * Created by Jan on 06.05.2017.
@@ -18,5 +18,5 @@ public interface XmlExporter {
      */
     Document ExportXmlToDoc() throws ParserConfigurationException;
 
-    String ExportXmlToString() throws ParserConfigurationException, TransformerException;
+    String ExportXmlToString() throws XmlValidationException;
 }

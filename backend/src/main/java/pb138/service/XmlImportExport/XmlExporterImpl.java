@@ -3,7 +3,9 @@ package pb138.service.XmlImportExport;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import pb138.dal.entities.Item;
+import pb138.service.exceptions.XmlValidationException;
 import pb138.service.facades.ItemFacade;
+import pb138.service.xmlvalidator.XmlValidator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,9 +22,11 @@ import java.util.List;
  */
 public class XmlExporterImpl implements XmlExporter {
     private ItemFacade itemFacade;
+    private XmlValidator xmlValidator;
 
-    public XmlExporterImpl(ItemFacade itemFacade) {
+    public XmlExporterImpl(ItemFacade itemFacade, XmlValidator xmlValidator) {
         this.itemFacade = itemFacade;
+        this.xmlValidator = xmlValidator;
     }
 
     @Override
@@ -84,21 +88,24 @@ public class XmlExporterImpl implements XmlExporter {
     }
 
     @Override
-    public String ExportXmlToString() throws ParserConfigurationException, TransformerException {
-        Document doc = ExportXmlToDoc();
+    public String ExportXmlToString() throws XmlValidationException{
+        try {
+            Document doc = ExportXmlToDoc();
 
-        StringWriter sw = new StringWriter();
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            StringWriter sw = new StringWriter();
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
-
-        transformer.transform(new DOMSource(doc), new StreamResult(sw));
-        //TODO validate it
-        return sw.toString();
-
+            transformer.transform(new DOMSource(doc), new StreamResult(sw));
+            String xmlExport = sw.toString();
+            xmlValidator.validate(xmlExport, getClass().getClassLoader().getResource("xml_schema/export_xml_schema.xsd"));
+            return xmlExport;
+        } catch (TransformerException | ParserConfigurationException ex) {
+            throw new XmlValidationException("Exception occurred in XML generation", ex);
+        }
     }
 }
