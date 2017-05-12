@@ -120,8 +120,11 @@ public class ItemRepositoryImpl implements ItemRepository {
             validPredicates.add(id);
         }
         if (filter.getFetchItemsBelowThreshold() != null && filter.getFetchItemsBelowThreshold()) {
-            Predicate threshold = builder.lessThan(root.get(Item_.currentCount), root.get(Item_.alertThreshold));
-            validPredicates.add(threshold);
+            Predicate alertThresholdNotNull = builder.isNotNull(root.get(Item_.alertThreshold));
+            Predicate belowThreshold = builder.lessThan(root.get(Item_.currentCount), root.get(Item_.alertThreshold));
+            Predicate alertThresholdAboveNegOne = builder.greaterThanOrEqualTo(root.get(Item_.alertThreshold), 0);
+            Predicate combined = builder.and(alertThresholdNotNull, belowThreshold,  alertThresholdAboveNegOne);
+            validPredicates.add(combined);
         }
         if (filter.getCategory() != null) {
             Predicate category = builder.equal(root.get(Item_.category), filter.getCategory());

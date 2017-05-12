@@ -111,7 +111,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
         Item item = new Item();
         item.setDescription("i desc");
-        item.setName("i name0");
+        item.setName("item0");
         item.setCategory(cat);
         item.setCurrentCount(25);
         item.setAlertThreshold(30);
@@ -121,7 +121,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
         Item item1 = new Item();
         item1.setDescription("i desc");
-        item1.setName("i name1");
+        item1.setName("item1");
         item1.setCategory(cat);
         item1.setCurrentCount(25);
         item1.setAlertThreshold(30);
@@ -131,13 +131,23 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
         Item item2 = new Item();
         item2.setDescription("i desc");
-        item2.setName("i name2");
+        item2.setName("item2");
         item2.setCategory(cat);
-        item2.setCurrentCount(10);
+        item2.setCurrentCount(100);
         item2.setAlertThreshold(30);
         item2.setEan(125);
         item2.setUnit("pcs");
         itemRepository.create(item2);
+
+        Item item3NullThreshold = new Item();
+        item3NullThreshold.setDescription("i desc");
+        item3NullThreshold.setName("item3");
+        item3NullThreshold.setCategory(cat);
+        item3NullThreshold.setCurrentCount(10);
+        item3NullThreshold.setAlertThreshold(null);
+        item3NullThreshold.setEan(126);
+        item3NullThreshold.setUnit("kg");
+        itemRepository.create(item3NullThreshold);
 
         Sale sale = new Sale();
         sale.setDateSold(new Date());
@@ -188,7 +198,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws ParserConfigurationException on internal error
      */
     @WebMethod
-    public String exportAllItemsToXml() throws TransformerException, ParserConfigurationException {
+    public String exportAllItemsToXml() throws XmlValidationException {
         return xmlExporter.ExportXmlToString();
     }
 
@@ -339,6 +349,10 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      */
     @WebMethod
     public ItemDto changeItem(long ean, int currentCount, String unit, Integer alertThreshold) throws ServiceException, EntityDoesNotExistException {
+        //convert negative alert threshold to NULL internally
+        if(alertThreshold != null && alertThreshold <= 0){
+            alertThreshold = null;
+        }
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
         return automapper.mapTo(item, ItemDto.class);
     }

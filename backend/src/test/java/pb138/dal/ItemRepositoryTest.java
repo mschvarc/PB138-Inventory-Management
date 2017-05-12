@@ -18,11 +18,14 @@ import pb138.service.filters.ItemFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -206,6 +209,43 @@ public class ItemRepositoryTest extends TestCase {
         i2.setUnit("pcs");
         assertThat(i2, is(i1));
         repository.create(i2);
+    }
+
+
+    @Test
+    public void nullThresholdTest() throws Exception {
+        Item nullThresholdItem = new Item();
+        nullThresholdItem.setCategory(category);
+        nullThresholdItem.setDescription("desc1");
+        nullThresholdItem.setName("name1");
+        nullThresholdItem.setCurrentCount(10);
+        nullThresholdItem.setEan(123);
+        nullThresholdItem.setUnit("kg");
+        nullThresholdItem.setAlertThreshold(null);
+        repository.create(nullThresholdItem);
+        Item r1 = repository.getById(nullThresholdItem.getId());
+        assertEquals(r1, nullThresholdItem);
+
+        Item setThresholdItem = new Item();
+        setThresholdItem.setCategory(category);
+        setThresholdItem.setDescription("desc2");
+        setThresholdItem.setName("name2");
+        setThresholdItem.setCurrentCount(1);
+        setThresholdItem.setEan(444);
+        setThresholdItem.setUnit("pcs");
+        setThresholdItem.setAlertThreshold(10);
+        repository.create(setThresholdItem);
+
+        ItemFilter filter = new ItemFilter();
+        filter.setFetchItemsBelowThreshold(true);
+        filter.setCategory(category);
+        Iterable<Item> items = repository.find(filter);
+        List<Item> list = new ArrayList<Item>();
+        items.forEach(list::add);
+
+        assertThat(list.size(), is(1));
+        assertThat(items, not(hasItem(nullThresholdItem)));
+        assertThat(items, hasItem(setThresholdItem));
     }
 
 
