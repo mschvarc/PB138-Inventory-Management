@@ -126,4 +126,10 @@
     <bean id="salesImporter" class="pb138.service.XmlImportExport.SalesImporterImpl">
         <constructor-arg name="saleFacade" ref="saleFacade"/>
     </bean>
+
+    <bean id="overviewProvider" class="pb138.service.overview.OverviewProviderImpl">
+        <constructor-arg name="saleFacade" ref="saleFacade"/>
+        <constructor-arg name="itemService" ref="itemService"/>
+        <constructor-arg name="categoryService" ref="categoryService"/>
+    </bean>
 </beans>

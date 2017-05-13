@@ -56,26 +56,26 @@ public class SaleFacadeImpl implements SaleFacade {
     }
 
     @Override
-    public List<Sale> getSalesForCategory(String categoryName, Date from, Date to) throws EntityDoesNotExistException {
-        Category c = categoryService.getByName(categoryName);
-        if (c == null) {
-            throw new EntityDoesNotExistException("Category " + categoryName + " does not exist");
+    public List<Sale> getSalesForCategory(Category category, Date from, Date to) throws IllegalArgumentException {
+
+        if (category == null) {
+            throw new IllegalArgumentException("Category is null");
         }
         SaleFilter filter = new SaleFilter();
-        filter.setCategory(c);
+        filter.setCategory(category);
         filter.setDateSoldFrom(from);
         filter.setDateSoldTo(to);
         return saleService.getByFilter(filter);
     }
 
     @Override
-    public List<Sale> getSalesForProduct(long ean, Date from, Date to) throws EntityDoesNotExistException{
-        Item i = itemService.getByEan(ean);
-        if (i == null) {
-            throw new EntityDoesNotExistException("Item with ean " + ean + " does not exist");
+    public List<Sale> getSalesForProduct(Item item, Date from, Date to) throws IllegalArgumentException {
+
+        if (item == null) {
+            throw new IllegalArgumentException("Item is null");
         }
         SaleFilter filter = new SaleFilter();
-        filter.setItem(i);
+        filter.setItem(item);
         filter.setDateSoldFrom(from);
         filter.setDateSoldTo(to);
         return saleService.getByFilter(filter);

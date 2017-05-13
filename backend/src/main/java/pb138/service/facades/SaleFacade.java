@@ -7,6 +7,8 @@ import pb138.service.exceptions.ServiceException;
 
 import java.util.Date;
 import java.util.List;
+import pb138.dal.entities.Category;
+import pb138.dal.entities.Item;
 
 /**
  * Created by Honza on 30.04.2017.
@@ -31,7 +33,7 @@ public interface SaleFacade {
      * @return list of sales
      * @throws EntityDoesNotExistException if there is no such category
      */
-    List<Sale> getSalesForCategory(String categoryName, Date from, Date to) throws EntityDoesNotExistException;
+    List<Sale> getSalesForCategory(Category category, Date from, Date to) throws IllegalArgumentException;
 
     /**
      * Get all sales for given item from given period of time
@@ -41,7 +43,7 @@ public interface SaleFacade {
      * @return list of sales
      * @throws EntityDoesNotExistException if there is no such item
      */
-    List<Sale> getSalesForProduct(long ean, Date from, Date to) throws EntityDoesNotExistException;
+    List<Sale> getSalesForProduct(Item item, Date from, Date to) throws IllegalArgumentException;
 
     /**
      * Get all sales

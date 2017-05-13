@@ -127,7 +127,7 @@ public class SaleRepositoryImpl implements SaleRepository {
             validPredicates.add(dateSoldFrom);
         }
         if (filter.getDateSoldTo() != null) {
-            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Sale_.dateSold), filter.getDateSoldTo());
+            Predicate dateSoldTo = builder.lessThan(root.get(Sale_.dateSold), filter.getDateSoldTo());
             validPredicates.add(dateSoldTo);
         }
         if (filter.getItem() != null) {

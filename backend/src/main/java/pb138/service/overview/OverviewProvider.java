@@ -1,24 +1,21 @@
 package pb138.service.overview;
 
-import pb138.dal.entities.Category;
-import pb138.dal.entities.Item;
-
 import java.util.Date;
 import java.util.List;
+import pb138.service.exceptions.EntityDoesNotExistException;
 
 public interface OverviewProvider {
 
-    //Marketa TODO: implement
-    List<OverviewResultItem> getDailySalesForItem(Item item, Date dayStart, int numberOfDays);
+    List<OverviewResultItem> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException;
 
-    List<OverviewResultCategory> getDailySalesForCategory(Category category, Date dayStart, int numberOfDays);
+    List<OverviewResultCategory> getDailySalesForCategory(String categoryName, Date dayStart, int numberOfDays) throws EntityDoesNotExistException;
 
-    List<OverviewResultItem> getWeeklySalesForItem(Item item, Date weekStart, int numberOfWeeks);
+    List<OverviewResultItem> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException;
 
-    List<OverviewResultCategory> getWeeklySalesForCategory(Category category, Date weekStart, int numberOfWeeks);
+    List<OverviewResultCategory> getWeeklySalesForCategory(String categoryName, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException;
 
-    List<OverviewResultItem> getMonthlySalesForItem(Item item, Date monthStart, int numberOfMonths);
+    List<OverviewResultItem> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException;
 
-    List<OverviewResultCategory> getMonthlySalesForCategory(Category category, Date monthStart, int numberOfMonths);
+    List<OverviewResultCategory> getMonthlySalesForCategory(String categoryName, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException;
 
 }
