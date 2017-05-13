@@ -2,7 +2,6 @@ package pb138.service.overview;
 
 import com.migesok.jaxb.adapter.javatime.PeriodXmlAdapter;
 import pb138.dal.entities.Category;
-import pb138.dal.entities.Item;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
