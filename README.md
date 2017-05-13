@@ -4,6 +4,8 @@
 
 ## [Project Wiki](https://github.com/mschvarc/PB138-Inventory-Management/wiki)
 
+### [Project Documentation](https://github.com/mschvarc/PB138-Inventory-Management/wiki/Project-Documentation)
+
 ## [Project Website](https://mschvarc.github.io/PB138-Inventory-Management/)
 
 ## Project Description:
