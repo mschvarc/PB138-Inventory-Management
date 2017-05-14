@@ -4,3 +4,7 @@ jdk:
 
 sudo: false
 script: mvn clean verify
+
+git:
+  depth: 10
+
