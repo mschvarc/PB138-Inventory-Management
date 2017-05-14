@@ -44,6 +44,11 @@ public class XmlExporterTest extends TestCase {
 
     @Before
     public void beforeTests() throws Exception {
+
+    }
+
+    @Test
+    public void exportCorrectly() throws Exception {
         categoryFacade.createOrUpdateCategory("Electronics", "Computers, TVs, etc");
         categoryFacade.createOrUpdateCategory("Clothes", "T-shirts and pants");
         Pair<Item, CreateOrUpdate> i1 = itemFacade.createOrUpdateItem("PC", "Awesome gaming computer", "Electronics", null, "pieces", 213);
@@ -57,15 +62,17 @@ public class XmlExporterTest extends TestCase {
 
         Pair<Item, CreateOrUpdate> i4 = itemFacade.createOrUpdateItem("t-shirt", "Nice blue T-Shirt", "Clothes", null, "pieces", 21312);
         itemFacade.storeItemInDb(i4);
-    }
-
-    @Test
-    public void exportCorrectly() throws Exception {
         String s = xmlExporter.ExportXmlToString();
         Document doc = xmlExporter.ExportXmlToDoc();
         Element root = doc.getDocumentElement();
         assertThat(root.getTagName(), is("items"));
         NodeList itemList = root.getChildNodes();
         assertThat(itemList.getLength(), is(4));
+    }
+
+    @Test
+    public void exportEmpty() throws Exception {
+        String s = xmlExporter.ExportXmlToString();
+        assertThat(s.contains("<items/>"), is(true));
     }
 }
