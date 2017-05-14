@@ -109,6 +109,17 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         Root<Shipment> root = criteria.from(Shipment.class);
         criteria.select(root);
 
+        if(filter.getDateImported() != null && filter.getDateImportedFrom() != null && filter.getDateImported().before(filter.getDateImportedFrom())){
+            throw new IllegalStateException("Filter date imported is before filter date imported from");
+        }
+        if(filter.getDateImported() != null && filter.getDateImportedTo() != null && filter.getDateImported().after(filter.getDateImportedTo())){
+            throw new IllegalStateException("Filter date imported is after filter date imported from");
+        }
+        if(filter.getDateImportedTo()!= null && filter.getDateImportedFrom() != null && filter.getDateImportedFrom().after(filter.getDateImportedTo())){
+            throw new IllegalStateException("Filter date imported from is after filter date imported to");
+        }
+
+
         List<Predicate> validPredicates = new LinkedList<>();
         if (filter.getId() != null) {
             Predicate id = builder.equal(root.get(Shipment_.id), filter.getId());
@@ -127,7 +138,7 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
             validPredicates.add(dateSoldFrom);
         }
         if (filter.getDateImportedTo() != null) {
-            Predicate dateSoldTo = builder.lessThanOrEqualTo(root.get(Shipment_.dateImported), filter.getDateImportedTo());
+            Predicate dateSoldTo = builder.lessThan(root.get(Shipment_.dateImported), filter.getDateImportedTo());
             validPredicates.add(dateSoldTo);
         }
         if (filter.getCategory() != null) {

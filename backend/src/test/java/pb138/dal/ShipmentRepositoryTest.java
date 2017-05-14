@@ -140,6 +140,34 @@ public class ShipmentRepositoryTest extends TestCase {
         assertThat(result, hasItem(shipment));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionFrom() throws Exception {
+        ShipmentFilter filter = new ShipmentFilter();
+        filter.setDateImported(date(500*1000L));
+        filter.setDateImportedFrom(date(700*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionTo() throws Exception {
+        ShipmentFilter filter = new ShipmentFilter();
+        filter.setDateImported(date(500*1000L));
+        filter.setDateImportedTo(date(300*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionFromToReversed() throws Exception {
+        ShipmentFilter filter = new ShipmentFilter();
+        filter.setDateImportedFrom(date(700 * 1000L));
+        filter.setDateImportedTo(date(300*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+
     @Test
     public void basicRetrieveTest() {
         Shipment result = repository.getById(insertedShipment.getId());

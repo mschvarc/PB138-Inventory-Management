@@ -90,7 +90,7 @@ public class SaleFilter implements EntityFilter {
     }
 
     /**
-     * Gets dateSoldFrom
+     * Gets dateSoldFrom INCLUSIVE
      *
      * @return value of dateSoldFrom
      */
@@ -99,7 +99,7 @@ public class SaleFilter implements EntityFilter {
     }
 
     /**
-     * Sets dateSoldFrom
+     * Sets dateSoldFrom INCLUSIVE
      *
      * @param dateSoldFrom dateSoldFrom
      */
@@ -108,7 +108,7 @@ public class SaleFilter implements EntityFilter {
     }
 
     /**
-     * Gets dateSoldTo
+     * Gets dateSoldTo EXCLUSIVE
      *
      * @return value of dateSoldTo
      */
@@ -117,7 +117,7 @@ public class SaleFilter implements EntityFilter {
     }
 
     /**
-     * Sets dateSoldTo
+     * Sets dateSoldTo EXCLUSIVE
      *
      * @param dateSoldTo dateSoldTo
      */

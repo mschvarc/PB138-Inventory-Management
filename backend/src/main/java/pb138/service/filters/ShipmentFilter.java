@@ -89,7 +89,7 @@ public class ShipmentFilter implements EntityFilter {
     }
 
     /**
-     * Gets dateImportedFrom
+     * Gets dateImportedFrom INCLUSIVE
      *
      * @return value of dateImportedFrom
      */
@@ -98,7 +98,7 @@ public class ShipmentFilter implements EntityFilter {
     }
 
     /**
-     * Sets dateImportedFrom
+     * Sets dateImportedFrom INCLUSIVE
      *
      * @param dateImportedFrom dateImportedFrom
      */
@@ -107,7 +107,7 @@ public class ShipmentFilter implements EntityFilter {
     }
 
     /**
-     * Gets dateImportedTo
+     * Gets dateImportedTo EXCLUSIVE
      *
      * @return value of dateImportedTo
      */
@@ -116,7 +116,7 @@ public class ShipmentFilter implements EntityFilter {
     }
 
     /**
-     * Sets dateImportedTo
+     * Sets dateImportedTo EXCLUSIVE
      *
      * @param dateImportedTo dateImportedTo
      */

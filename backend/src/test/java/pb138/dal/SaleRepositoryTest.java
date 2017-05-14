@@ -133,6 +133,35 @@ public class SaleRepositoryTest extends TestCase {
         assertThat(result, hasItem(sale));
     }
 
+
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionFrom() throws Exception {
+        SaleFilter filter = new SaleFilter();
+        filter.setDateSold(date(500*1000L));
+        filter.setDateSoldFrom(date(700*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionTo() throws Exception {
+        SaleFilter filter = new SaleFilter();
+        filter.setDateSold(date(500*1000L));
+        filter.setDateSoldTo(date(300*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void filterStateExceptionFromToReversed() throws Exception {
+        SaleFilter filter = new SaleFilter();
+        filter.setDateSoldFrom(date(700 * 1000L));
+        filter.setDateSoldTo(date(300*1000L));
+        filter.setCategory(category);
+        repository.find(filter);
+    }
+
+
     @Test
     public void basicRetrieveTest() {
         Sale result = repository.getById(insertedSale.getId());

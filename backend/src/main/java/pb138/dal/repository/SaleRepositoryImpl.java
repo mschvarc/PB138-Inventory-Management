@@ -113,6 +113,16 @@ public class SaleRepositoryImpl implements SaleRepository {
         Root<Sale> root = criteria.from(Sale.class);
         criteria.select(root);
 
+        if(filter.getDateSold() != null && filter.getDateSoldFrom() != null && filter.getDateSold().before(filter.getDateSoldFrom())){
+            throw new IllegalStateException("Filter date sold is before filter date sold from");
+        }
+        if(filter.getDateSold() != null && filter.getDateSoldTo() != null && filter.getDateSold().after(filter.getDateSoldTo())){
+            throw new IllegalStateException("Filter date sold is after filter date sold from");
+        }
+        if(filter.getDateSoldTo()!= null && filter.getDateSoldFrom() != null && filter.getDateSoldFrom().after(filter.getDateSoldTo())){
+            throw new IllegalStateException("Filter date sold from is after filter date sold to");
+        }
+
         List<Predicate> validPredicates = new LinkedList<>();
         if (filter.getId() != null) {
             Predicate id = builder.equal(root.get(Sale_.id), filter.getId());

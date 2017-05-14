@@ -45,6 +45,9 @@ import pb138.service.facades.SaleFacade;
 import pb138.service.facades.ShipmentFacade;
 import pb138.service.mapper.Automapper;
 import pb138.service.overview.OverviewProvider;
+import pb138.service.overview.OverviewResultCategory;
+import pb138.service.overview.OverviewResultItem;
+import pb138.service.overview.OverviewXmlExporter;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -75,7 +78,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private ShipmentRepository shipmentRepository;
     @Autowired
     private ConstraintValidator validator;
-    //@Autowired //TODO: once done, autowire
+    @Autowired
     private OverviewProvider overviewProvider;
     @Autowired
     private CategoryFacade categoryFacade;
@@ -91,8 +94,8 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private XmlExporter xmlExporter;
     @Autowired
     private Automapper automapper;
-    //@Autowired
-    //private EmailSender emailSender;
+    //@Autowired //TODO: auto-wire once implemented
+    private OverviewXmlExporter overviewXmlExporter;
 
     @WebMethod(exclude = true)
     @PostConstruct
@@ -100,6 +103,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    //TODO: debug only!
     @WebMethod
     public void addTestData() throws EntityValidationException {
         Category cat = new Category();
@@ -251,98 +255,6 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return automapper.mapTo(category, CategoryDto.class);
     }
 
-    /*
-    private List<OverviewResult> testOverviewDEBUG(int timespan, boolean isCategory){
-        try{
-            addTestData();
-        }
-        catch (Throwable t ){
-            //errors expected here, debug only until OverviewProvider is implemented
-        }
-
-        List<OverviewResult> results = new ArrayList<>();
-        if(isCategory) {
-            switch (timespan) {
-                case 0:
-                    results.add(new OverviewResult(Period.ofDays(2), date(514455), categoryFacade.getAllCategories().get(0), 10));
-                    results.add(new OverviewResult(Period.ofDays(2), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 30));
-                    break;
-                case 1:
-                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455), categoryFacade.getAllCategories().get(0), 5));
-                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 100));
-                    break;
-                case 2:
-                    results.add(new OverviewResult(Period.ofMonths(1), date(514455), categoryFacade.getAllCategories().get(0), 25));
-                    results.add(new OverviewResult(Period.ofMonths(1), date(514455 + 100000), categoryFacade.getAllCategories().get(0), 55));
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        else {
-            switch (timespan) {
-                case 0:
-                    results.add(new OverviewResult(Period.ofDays(1), date(514455), itemFacade.getAllItems().get(0), 10));
-                    results.add(new OverviewResult(Period.ofDays(1), date(514455 + 100000), itemFacade.getAllItems().get(0), 30));
-                    break;
-                case 1:
-                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455), itemFacade.getAllItems().get(0), 5));
-                    results.add(new OverviewResult(Period.ofWeeks(1), date(514455 + 100000),itemFacade.getAllItems().get(0), 100));
-                    break;
-                case 2:
-                    results.add(new OverviewResult(Period.ofMonths(1), date(514455), itemFacade.getAllItems().get(0), 25));
-                    results.add(new OverviewResult(Period.ofMonths(1), date(514455 + 100000), itemFacade.getAllItems().get(0), 55));
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        return results;
-    }
-
-    private static Date date(long time){
-        Date v = new Date();
-        v.setTime(time);
-        return v;
-    }
-
-    @WebMethod
-    public List<OverviewResult> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) {
-        //return overviewProvider.getDailySalesForItem(itemFacade.getItemByEan(ean), dayStart, numberOfDays);
-        return testOverviewDEBUG(0, false);
-    }
-
-    @WebMethod
-    public List<OverviewResult> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) {
-        //return overviewProvider.getWeeklySalesForItem(itemFacade.getItemByEan(ean), weekStart, numberOfWeeks);
-        return testOverviewDEBUG(1, false);
-    }
-
-    @WebMethod
-    public List<OverviewResult> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) {
-        //return overviewProvider.getMonthlySalesForItem(itemFacade.getItemByEan(ean), monthStart, numberOfMonths);
-        return testOverviewDEBUG(2, false);
-    }
-
-    @WebMethod
-    public List<OverviewResult> getDailySalesForCategory(String category, Date dayStart, int numberOfDays){
-        //return overviewProvider.getDailySalesForCategory(categoryFacade.getCategoryByName(category), dayStart, numberOfDays);
-        return testOverviewDEBUG(0, true);
-    }
-
-    @WebMethod
-    public List<OverviewResult> getWeeklySalesForCategory(String category, Date weekStart, int numberOfWeeks){
-       // return overviewProvider.getWeeklySalesForCategory(categoryFacade.getCategoryByName(category), weekStart, numberOfWeeks);
-        return testOverviewDEBUG(0, true);
-    }
-
-    @WebMethod
-    public List<OverviewResult> getMonthlySalesForCategory(String category, Date monthStart, int numberOfMonths){
-        //return overviewProvider.getMonthlySalesForCategory(categoryFacade.getCategoryByName(category), monthStart, numberOfMonths);
-        return testOverviewDEBUG(0, true);
-    }
-    */
-
     /**
      * Changes the parameters of an item
      *
@@ -369,4 +281,92 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         return automapper.mapTo(item, ItemDto.class);
     }
 
+
+
+    private static Date date(long time){
+        Date v = new Date();
+        v.setTime(time);
+        return v;
+    }
+
+    /*
+    ---------
+    XML OVERVIEW EXPORTERS
+    ---------
+     */
+
+    @WebMethod
+    public String getDailySalesForItemXml(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+        return serializeOverviewResultItem(overviewProvider.getDailySalesForItem(ean, dayStart, numberOfDays));
+    }
+
+    @WebMethod
+    public String getWeeklySalesForItemXml(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+        return serializeOverviewResultItem(overviewProvider.getWeeklySalesForItem(ean, weekStart, numberOfWeeks));
+    }
+
+    @WebMethod
+    public String getMonthlySalesForItemXml(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+        return serializeOverviewResultItem(overviewProvider.getMonthlySalesForItem(ean, monthStart, numberOfMonths));
+    }
+
+    @WebMethod
+    public String getDailySalesForCategoryXml(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+        return serializeOverviewResultCategory(overviewProvider.getDailySalesForCategory(category, dayStart, numberOfDays));
+    }
+
+    @WebMethod
+    public String getWeeklySalesForCategoryXml(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+        return serializeOverviewResultCategory(overviewProvider.getWeeklySalesForCategory(category, weekStart, numberOfWeeks));
+    }
+
+    @WebMethod
+    public String getMonthlySalesForCategoryXml(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+        return serializeOverviewResultCategory(overviewProvider.getMonthlySalesForCategory(category, monthStart, numberOfMonths));
+    }
+
+    /*
+    ---------
+    LIST OVERVIEW EXPORTERS
+    ---------
+     */
+
+    @WebMethod
+    public List<OverviewResultItem> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+        return overviewProvider.getDailySalesForItem(ean, dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResultItem> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+        return overviewProvider.getWeeklySalesForItem(ean, weekStart, numberOfWeeks);
+    }
+
+    @WebMethod
+    public List<OverviewResultItem> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+        return overviewProvider.getMonthlySalesForItem(ean, monthStart, numberOfMonths);
+    }
+
+    @WebMethod
+    public List<OverviewResultCategory> getDailySalesForCategory(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+        return overviewProvider.getDailySalesForCategory(category, dayStart, numberOfDays);
+    }
+
+    @WebMethod
+    public List<OverviewResultCategory> getWeeklySalesForCategory(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+        return overviewProvider.getWeeklySalesForCategory(category, weekStart, numberOfWeeks);
+    }
+
+    @WebMethod
+    public List<OverviewResultCategory> getMonthlySalesForCategory(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+        return overviewProvider.getMonthlySalesForCategory(category, monthStart, numberOfMonths);
+    }
+
+
+    private String serializeOverviewResultItem(List<OverviewResultItem> items){
+        return overviewXmlExporter.exportItemResultToXml(items);
+    }
+
+    private String serializeOverviewResultCategory(List<OverviewResultCategory> category){
+        return overviewXmlExporter.exportCategoryResultToXml(category);
+    }
 }
