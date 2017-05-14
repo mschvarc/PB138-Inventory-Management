@@ -3,6 +3,8 @@ package pb138.service.mapper;
 import java.util.Collection;
 import java.util.List;
 
+// Original source (javadoc modified): https://github.com/drichtarik/Dog-barbershop/blob/master/service/src/main/java/cz/muni/fi/pa165/service/BeanMappingService.java
+
 /**
  * Interface for mapping between DAL Entities and DTOs in Web layer
  *
