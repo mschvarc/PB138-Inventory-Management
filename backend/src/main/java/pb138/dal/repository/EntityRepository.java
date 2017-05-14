@@ -6,6 +6,7 @@ import pb138.dal.repository.validation.EntityValidationException;
  * Represents a repository for entity manipulation and retrieval
  *
  * @param <T> ORM entity
+ * @author Martin Schvarcbacher
  */
 public interface EntityRepository<T> {
     /**

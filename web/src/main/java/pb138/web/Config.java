@@ -24,6 +24,10 @@ import pb138.web.email.EmailSenderImpl;
 import javax.xml.ws.Endpoint;
 import java.util.Map;
 
+/**
+ * Spring configuration class for web backend
+ * @author Martin Schvarcbacher
+ */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories

@@ -3,6 +3,7 @@
 
     <persistence-unit name="H2_INMEMORY_DB" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>pb138.dal.entities.BaseEntity</class>
         <class>pb138.dal.entities.Category</class>
         <class>pb138.dal.entities.Sale</class>
         <class>pb138.dal.entities.Shipment</class>

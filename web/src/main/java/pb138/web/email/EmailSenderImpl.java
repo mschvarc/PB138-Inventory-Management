@@ -9,10 +9,10 @@ import pb138.service.services.EmailSender;
 import java.util.Date;
 import java.util.List;
 
-//Source: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mail.html
 
 /**
  * Sends an alert when count gets below a threshold
+ * @author Martin Schvarcbacher
  */
 public class EmailSenderImpl implements EmailSender {
 
@@ -26,6 +26,7 @@ public class EmailSenderImpl implements EmailSender {
 
     @Override
     public void sendAlerts(List<Item> items) {
+        //Source: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mail.html
         if (items.isEmpty()) {
             System.err.println((new Date()) + " received empty alert collection for emails, returning");
             return;

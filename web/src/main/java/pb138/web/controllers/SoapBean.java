@@ -58,7 +58,10 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * SOAP API endpoint
+ * @author Martin Schvarcbacher
+ */
 @Service
 @Component
 @WebService(name = "SoapBean", serviceName = "SoapBean", targetNamespace = "pb138.web")

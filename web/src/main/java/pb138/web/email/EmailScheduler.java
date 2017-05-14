@@ -3,6 +3,10 @@ package pb138.web.email;
 import org.springframework.scheduling.annotation.Scheduled;
 import pb138.service.services.ItemCountWatchdogService;
 
+/**
+ * Spring Scheduled class for sending emails every 24 hours
+ * @author Martin Schvarcbacher
+ */
 public class EmailScheduler {
 
     private final ItemCountWatchdogService itemCountWatchdogService;

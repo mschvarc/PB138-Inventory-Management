@@ -2,6 +2,7 @@ package pb138.dal.repository.validation;
 
 /**
  * Represents exceptions thrown on constraint violations
+ * @author Martin Schvarcbacher
  */
 public class EntityValidationException extends Exception {
 

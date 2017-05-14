@@ -27,6 +27,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
+/**
+ * Tests ShipmentRepositoryImpl
+ * @author Martin Schvarcbacher
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:META-INF/persistence-config.xml")
 @Transactional

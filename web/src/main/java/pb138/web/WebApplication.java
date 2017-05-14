@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Core Spring Boot Launcher class, responsible for bootstrapping web layer
+ * @author Martin Schvarcbacher
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "pb138.web.controllers")
 @ImportResource(locations = {"classpath*:META-INF/persistence-config.xml"})

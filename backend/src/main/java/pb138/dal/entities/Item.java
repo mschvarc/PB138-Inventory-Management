@@ -1,14 +1,13 @@
 package pb138.dal.entities;
 
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,13 +16,11 @@ import javax.validation.constraints.NotNull;
  * ORM Item
  * PK: id
  * BK: ean
+ * @author Martin Schvarcbacher
  */
 @Entity
-public class Item {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+public class Item extends BaseEntity {
 
     @NotNull
     @Length(min = 1)
@@ -52,24 +49,6 @@ public class Item {
 
     @NotNull
     private int currentCount;
-
-    /**
-     * Gets id
-     *
-     * @return value of id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Sets id
-     *
-     * @param id id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
 
     /**
      * Gets name

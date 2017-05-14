@@ -1,11 +1,9 @@
 package pb138.dal.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,18 +11,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-//no unique business key (yet)
-
 /**
  * ORM Sale
  * PK: id
+ * @author Martin Schvarcbacher
  */
 @Entity
-public class Sale {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+public class Sale extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
@@ -37,23 +31,6 @@ public class Sale {
     @NotNull
     private Date dateSold;
 
-    /**
-     * Gets id
-     *
-     * @return value of id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Sets id
-     *
-     * @param id id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
 
     /**
      * Gets item

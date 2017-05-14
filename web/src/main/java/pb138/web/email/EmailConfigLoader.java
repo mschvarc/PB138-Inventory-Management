@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Responsible for loading email sender configuration files
+ * @author Martin Schvarcbacher
  */
 @Component
 public interface EmailConfigLoader {

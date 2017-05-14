@@ -29,6 +29,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
+/**
+ * Tests ItemRepositoryImpl
+ * @author Martin Schvarcbacher
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:META-INF/persistence-config.xml")
 @Transactional
