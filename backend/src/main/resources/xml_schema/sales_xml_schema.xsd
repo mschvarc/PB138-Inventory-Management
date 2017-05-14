@@ -14,15 +14,15 @@
 
     <xs:complexType name="saleType">
         <xs:sequence>
-            <xs:element name="itemEan" type="nonNegativeInteger"/>
-            <xs:element name="amount" type="nonNegativeInteger"/>
+            <xs:element name="itemEan" type="eanType"/>
+            <xs:element name="amount" type="xs:nonNegativeInteger"/>
             <xs:element name="date" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="nonNegativeInteger">
-        <xs:restriction base="xs:integer">
-            <xs:minExclusive value="0"/>
+    <xs:simpleType name="eanType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{13}"/>
         </xs:restriction>
     </xs:simpleType>
 
