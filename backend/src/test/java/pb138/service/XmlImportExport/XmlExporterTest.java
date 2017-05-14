@@ -1,4 +1,4 @@
-package XmlImportExport;
+package pb138.service.XmlImportExport;
 
 import junit.framework.TestCase;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package Facades;
+package pb138.service.facades;
 
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pb138.dal.entities.Category;
-import pb138.service.facades.CategoryFacade;
 
 import javax.transaction.Transactional;
 import java.util.List;

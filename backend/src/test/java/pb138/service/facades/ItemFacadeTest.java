@@ -1,4 +1,4 @@
-package Facades;
+package pb138.service.facades;
 
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -11,8 +11,6 @@ import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.repository.CategoryRepository;
 import pb138.service.exceptions.EntityDoesNotExistException;
-import pb138.service.facades.CreateOrUpdate;
-import pb138.service.facades.ItemFacade;
 import pb138.utils.Pair;
 
 import javax.transaction.Transactional;

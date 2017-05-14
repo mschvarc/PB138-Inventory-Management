@@ -1,4 +1,4 @@
-package XmlImportExport;
+package pb138.service.XmlImportExport;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
