@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<categoryOverview>
+
+    <overview>
+        <period>week</period>
+        <date>2017-01-30</date>
+        <category>
+            <name>sweet-stuff</name>
+            <description>Foodstuffs: chocolate, candies atc.</description>
+        </category>
+        <countSold>20</countSold>
+    </overview>
+
+    <overview>
+        <period>week</period>
+        <date>2017-02-06</date>
+        <category>
+            <name>sweet-stuff</name>
+            <description>Foodstuffs: chocolate, candies atc.</description>
+        </category>
+        <countSold>30</countSold>
+    </overview>
+
+</categoryOverview>

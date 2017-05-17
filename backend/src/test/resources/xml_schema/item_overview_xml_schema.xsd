@@ -4,16 +4,20 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified">
 
-    <xs:element name="items" type="itemsType">
-        <xs:key name="eanKey">
-            <xs:selector xpath="./item"/>
-            <xs:field xpath="ean"/>
-        </xs:key>
-    </xs:element>
+    <xs:element name="itemOverview" type="itemOverviewType"/>
 
-    <xs:complexType name="itemsType">
+    <xs:complexType name="itemOverviewType">
         <xs:sequence>
-            <xs:element name="item" type="itemType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="overview" type="overviewType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="overviewType">
+        <xs:sequence>
+            <xs:element name="period" type="periodType"/>
+            <xs:element name="date" type="xs:date"/>
+            <xs:element name="item" type="itemType"/>
+            <xs:element name="countSold" type="xs:nonNegativeInteger"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -27,6 +31,14 @@
             <xs:element name="threshold" type="xs:nonNegativeInteger" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="periodType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="day"/>
+            <xs:enumeration value="week"/>
+            <xs:enumeration value="month"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="eanType">
         <xs:restriction base="xs:string">

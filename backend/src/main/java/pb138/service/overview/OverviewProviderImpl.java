@@ -82,7 +82,7 @@ public class OverviewProviderImpl implements OverviewProvider {
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
         to.setTime(start);
-        roud(to, calFieldPeriod);
+        roundToPrecision(to, calFieldPeriod);
         List<OverviewResultItem> results = new ArrayList<>();
         List<Sale> sales;
         Period period;
@@ -97,7 +97,7 @@ public class OverviewProviderImpl implements OverviewProvider {
                 period = Period.ofMonths(1);
                 break;
             default:
-                period = null;
+                throw new IllegalStateException("Wrong period");
         }
 
         for (int i = 0; i < numberOfPeriods; ++i) {
@@ -126,7 +126,7 @@ public class OverviewProviderImpl implements OverviewProvider {
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
         to.setTime(start);
-        roud(to, calFieldPeriod);
+        roundToPrecision(to, calFieldPeriod);
         List<OverviewResultCategory> results = new ArrayList<>();
         List<Sale> sales;
         Period period;
@@ -141,7 +141,7 @@ public class OverviewProviderImpl implements OverviewProvider {
                 period = Period.ofMonths(1);
                 break;
             default:
-                period = null;
+                throw new IllegalStateException("Wrong period");
         }
 
         for (int i = 0; i < numberOfPeriods; ++i) {
@@ -160,7 +160,7 @@ public class OverviewProviderImpl implements OverviewProvider {
     }
 
     //works only for calFieldAccuracy values: Calendar.DAY_OF_MONTH, Calendar.WEEK_OF_YEAR and Calendar.MONTH
-    private Calendar roud(Calendar date, int calFieldAccuracy) {
+    private Calendar roundToPrecision(Calendar date, int calFieldAccuracy) {
 
         date.set(Calendar.MILLISECOND, 0);
         date.set(Calendar.SECOND, 0);
