@@ -3,8 +3,8 @@
 <itemOverview>
 
     <overview>
-        <period>week</period>
-        <date>2017-01-30</date>
+        <timespan>week</timespan>
+        <dateStart>2017-01-30</dateStart>
         <item>
             <ean>7614500010013</ean>
             <name>Toblerone Milk Chocolate</name>
@@ -16,8 +16,8 @@
     </overview>
 
     <overview>
-        <period>week</period>
-        <date>2017-02-06</date>
+        <timespan>week</timespan>
+        <dateStart>2017-02-06</dateStart>
         <item>
             <ean>7614500010013</ean>
             <name>Toblerone Milk Chocolate</name>

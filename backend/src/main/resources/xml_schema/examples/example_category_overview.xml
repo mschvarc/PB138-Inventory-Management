@@ -3,8 +3,8 @@
 <categoryOverview>
 
     <overview>
-        <period>week</period>
-        <date>2017-01-30</date>
+        <timespan>week</timespan>
+        <dateStart>2017-01-30</dateStart>
         <category>
             <name>sweet-stuff</name>
             <description>Foodstuffs: chocolate, candies atc.</description>
@@ -13,8 +13,8 @@
     </overview>
 
     <overview>
-        <period>week</period>
-        <date>2017-02-06</date>
+        <timespan>week</timespan>
+        <dateStart>2017-02-06</dateStart>
         <category>
             <name>sweet-stuff</name>
             <description>Foodstuffs: chocolate, candies atc.</description>

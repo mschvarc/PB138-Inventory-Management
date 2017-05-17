@@ -14,8 +14,8 @@
 
     <xs:complexType name="overviewType">
         <xs:sequence>
-            <xs:element name="period" type="periodType"/>
-            <xs:element name="date" type="xs:date"/>
+            <xs:element name="timespan" type="timespanType"/>
+            <xs:element name="dateStart" type="xs:date"/>
             <xs:element name="item" type="itemType"/>
             <xs:element name="countSold" type="xs:nonNegativeInteger"/>
         </xs:sequence>
@@ -32,7 +32,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="periodType">
+    <xs:simpleType name="timespanType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="day"/>
             <xs:enumeration value="week"/>
