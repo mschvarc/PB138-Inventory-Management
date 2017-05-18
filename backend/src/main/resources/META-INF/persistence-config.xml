@@ -132,4 +132,8 @@
         <constructor-arg name="itemService" ref="itemService"/>
         <constructor-arg name="categoryService" ref="categoryService"/>
     </bean>
+
+    <bean id="overviewXmlExporter" class="pb138.service.overview.OverviewXmlExporterImpl">
+        <constructor-arg name="xmlValidator" ref="xmlValidator"/>
+    </bean>
 </beans>
