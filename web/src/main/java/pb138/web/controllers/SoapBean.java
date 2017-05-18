@@ -66,6 +66,7 @@ import java.util.List;
 
 /**
  * SOAP API endpoint
+ *
  * @author Martin Schvarcbacher
  */
 @Service
@@ -103,7 +104,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     private XmlExporter xmlExporter;
     @Autowired
     private Automapper automapper;
-    //@Autowired //TODO: auto-wire once implemented
+    @Autowired
     private OverviewXmlExporter overviewXmlExporter;
 
     @WebMethod(exclude = true)
@@ -362,8 +363,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
 
-
-    private static Date date(long time){
+    private static Date date(long time) {
         Date v = new Date();
         v.setTime(time);
         return v;
@@ -378,84 +378,108 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     /**
      * Get daily count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param dayStart - date of the first day of the overview
+     * @param ean          - ean of item to find its sales
+     * @param dayStart     - date of the first day of the overview
      * @param numberOfDays - number of days of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one day
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getDailySalesForItemXml(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException, XmlValidationException {
+    public String getDailySalesForItemXml(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "dayStart") Date dayStart,
+            @WebParam(name = "numberOfDays") int numberOfDays)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getDailySalesForItem(ean, dayStart, numberOfDays));
     }
 
     /**
      * Get weekly count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param weekStart - date of some day from the first week of the overview
+     * @param ean           - ean of item to find its sales
+     * @param weekStart     - date of some day from the first week of the overview
      * @param numberOfWeeks - number of weeks of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one week
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getWeeklySalesForItemXml(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException, XmlValidationException {
+    public String getWeeklySalesForItemXml(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "weekStart") Date weekStart,
+            @WebParam(name = "numberOfWeeks") int numberOfWeeks)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getWeeklySalesForItem(ean, weekStart, numberOfWeeks));
     }
 
     /**
      * Get monthly count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param monthStart - date of some day from the first month of the overview
+     * @param ean            - ean of item to find its sales
+     * @param monthStart     - date of some day from the first month of the overview
      * @param numberOfMonths - number of months of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one month
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getMonthlySalesForItemXml(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException, XmlValidationException {
+    public String getMonthlySalesForItemXml(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "monthStart") Date monthStart,
+            @WebParam(name = "numberOfMonths") int numberOfMonths)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getMonthlySalesForItem(ean, monthStart, numberOfMonths));
     }
 
     /**
      * Get daily count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param dayStart - date of the first day of the overview
+     * @param category     - name of category to find its sales
+     * @param dayStart     - date of the first day of the overview
      * @param numberOfDays - number of days of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one day
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getDailySalesForCategoryXml(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException, XmlValidationException {
+    public String getDailySalesForCategoryXml(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "dayStart") Date dayStart,
+            @WebParam(name = "numberOfDays") int numberOfDays)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getDailySalesForCategory(category, dayStart, numberOfDays));
     }
 
     /**
      * Get weekly count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param weekStart - date of some day from the first week of the overview
+     * @param category      - name of category to find its sales
+     * @param weekStart     - date of some day from the first week of the overview
      * @param numberOfWeeks - number of weeks of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one week
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getWeeklySalesForCategoryXml(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException, XmlValidationException {
+    public String getWeeklySalesForCategoryXml(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "weekStart") Date weekStart,
+            @WebParam(name = "numberOfWeeks") int numberOfWeeks)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getWeeklySalesForCategory(category, weekStart, numberOfWeeks));
     }
 
     /**
      * Get monthly count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param monthStart - date of some day from the first month of the overview
+     * @param category       - name of category to find its sales
+     * @param monthStart     - date of some day from the first month of the overview
      * @param numberOfMonths - number of months of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one month
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getMonthlySalesForCategoryXml(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException, XmlValidationException {
+    public String getMonthlySalesForCategoryXml(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "monthStart") Date monthStart,
+            @WebParam(name = "numberOfMonths") int numberOfMonths)
+            throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getMonthlySalesForCategory(category, monthStart, numberOfMonths));
     }
 
@@ -468,90 +492,115 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     /**
      * Get daily count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param dayStart - date of the first day of the overview
+     * @param ean          - ean of item to find its sales
+     * @param dayStart     - date of the first day of the overview
      * @param numberOfDays - number of days of the overview
      * @return list of 'OverviewResultItem's with timespan one day
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public List<OverviewResultItem> getDailySalesForItem(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+    public List<OverviewResultItem> getDailySalesForItem(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "dayStart") Date dayStart,
+            @WebParam(name = "numberOfDays") int numberOfDays)
+            throws EntityDoesNotExistException {
         return overviewProvider.getDailySalesForItem(ean, dayStart, numberOfDays);
     }
 
     /**
      * Get weekly count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param weekStart - date of some day from the first week of the overview
+     * @param ean           - ean of item to find its sales
+     * @param weekStart     - date of some day from the first week of the overview
      * @param numberOfWeeks - number of weeks of the overview
      * @return list of 'OverviewResultItem's with timespan one week
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public List<OverviewResultItem> getWeeklySalesForItem(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+    public List<OverviewResultItem> getWeeklySalesForItem(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "weekStart") Date weekStart,
+            @WebParam(name = "numberOfWeeks") int numberOfWeeks)
+            throws EntityDoesNotExistException {
         return overviewProvider.getWeeklySalesForItem(ean, weekStart, numberOfWeeks);
     }
 
     /**
      * Get monthly count of sold items.
      *
-     * @param ean - ean of item to find its sales
-     * @param monthStart - date of some day from the first month of the overview
+     * @param ean            - ean of item to find its sales
+     * @param monthStart     - date of some day from the first month of the overview
      * @param numberOfMonths - number of months of the overview
      * @return list of 'OverviewResultItem's with timespan one month
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public List<OverviewResultItem> getMonthlySalesForItem(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+    public List<OverviewResultItem> getMonthlySalesForItem(
+            @WebParam(name = "ean") long ean,
+            @WebParam(name = "monthStart") Date monthStart,
+            @WebParam(name = "numberOfMonths") int numberOfMonths)
+            throws EntityDoesNotExistException {
         return overviewProvider.getMonthlySalesForItem(ean, monthStart, numberOfMonths);
     }
 
     /**
      * Get daily count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param dayStart - date of the first day of the overview
+     * @param category     - name of category to find its sales
+     * @param dayStart     - date of the first day of the overview
      * @param numberOfDays - number of days of the overview
      * @return list of 'OverviewResultCategory's with timespan one day
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public List<OverviewResultCategory> getDailySalesForCategory(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+    public List<OverviewResultCategory> getDailySalesForCategory(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "dayStart") Date dayStart,
+            @WebParam(name = "numberOfDays") int numberOfDays)
+            throws EntityDoesNotExistException {
         return overviewProvider.getDailySalesForCategory(category, dayStart, numberOfDays);
     }
 
     /**
      * Get weekly count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param weekStart - date of some day from the first week of the overview
+     * @param category      - name of category to find its sales
+     * @param weekStart     - date of some day from the first week of the overview
      * @param numberOfWeeks - number of weeks of the overview
      * @return list of 'OverviewResultCategory's with timespan one week
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public List<OverviewResultCategory> getWeeklySalesForCategory(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+    public List<OverviewResultCategory> getWeeklySalesForCategory(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "weekStart") Date weekStart,
+            @WebParam(name = "numberOfWeeks") int numberOfWeeks)
+            throws EntityDoesNotExistException {
         return overviewProvider.getWeeklySalesForCategory(category, weekStart, numberOfWeeks);
     }
 
     /**
      * Get monthly count of sold items from given category.
      *
-     * @param category - name of category to find its sales
-     * @param monthStart - date of some day from the first month of the overview
+     * @param category       - name of category to find its sales
+     * @param monthStart     - date of some day from the first month of the overview
      * @param numberOfMonths - number of months of the overview
      * @return list of 'OverviewResultCategory's with timespan one month
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public List<OverviewResultCategory> getMonthlySalesForCategory(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+    public List<OverviewResultCategory> getMonthlySalesForCategory(
+            @WebParam(name = "category") String category,
+            @WebParam(name = "monthStart") Date monthStart,
+            @WebParam(name = "numberOfMonths") int numberOfMonths)
+            throws EntityDoesNotExistException {
         return overviewProvider.getMonthlySalesForCategory(category, monthStart, numberOfMonths);
     }
 
 
     /**
      * Serializes OverviewResultItem to XML
+     *
      * @param items item list
      * @return XML
      */
@@ -561,6 +610,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
 
     /**
      * Serializes OverviewResultItem to XML
+     *
      * @param category category list
      * @return XML
      */
