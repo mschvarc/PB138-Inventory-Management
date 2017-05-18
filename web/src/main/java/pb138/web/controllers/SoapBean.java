@@ -30,7 +30,6 @@ import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.SaleRepository;
 import pb138.dal.repository.ShipmentRepository;
 import pb138.dal.repository.validation.ConstraintValidator;
-import pb138.dal.repository.validation.EntityValidationException;
 import pb138.service.XmlImportExport.XmlExporter;
 import pb138.service.XmlImportExport.XmlImporter;
 import pb138.service.dto.CategoryDto;
@@ -386,7 +385,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getDailySalesForItemXml(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+    public String getDailySalesForItemXml(long ean, Date dayStart, int numberOfDays) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getDailySalesForItem(ean, dayStart, numberOfDays));
     }
 
@@ -400,7 +399,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getWeeklySalesForItemXml(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+    public String getWeeklySalesForItemXml(long ean, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getWeeklySalesForItem(ean, weekStart, numberOfWeeks));
     }
 
@@ -414,7 +413,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if item does not exists
      */
     @WebMethod
-    public String getMonthlySalesForItemXml(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+    public String getMonthlySalesForItemXml(long ean, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultItem(getMonthlySalesForItem(ean, monthStart, numberOfMonths));
     }
 
@@ -428,7 +427,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getDailySalesForCategoryXml(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException {
+    public String getDailySalesForCategoryXml(String category, Date dayStart, int numberOfDays) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getDailySalesForCategory(category, dayStart, numberOfDays));
     }
 
@@ -442,7 +441,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getWeeklySalesForCategoryXml(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException {
+    public String getWeeklySalesForCategoryXml(String category, Date weekStart, int numberOfWeeks) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getWeeklySalesForCategory(category, weekStart, numberOfWeeks));
     }
 
@@ -456,7 +455,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @throws EntityDoesNotExistException if category does not exists
      */
     @WebMethod
-    public String getMonthlySalesForCategoryXml(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException {
+    public String getMonthlySalesForCategoryXml(String category, Date monthStart, int numberOfMonths) throws EntityDoesNotExistException, XmlValidationException {
         return serializeOverviewResultCategory(getMonthlySalesForCategory(category, monthStart, numberOfMonths));
     }
 
@@ -556,7 +555,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param items item list
      * @return XML
      */
-    private String serializeOverviewResultItem(List<OverviewResultItem> items){
+    private String serializeOverviewResultItem(List<OverviewResultItem> items) throws XmlValidationException {
         return overviewXmlExporter.exportItemResultToXml(items);
     }
 
@@ -565,7 +564,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param category category list
      * @return XML
      */
-    private String serializeOverviewResultCategory(List<OverviewResultCategory> category){
+    private String serializeOverviewResultCategory(List<OverviewResultCategory> category) throws XmlValidationException {
         return overviewXmlExporter.exportCategoryResultToXml(category);
     }
 }
