@@ -80,7 +80,6 @@
     </bean>
 
     <bean id="saleFacade" class="pb138.service.facades.SaleFacadeImpl">
-        <constructor-arg name="categoryService" ref="categoryService"/>
         <constructor-arg name="itemService" ref="itemService"/>
         <constructor-arg name="saleService" ref="saleService"/>
     </bean>

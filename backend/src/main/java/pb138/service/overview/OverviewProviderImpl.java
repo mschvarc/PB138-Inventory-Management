@@ -14,6 +14,7 @@ import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 
 /**
+ * Implementation of OverviewProvider interface.
  *
  * @author Marketa Elederova
  */
@@ -23,6 +24,13 @@ public class OverviewProviderImpl implements OverviewProvider {
     private ItemService itemService;
     private CategoryService categoryService;
 
+    /**
+     * Constructor.
+     * 
+     * @param saleFacade saleFacade
+     * @param itemService itemService
+     * @param categoryService categoryService
+     */
     public OverviewProviderImpl(SaleFacade saleFacade, ItemService itemService, CategoryService categoryService) {
         this.saleFacade = saleFacade;
         this.itemService = itemService;

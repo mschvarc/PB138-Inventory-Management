@@ -11,6 +11,10 @@ import java.io.Serializable;
 import java.time.Period;
 import java.util.Date;
 
+/**
+ * Class representing overview of count of sold items from one category
+ * in given timespan.
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @SuppressWarnings({"unused"})
@@ -22,10 +26,21 @@ public class OverviewResultCategory implements Serializable {
     private Category category;
     private int entityCount;
 
+    /**
+     * Constructor.
+     */
     public OverviewResultCategory() {
         //Class pb138.service.overview.OverviewResult does not have a default constructor which JAXB requires.
     }
 
+    /**
+     * Constructor.
+     *
+     * @param timespan timespan of overview (expected a day, week or month)
+     * @param startDate first day of overview
+     * @param category items from this category are in the overview
+     * @param entityCount - count of sold items
+     */
     public OverviewResultCategory(Period timespan, Date startDate, Category category, int entityCount) {
         this.timespan = timespan;
         this.startDate = startDate;

@@ -13,6 +13,11 @@ import java.util.List;
 public class CategoryFacadeImpl implements CategoryFacade {
     private CategoryService categoryService;
 
+    /**
+     * Constructor.
+     *
+     * @param categoryService categoryService
+     */
     public CategoryFacadeImpl(CategoryService categoryService) {
         this.categoryService = categoryService;
     }

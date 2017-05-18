@@ -18,6 +18,12 @@ public class ShipmentFacadeImpl  implements ShipmentFacade{
     private ShipmentService shipmentService;
     private ItemService itemService;
 
+    /**
+     * Constructor.
+     *
+     * @param shipmentService shipmentService
+     * @param itemService itemService
+     */
     public ShipmentFacadeImpl(ShipmentService shipmentService, ItemService itemService) {
         this.shipmentService = shipmentService;
         this.itemService = itemService;

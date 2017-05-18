@@ -20,28 +20,32 @@ public interface SaleFacade {
     //Must be solved - what if the total amount of sales is greater than current stock?
     Sale addSale(long ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException;
 
+    /**
+     * Store sale in db.
+     *
+     * @param s sale to store
+     * @return the sale
+     * @throws ServiceException if sale is invalid or some error occurs
+     */
     Sale storeSaleInDb(Sale s) throws ServiceException;
-
-    // Pro Marketku, ty to zrejme budes exportovat do xml, nazev kategorie/ ean produktu a data ti prijdou z webove vrstvy,
-    // (asi na to Dominikovi nachystej nejaky interface, neco jako xmlExporter) vratim ti to jako list, do XML uz si to pak nejak zpracuj :)
 
     /**
      * Get all sales for given category from given period of time
-     * @param categoryName name of category
+     * @param category category
      * @param from minimum date for sales
      * @param to maximum date for sales
      * @return list of sales
-     * @throws EntityDoesNotExistException if there is no such category
+     * @throws IllegalArgumentException if category is null
      */
     List<Sale> getSalesForCategory(Category category, Date from, Date to) throws IllegalArgumentException;
 
     /**
      * Get all sales for given item from given period of time
-     * @param ean ean of item
+     * @param item item
      * @param from minimum date for sales
      * @param to maximum date for sales
      * @return list of sales
-     * @throws EntityDoesNotExistException if there is no such item
+     * @throws IllegalArgumentException item is null
      */
     List<Sale> getSalesForProduct(Item item, Date from, Date to) throws IllegalArgumentException;
 

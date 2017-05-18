@@ -11,7 +11,6 @@ import pb138.utils.Pair;
 
 import java.util.List;
 
-
 /**
  * Created by Jan on 03.05.2017.
  *
@@ -20,6 +19,12 @@ public class ItemFacadeImpl implements ItemFacade {
     private ItemService itemService;
     private CategoryService categoryService;
 
+    /**
+     * Constructor.
+     *
+     * @param itemService itemService
+     * @param categoryService categoryService
+     */
     public ItemFacadeImpl(ItemService itemService, CategoryService categoryService) {
         this.itemService = itemService;
         this.categoryService = categoryService;

@@ -7,7 +7,6 @@ import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.NotEnoughStoredException;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.filters.SaleFilter;
-import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 import pb138.service.services.SaleService;
 
@@ -21,12 +20,16 @@ import java.util.List;
 public class SaleFacadeImpl implements SaleFacade {
     private SaleService saleService;
     private ItemService itemService;
-    private CategoryService categoryService;
 
-    public SaleFacadeImpl(SaleService saleService, ItemService itemService, CategoryService categoryService) {
+    /**
+     * Constructor.
+     *
+     * @param saleService saleService
+     * @param itemService itemService
+     */
+    public SaleFacadeImpl(SaleService saleService, ItemService itemService) {
         this.saleService = saleService;
         this.itemService = itemService;
-        this.categoryService = categoryService;
     }
 
     @Override

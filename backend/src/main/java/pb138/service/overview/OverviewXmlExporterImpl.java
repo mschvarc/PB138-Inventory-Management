@@ -28,6 +28,11 @@ public class OverviewXmlExporterImpl implements OverviewXmlExporter {
 
     private final XmlValidator xmlValidator;
 
+    /**
+     * Constructor.
+     *
+     * @param xmlValidator xmlValidator
+     */
     public OverviewXmlExporterImpl(XmlValidator xmlValidator) {
         this.xmlValidator = xmlValidator;
     }

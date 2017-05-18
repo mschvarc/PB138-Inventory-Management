@@ -20,11 +20,19 @@ public interface CategoryFacade {
     Category createOrUpdateCategory(String name, String desctription) throws ServiceException;
 
 
-
-
-
+    /**
+     * Get all categories from db.
+     * 
+     * @return list of all categories
+     */
     List<Category> getAllCategories();
 
+    /**
+     * Find category with given name in db.
+     * 
+     * @param name name of category
+     * @return category with given name or null if category with this name does not exist
+     */
     Category getCategoryByName(String name);
 
 }

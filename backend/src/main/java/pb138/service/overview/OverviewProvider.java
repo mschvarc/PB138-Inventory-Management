@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import pb138.service.exceptions.EntityDoesNotExistException;
 
+/**
+ * Provides overview of sold items.
+ */
 public interface OverviewProvider {
 
     /**

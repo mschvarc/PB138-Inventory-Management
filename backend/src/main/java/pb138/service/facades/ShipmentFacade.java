@@ -30,5 +30,9 @@ public interface ShipmentFacade {
      */
     Shipment storeShipmentInDb(Shipment s) throws ServiceException;
 
+    /**
+     * Get all shipments
+     * @return all shipments
+     */
     List<Shipment> getAllShipments();
 }
