@@ -107,6 +107,9 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     @Autowired
     private OverviewXmlExporter overviewXmlExporter;
 
+    /**
+     * Spring postConstruct initialization of dependency inversion context
+     */
     @WebMethod(exclude = true)
     @PostConstruct
     public void postConstruct() {
@@ -114,6 +117,10 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     //TODO: debug only!
+    /**
+     * Removes all data from database
+     * @throws Exception on db cleanup failure
+     */
     @WebMethod
     public void clearDatabase() throws Exception {
         for (Sale sale : saleRepository.find(new SaleFilter())) {
@@ -131,6 +138,10 @@ public class SoapBean extends SpringBeanAutowiringSupport {
     }
 
     //TODO: debug only!
+    /**
+     * Adds test data to the database
+     * @throws Exception db failure
+     */
     @WebMethod
     public void addTestData() throws Exception {
         Category cat = new Category();
@@ -383,6 +394,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfDays - number of days of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one day
      * @throws EntityDoesNotExistException if item does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getDailySalesForItemXml(
@@ -401,6 +413,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfWeeks - number of weeks of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one week
      * @throws EntityDoesNotExistException if item does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getWeeklySalesForItemXml(
@@ -419,6 +432,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfMonths - number of months of the overview
      * @return XML encoded list of 'OverviewResultItem's with timespan one month
      * @throws EntityDoesNotExistException if item does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getMonthlySalesForItemXml(
@@ -437,6 +451,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfDays - number of days of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one day
      * @throws EntityDoesNotExistException if category does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getDailySalesForCategoryXml(
@@ -455,6 +470,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfWeeks - number of weeks of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one week
      * @throws EntityDoesNotExistException if category does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getWeeklySalesForCategoryXml(
@@ -473,6 +489,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      * @param numberOfMonths - number of months of the overview
      * @return XML encoded list of 'OverviewResultCategory's with timespan one month
      * @throws EntityDoesNotExistException if category does not exists
+     * @throws XmlValidationException on invalid xml
      */
     @WebMethod
     public String getMonthlySalesForCategoryXml(

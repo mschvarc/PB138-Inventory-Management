@@ -9,7 +9,8 @@ import java.util.Set;
 //Source: https://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single
 
 /**
- * {@inheritDoc}
+ * Validates ORM entity constraints
+ * @author Martin Schvarcbacher
  */
 public class ConstraintValidatorImpl implements ConstraintValidator {
 

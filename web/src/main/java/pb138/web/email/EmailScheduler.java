@@ -11,15 +11,22 @@ public class EmailScheduler {
 
     private final ItemCountWatchdogService itemCountWatchdogService;
     private final boolean enabled;
-
     private final EmailConfigLoader emailConfigLoader;
 
+    /**
+     * DI constructor
+     * @param itemCountWatchdogService itemCountWatchdogService
+     * @param emailConfigLoader emailConfigLoader
+     */
     public EmailScheduler(ItemCountWatchdogService itemCountWatchdogService, EmailConfigLoader emailConfigLoader) {
         this.itemCountWatchdogService = itemCountWatchdogService;
         this.emailConfigLoader = emailConfigLoader;
         enabled = emailConfigLoader.extractEmailConfig().get("enabled").equalsIgnoreCase("true");
     }
 
+    /**
+     * Executes scan of database with predetermined delay
+     */
     @Scheduled(initialDelay = 0, fixedDelay = 2 * 60 * 1000L)
     public void executeScan() {
         if (!enabled) {

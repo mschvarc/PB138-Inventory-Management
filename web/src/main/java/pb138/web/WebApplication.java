@@ -23,6 +23,10 @@ public class WebApplication extends SpringBootServletInitializer {
 
     private static Class<WebApplication> applicationClass = WebApplication.class;
 
+    /**
+     * Main application entry point when deployed on Tomcat / JEE server
+     * @param args args
+     */
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
     }

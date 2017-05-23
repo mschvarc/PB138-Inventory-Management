@@ -19,6 +19,11 @@ public class EmailSenderImpl implements EmailSender {
     private final MailSender mailSender;
     private final SimpleMailMessage templateMessage;
 
+    /**
+     * DI constructor
+     * @param mailSender mailSender
+     * @param templateMessage templateMessage
+     */
     public EmailSenderImpl(MailSender mailSender, SimpleMailMessage templateMessage) {
         this.mailSender = mailSender;
         this.templateMessage = templateMessage;

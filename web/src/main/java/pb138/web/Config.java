@@ -47,12 +47,20 @@ public class Config {
     private EmailConfigLoader emailConfigLoader;
 
 
+    /**
+     * Bootstraps ItemCountWatchdogService
+     * @return ItemCountWatchdogService
+     */
     @Bean
     public ItemCountWatchdogService itemCountWatchdogService() {
         return new ItemCountWatchdogServiceImpl(itemService, emailSender());
     }
 
 
+    /**
+     * Bootstraps Endpoint
+     * @return Endpoint
+     */
     @Bean
     public Endpoint endpoint() {
         EndpointImpl endpoint = new EndpointImpl(bus, soapBean);
@@ -62,6 +70,10 @@ public class Config {
     }
 
 
+    /**
+     * Bootstraps EmailSender
+     * @return EmailSender
+     */
     @Bean
     public EmailSender scheduler() {
         EmailSender emailSender = new EmailSenderImpl(javaMailSender(), simpleMailMessage());
@@ -69,11 +81,19 @@ public class Config {
     }
 
 
+    /**
+     * Bootstraps EmailScheduler
+     * @return EmailScheduler
+     */
     @Bean
     public EmailScheduler emailScheduler() {
         return new EmailScheduler(itemCountWatchdogService(), emailConfigLoader);
     }
 
+    /**
+     * Bootstraps EmailSender
+     * @return EmailSender
+     */
     @Bean
     public EmailSender emailSender() {
         return new EmailSenderImpl(javaMailSender(), simpleMailMessage());
@@ -90,6 +110,10 @@ public class Config {
         return javaMailSender;
     }
 
+    /**
+     * Boostraps SimpleMailMessage
+     * @return SimpleMailMessage
+     */
     @Bean
     public SimpleMailMessage simpleMailMessage() {
         Map<String, String> config = emailConfigLoader.extractEmailConfig();
