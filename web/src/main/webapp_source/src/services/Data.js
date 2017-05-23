@@ -51,14 +51,63 @@ export default class Data {
   }
 
   loadSales(timeUnit, entityType, entityId, dateStart, numberOfTimeUnit) {
-    var fname = "get"+timeUnit+"SalesFor"+entityType;
+    var fname = "get"+timeUnit+"SalesFor"+entityType+"Xml";
 
-    this.client[fname]({arg0: entityId, arg1: dateStart, arg2: numberOfTimeUnit}, (err, result) => {
+    var args = null;
+
+    switch (entityType+timeUnit) {
+      case 'Item'+'Daily':
+        args = {
+          'ean': entityId,
+          'dayStart': dateStart,
+          'numberOfDays': numberOfTimeUnit
+        }
+        break;
+      case 'Item'+'Weekly':
+        args = {
+          'ean': entityId,
+          'weekStart': dateStart,
+          'numberOfWeeks': numberOfTimeUnit
+        }
+        break;
+      case 'Item'+'Monthly':
+        args = {
+          'ean': entityId,
+          'monthStart': dateStart,
+          'numberOfMonths': numberOfTimeUnit
+        }
+        break;
+      case 'Category'+'Daily':
+        args = {
+          'category': entityId,
+          'dayStart': dateStart,
+          'numberOfDays': numberOfTimeUnit
+        }
+        break;
+      case 'Category'+'Weekly':
+        args = {
+          'category': entityId,
+          'weekStart': dateStart,
+          'numberOfWeeks': numberOfTimeUnit
+        }
+        break;
+      case 'Category'+'Monthly':
+        args = {
+          'category': entityId,
+          'monthStart': dateStart,
+          'numberOfMonths': numberOfTimeUnit
+        }
+        break;
+      default:
+        throw new Error("Illegal entity type or time unit");
+    }
+
+    this.client[fname](args, (err, result) => {
       if(err) {
-        this.app.setState({error: "Cannot retrive sales"});
+        this.app.setState({sales: "Cannot retrive sales: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
-        console.log("sales", result);
-        this.app.setState({sales: this.resultArray(result.return.item)});
+        console.log(result);
+        this.app.setState({sales: result.return});
       }
     });
   }

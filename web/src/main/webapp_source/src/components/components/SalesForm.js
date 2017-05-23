@@ -57,9 +57,11 @@ export default class SalesForm extends Component {
       return;
     }
 
-    var dateStart = this.state.dateStart + "T00:00:00";
-    this.props.loadSales(this.state.timeUnit, this.state.entityType, this.state.entityId, dateStart, this.state.numberOfTimeUnit);
-  }
+		setTimeout(() => {
+	    var dateStart = this.state.dateStart + "T00:00:00";
+	    this.props.loadSales(this.state.timeUnit, this.state.entityType, this.state.entityId, dateStart, this.state.numberOfTimeUnit);
+		});
+	}
 
   render() {
     return <form onSubmit={() => this.props.loadSales()}>
