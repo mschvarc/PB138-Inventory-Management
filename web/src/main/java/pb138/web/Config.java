@@ -16,6 +16,7 @@ import pb138.service.services.EmailSender;
 import pb138.service.services.ItemCountWatchdogService;
 import pb138.service.services.ItemCountWatchdogServiceImpl;
 import pb138.service.services.ItemService;
+import pb138.web.controllers.DebugSoapBean;
 import pb138.web.controllers.SoapBean;
 import pb138.web.email.EmailConfigLoader;
 import pb138.web.email.EmailScheduler;
@@ -36,6 +37,9 @@ import java.util.Map;
 public class Config {
     @Autowired
     private SoapBean soapBean;
+
+    @Autowired
+    private DebugSoapBean debugSoapBean;
 
     @Autowired
     private Bus bus;
@@ -66,6 +70,18 @@ public class Config {
         EndpointImpl endpoint = new EndpointImpl(bus, soapBean);
         //endpoint.setAddress("/soap");
         endpoint.publish("/soap");
+        return endpoint;
+    }
+
+    //TODO: REMOVE FOR RELEASE!!!!
+    /**
+     * Bootstraps Endpoint DEBUG ONLY
+     * @return Endpoint
+     */
+    @Bean
+    public Endpoint endpointDebug() {
+        EndpointImpl endpoint = new EndpointImpl(bus, debugSoapBean);
+        endpoint.publish("/debugsoap");
         return endpoint;
     }
 
