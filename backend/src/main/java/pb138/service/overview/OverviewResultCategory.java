@@ -2,6 +2,7 @@ package pb138.service.overview;
 
 import com.migesok.jaxb.adapter.javatime.PeriodXmlAdapter;
 import pb138.dal.entities.Category;
+import pb138.service.dto.CategoryDto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,7 +24,7 @@ public class OverviewResultCategory implements Serializable {
     @XmlJavaTypeAdapter(PeriodXmlAdapter.class)
     private Period timespan;
     private Date startDate;
-    private Category category;
+    private CategoryDto category;
     private int entityCount;
 
     /**
@@ -41,7 +42,7 @@ public class OverviewResultCategory implements Serializable {
      * @param category items from this category are in the overview
      * @param entityCount - count of sold items
      */
-    public OverviewResultCategory(Period timespan, Date startDate, Category category, int entityCount) {
+    public OverviewResultCategory(Period timespan, Date startDate, CategoryDto category, int entityCount) {
         this.timespan = timespan;
         this.startDate = startDate;
         this.category = category;
@@ -91,7 +92,7 @@ public class OverviewResultCategory implements Serializable {
      *
      * @return value of category
      */
-    public Category getCategory() {
+    public CategoryDto getCategory() {
         return category;
     }
 
@@ -100,7 +101,7 @@ public class OverviewResultCategory implements Serializable {
      *
      * @param category category
      */
-    public void setCategory(Category category) {
+    public void setCategory(CategoryDto category) {
         this.category = category;
     }
 

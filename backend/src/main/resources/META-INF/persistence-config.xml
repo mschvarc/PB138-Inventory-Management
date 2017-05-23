@@ -130,6 +130,7 @@
         <constructor-arg name="saleFacade" ref="saleFacade"/>
         <constructor-arg name="itemService" ref="itemService"/>
         <constructor-arg name="categoryService" ref="categoryService"/>
+        <constructor-arg name="automapper" ref="automapper"/>
     </bean>
 
     <bean id="overviewXmlExporter" class="pb138.service.overview.OverviewXmlExporterImpl">

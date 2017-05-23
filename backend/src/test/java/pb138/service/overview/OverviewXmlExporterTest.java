@@ -24,7 +24,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
+import pb138.service.dto.CategoryDto;
+import pb138.service.dto.ItemDto;
 import pb138.service.exceptions.XmlValidationException;
+import pb138.service.mapper.Automapper;
 
 /**
  * Tests for OverviewXmlExportImpl class.
@@ -38,6 +41,9 @@ public class OverviewXmlExporterTest extends TestCase {
 
     @Autowired
     private OverviewXmlExporter overviewXmlExporter;
+
+    @Autowired
+    private Automapper automapper;
 
     @Test
     public void exportEmptyOverview() throws XmlValidationException, ParserConfigurationException, SAXException, IOException {
@@ -67,9 +73,9 @@ public class OverviewXmlExporterTest extends TestCase {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2017, 0, 30);
-        OverviewResultItem ori1 = new OverviewResultItem(Period.ofWeeks(1), calendar.getTime(), item, 3);
+        OverviewResultItem ori1 = new OverviewResultItem(Period.ofWeeks(1), calendar.getTime(), automapper.mapTo(item, ItemDto.class), 3);
         calendar.set(2017, 1, 6);
-        OverviewResultItem ori2 = new OverviewResultItem(Period.ofWeeks(1), calendar.getTime(), item, 4);
+        OverviewResultItem ori2 = new OverviewResultItem(Period.ofWeeks(1), calendar.getTime(), automapper.mapTo(item, ItemDto.class), 4);
 
         List<OverviewResultItem> results = new ArrayList<>();
         results.add(ori1);
@@ -120,9 +126,9 @@ public class OverviewXmlExporterTest extends TestCase {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2017, 0, 30);
-        OverviewResultCategory orc1 = new OverviewResultCategory(Period.ofWeeks(1), calendar.getTime(), category, 20);
+        OverviewResultCategory orc1 = new OverviewResultCategory(Period.ofWeeks(1), calendar.getTime(), automapper.mapTo(category, CategoryDto.class), 20);
         calendar.set(2017, 1, 6);
-        OverviewResultCategory orc2 = new OverviewResultCategory(Period.ofWeeks(1), calendar.getTime(), category, 30);
+        OverviewResultCategory orc2 = new OverviewResultCategory(Period.ofWeeks(1), calendar.getTime(), automapper.mapTo(category, CategoryDto.class), 30);
 
         List<OverviewResultCategory> results = new ArrayList<>();
         results.add(orc1);

@@ -8,8 +8,11 @@ import java.util.List;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
+import pb138.service.dto.CategoryDto;
+import pb138.service.dto.ItemDto;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.facades.SaleFacade;
+import pb138.service.mapper.Automapper;
 import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 
@@ -23,6 +26,7 @@ public class OverviewProviderImpl implements OverviewProvider {
     private SaleFacade saleFacade;
     private ItemService itemService;
     private CategoryService categoryService;
+    private Automapper automapper;
 
     /**
      * Constructor.
@@ -30,11 +34,13 @@ public class OverviewProviderImpl implements OverviewProvider {
      * @param saleFacade saleFacade
      * @param itemService itemService
      * @param categoryService categoryService
+     * @param automapper automapper
      */
-    public OverviewProviderImpl(SaleFacade saleFacade, ItemService itemService, CategoryService categoryService) {
+    public OverviewProviderImpl(SaleFacade saleFacade, ItemService itemService, CategoryService categoryService, Automapper automapper) {
         this.saleFacade = saleFacade;
         this.itemService = itemService;
         this.categoryService = categoryService;
+        this.automapper = automapper;
     }
 
     @Override
@@ -117,7 +123,7 @@ public class OverviewProviderImpl implements OverviewProvider {
             for (Sale sale : sales) {
                 itemCount += sale.getQuantitySold();
             }
-            results.add(new OverviewResultItem(period, from.getTime(), item, itemCount));
+            results.add(new OverviewResultItem(period, from.getTime(), automapper.mapTo(item, ItemDto.class), itemCount));
         }
 
         return results;
@@ -161,7 +167,7 @@ public class OverviewProviderImpl implements OverviewProvider {
             for (Sale sale : sales) {
                 itemCount += sale.getQuantitySold();
             }
-            results.add(new OverviewResultCategory(period, from.getTime(), category, itemCount));
+            results.add(new OverviewResultCategory(period, from.getTime(), automapper.mapTo(category, CategoryDto.class), itemCount));
         }
 
         return results;
