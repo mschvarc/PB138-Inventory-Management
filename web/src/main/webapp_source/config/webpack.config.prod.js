@@ -111,6 +111,7 @@ module.exports = {
           /\.(js|jsx)$/,
           /\.css$/,
           /\.json$/,
+          /\.xsl$/,
           /\.svg$/,
           /\.scss$/
         ],
@@ -153,6 +154,11 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json'
+      },
+      // XSLT loader
+      {
+        test: /\.xsl$/,
+        loader: 'string'
       },
       // "file" loader for svg
       {
