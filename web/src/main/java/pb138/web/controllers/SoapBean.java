@@ -226,7 +226,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
             @WebParam(name = "alertThreshold") Integer alertThreshold)
             throws ServiceException, EntityDoesNotExistException {
         //convert negative alert threshold to NULL internally
-        if (alertThreshold != null && alertThreshold <= 0) {
+        if (alertThreshold != null && alertThreshold < 0) {
             alertThreshold = null;
         }
         Item item = itemFacade.updateItemFromWeb(ean, currentCount, alertThreshold, unit);
