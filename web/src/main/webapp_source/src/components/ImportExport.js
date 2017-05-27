@@ -5,16 +5,13 @@ import fileDownload from 'react-file-download';
 class ImportExport extends Component {
 
 	onImport(files) {
-		for(var fileIndex in files) {
-			var file = files[fileIndex];
-
-			var fileReader = new FileReader();
-			fileReader.addEventListener("load", () => {
-				// send XML as string to server
-				this.props.import(fileReader.result);
-		  }, false);
+		var file = files[0];
+		var fileReader = new FileReader();
+		fileReader.addEventListener("load", () => {
+			// send XML as string to server
+			this.props.import(fileReader.result);
+	  	}, false);
     	fileReader.readAsText(file, 'utf-8');
-		}
 	}
 
 	onExport() {

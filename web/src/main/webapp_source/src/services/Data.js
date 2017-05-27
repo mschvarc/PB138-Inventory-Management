@@ -46,42 +46,42 @@ export default class Data {
     var args = null;
 
     switch (entityType+timeUnit) {
-      case 'Item'+'Daily':
+      case 'ItemDaily':
         args = {
           'ean': entityId,
           'dayStart': dateStart,
           'numberOfDays': numberOfTimeUnit
         }
         break;
-      case 'Item'+'Weekly':
+      case 'ItemWeekly':
         args = {
           'ean': entityId,
           'weekStart': dateStart,
           'numberOfWeeks': numberOfTimeUnit
         }
         break;
-      case 'Item'+'Monthly':
+      case 'ItemMonthly':
         args = {
           'ean': entityId,
           'monthStart': dateStart,
           'numberOfMonths': numberOfTimeUnit
         }
         break;
-      case 'Category'+'Daily':
+      case 'CategoryDaily':
         args = {
           'category': entityId,
           'dayStart': dateStart,
           'numberOfDays': numberOfTimeUnit
         }
         break;
-      case 'Category'+'Weekly':
+      case 'CategoryWeekly':
         args = {
           'category': entityId,
           'weekStart': dateStart,
           'numberOfWeeks': numberOfTimeUnit
         }
         break;
-      case 'Category'+'Monthly':
+      case 'CategoryMonthly':
         args = {
           'category': entityId,
           'monthStart': dateStart,
