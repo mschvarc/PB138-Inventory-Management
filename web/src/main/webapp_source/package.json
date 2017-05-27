@@ -56,7 +56,8 @@
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "2.0.2",
-    "xml-formatter": "^1.0.1"
+    "xml-formatter": "^1.0.1",
+    "xslt": "^0.8.0"
   },
   "scripts": {
     "start": "node scripts/start.js",

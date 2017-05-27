@@ -19,7 +19,6 @@ class ImportExport extends Component {
 
 	onExport() {
 		this.props.export(xml => {
-			console.log("EXPORT", xml);
 			fileDownload(xml, 'export.xml');
 		});
 	}

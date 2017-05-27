@@ -10,7 +10,11 @@ class Sales extends Component {
 		var salesXml = this.props.sales;
 		var salesXmlPreview = null;
 		if(this.props.sales && this.props.sales.startsWith("<?xml")) {
-			salesXmlPreview = xslt(this.props.sales, xsltTemplate);
+			try {
+				salesXmlPreview = xslt(this.props.sales, xsltTemplate);
+			} catch (e) {
+				console.log("Error while creating xml preview! ", e);
+			}
 		}
 
 		return <div className="page-sales row">

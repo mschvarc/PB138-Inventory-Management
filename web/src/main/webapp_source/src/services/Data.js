@@ -14,14 +14,6 @@ export default class Data {
       } else {
         this.client = client;
 
-        // this.client.addTestData((err, result) => {
-        //   if(err) {
-        //     this.app.setState({error: "Cannot add items"});
-        //   } else {
-        //     console.log(">>>TEST ITEMS ADDED<<<");
-        //   }
-        // });
-
         this.loadItems();
         this.loadCategories();
       }
@@ -33,7 +25,6 @@ export default class Data {
       if(err) {
         this.app.setState({error: "Cannot retrive items"});
       } else {
-        console.log("items", this.resultArray(result.return.item));
         this.app.setState({items: this.resultArray(result.return.item)});
       }
     });
@@ -44,7 +35,6 @@ export default class Data {
       if(err) {
         this.app.setState({error: "Cannot retrive categories"});
       } else {
-        console.log("categories", this.resultArray(result.return.item));
         this.app.setState({categories: this.resultArray(result.return.item)});
       }
     });
@@ -106,8 +96,7 @@ export default class Data {
       if(err) {
         this.app.setState({sales: "Cannot retrive sales: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
-        console.log(result);
-        this.app.setState({sales: result.return});
+        this.app.setState({sales: this.resultXml(result.return)});
       }
     });
   }
@@ -128,7 +117,7 @@ export default class Data {
         this.app.setState({exportState: "Cannot export XML file: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
         this.app.setState({exportState: "Export successfull"});
-        callback(result.return);
+        callback(this.resultXml(result.return));
       }
     });
   }
@@ -162,6 +151,11 @@ export default class Data {
     }
     //2+
     return data;
+  }
+
+  resultXml(data) {
+    //Windows NUL character bug
+    return data.replace(/\0/g, '');
   }
 
 }
