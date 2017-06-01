@@ -6,7 +6,6 @@ import pb138.service.exceptions.ServiceException;
 import java.util.List;
 
 /**
- * Created by Jan on 05.05.2017.
  * Interface for working with categories
  */
 public interface CategoryFacade {

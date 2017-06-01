@@ -1,7 +1,7 @@
 package pb138.service.facades;
 
 /**
- * Created by Jan on 07.05.2017.
+ * Enum that says whether the item will be updated or created
  *
  */
 public enum  CreateOrUpdate {

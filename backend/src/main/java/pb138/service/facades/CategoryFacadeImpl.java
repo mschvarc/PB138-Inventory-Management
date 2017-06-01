@@ -7,7 +7,6 @@ import pb138.service.services.CategoryService;
 import java.util.List;
 
 /**
- * Created by Jan on 05.05.2017.
  * Implements category facade
  */
 public class CategoryFacadeImpl implements CategoryFacade {

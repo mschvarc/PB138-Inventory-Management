@@ -3,12 +3,17 @@ package pb138.service.XmlImportExport;
 import org.w3c.dom.Element;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.exceptions.XmlValidationException;
-import pb138.service.xmlvalidator.XmlValidator;
 
 /**
- * Created by Jan on 08.05.2017.
+ * For importing categories
  *
  */
 public interface CategoryImporter {
+    /**
+     * Imports categoires
+     * @param e root element of XML file
+     * @throws XmlValidationException If XML cannot be validated
+     * @throws ServiceException If there are unexpected troubles on service layer
+     */
     void importCategories(Element e) throws XmlValidationException, ServiceException;
 }

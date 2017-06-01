@@ -1,7 +1,6 @@
 package pb138.service.XmlImportExport;
 
 
-import org.h2.mvstore.DataUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import pb138.dal.entities.Item;
@@ -9,10 +8,14 @@ import pb138.dal.entities.Sale;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.NotEnoughStoredException;
 import pb138.service.exceptions.ServiceException;
-import pb138.service.facades.ItemFacade;
 import pb138.service.facades.SaleFacade;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jan on 10.05.2017.
@@ -21,7 +24,10 @@ import java.util.*;
 public class SalesImporterImpl implements SalesImporter{
     private SaleFacade saleFacade;
 
-
+    /**
+     * Constructor
+     * @param saleFacade sale facade
+     */
     public SalesImporterImpl(SaleFacade saleFacade) {
         this.saleFacade = saleFacade;
 

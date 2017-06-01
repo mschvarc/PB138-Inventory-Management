@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Jan on 06.05.2017.
  * Implements SaleFacade
  */
 public class SaleFacadeImpl implements SaleFacade {

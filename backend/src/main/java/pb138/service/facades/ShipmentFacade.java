@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Honza on 30.04.2017.
  * Facade for working with shipments;
  */
 public interface ShipmentFacade {

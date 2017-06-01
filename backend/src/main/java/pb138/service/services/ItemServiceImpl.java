@@ -12,13 +12,16 @@ import pb138.service.filters.ItemFilter;
 import java.util.List;
 
 /**
- * Created by Honza on 30.04.2017.
+ * Implements item service
  *
  */
 public class ItemServiceImpl implements ItemService{
     private ItemRepository itemRepository;
 
-
+    /**
+     * Constructor
+     * @param itemRepository item repository
+     */
     public ItemServiceImpl(ItemRepository itemRepository ) {
         this.itemRepository = itemRepository;
 

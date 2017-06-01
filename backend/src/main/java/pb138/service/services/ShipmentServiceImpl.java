@@ -10,12 +10,16 @@ import pb138.service.filters.ShipmentFilter;
 import java.util.List;
 
 /**
- * Created by Honza on 30.04.2017.
+ * Implements shipment service
  *
  */
 public class ShipmentServiceImpl implements ShipmentService{
     private ShipmentRepository shipmentRepository;
 
+    /**
+     * Constructor
+     * @param shipmentRepository shipment repository
+     */
     public ShipmentServiceImpl(ShipmentRepository shipmentRepository) {
         this.shipmentRepository = shipmentRepository;
     }

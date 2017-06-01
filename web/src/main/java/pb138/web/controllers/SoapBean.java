@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import pb138.dal.entities.Category;
 import pb138.dal.entities.Item;
-import pb138.dal.entities.Sale;
-import pb138.dal.entities.Shipment;
 import pb138.dal.repository.CategoryRepository;
 import pb138.dal.repository.ItemRepository;
 import pb138.dal.repository.SaleRepository;
@@ -39,20 +37,14 @@ import pb138.service.exceptions.NotEnoughStoredException;
 import pb138.service.exceptions.ServiceException;
 import pb138.service.exceptions.XmlValidationException;
 import pb138.service.facades.CategoryFacade;
-import pb138.service.facades.CreateOrUpdate;
 import pb138.service.facades.ItemFacade;
 import pb138.service.facades.SaleFacade;
 import pb138.service.facades.ShipmentFacade;
-import pb138.service.filters.CategoryFilter;
-import pb138.service.filters.ItemFilter;
-import pb138.service.filters.SaleFilter;
-import pb138.service.filters.ShipmentFilter;
 import pb138.service.mapper.Automapper;
 import pb138.service.overview.OverviewProvider;
 import pb138.service.overview.OverviewResultCategory;
 import pb138.service.overview.OverviewResultItem;
 import pb138.service.overview.OverviewXmlExporter;
-import pb138.utils.Pair;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
@@ -60,7 +52,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -156,7 +147,7 @@ public class SoapBean extends SpringBeanAutowiringSupport {
      */
     @WebMethod
     public String exportAllItemsToXml() throws XmlValidationException {
-        return xmlExporter.ExportXmlToString();
+        return xmlExporter.exportXmlToString();
     }
 
     /**

@@ -14,6 +14,10 @@ public class CategoryImporterImpl implements CategoryImporter{
 
     private CategoryFacade categoryFacade;
 
+    /**
+     * Constructor
+     * @param categoryFacade category facade
+     */
     public CategoryImporterImpl(CategoryFacade categoryFacade) {
         this.categoryFacade = categoryFacade;
     }

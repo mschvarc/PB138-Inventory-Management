@@ -10,12 +10,16 @@ import pb138.service.filters.SaleFilter;
 import java.util.List;
 
 /**
- * Created by Honza on 30.04.2017.
+ * Implements sale service
  *
  */
 public class SaleServiceImpl implements SaleService{
     private SaleRepository saleRepository;
 
+    /**
+     * Constructor
+     * @param saleRepository sale repository
+     */
     public SaleServiceImpl(SaleRepository saleRepository) {
         this.saleRepository = saleRepository;
     }

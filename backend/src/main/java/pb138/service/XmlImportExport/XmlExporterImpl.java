@@ -10,7 +10,10 @@ import pb138.service.xmlvalidator.XmlValidator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
@@ -24,13 +27,18 @@ public class XmlExporterImpl implements XmlExporter {
     private ItemFacade itemFacade;
     private XmlValidator xmlValidator;
 
+    /**
+     * Constructor
+     * @param itemFacade item facade
+     * @param xmlValidator xml validator
+     */
     public XmlExporterImpl(ItemFacade itemFacade, XmlValidator xmlValidator) {
         this.itemFacade = itemFacade;
         this.xmlValidator = xmlValidator;
     }
 
     @Override
-    public Document ExportXmlToDoc() throws ParserConfigurationException {
+    public Document exportXmlToDoc() throws ParserConfigurationException {
         List<Item> items = itemFacade.getAllItems();
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -88,9 +96,9 @@ public class XmlExporterImpl implements XmlExporter {
     }
 
     @Override
-    public String ExportXmlToString() throws XmlValidationException{
+    public String exportXmlToString() throws XmlValidationException{
         try {
-            Document doc = ExportXmlToDoc();
+            Document doc = exportXmlToDoc();
 
             StringWriter sw = new StringWriter();
             TransformerFactory tf = TransformerFactory.newInstance();

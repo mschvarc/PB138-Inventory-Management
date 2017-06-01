@@ -1,7 +1,6 @@
 package pb138.service.XmlImportExport;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pb138.dal.entities.Shipment;
 import pb138.service.exceptions.EntityDoesNotExistException;
@@ -20,6 +19,10 @@ import java.util.List;
 public class ShipmentImporterImpl implements ShipmentImporter {
     private ShipmentFacade shipmentFacade;
 
+    /**
+     * Constructor
+     * @param shipmentFacade shipment facade
+     */
     public ShipmentImporterImpl(ShipmentFacade shipmentFacade) {
         this.shipmentFacade = shipmentFacade;
     }

@@ -32,6 +32,14 @@ public class XmlImporterImpl implements XmlImporter{
 
     private SalesImporter salesImporter;
 
+    /**
+     * Constructor
+     * @param xmlValidator xml validator
+     * @param shipmentImporter shipment importer
+     * @param categoryImporter category importer
+     * @param itemImporter item importer
+     * @param salesImporter sales importer
+     */
     public XmlImporterImpl(XmlValidator xmlValidator, ShipmentImporter shipmentImporter,
                            CategoryImporter categoryImporter, ItemImporter itemImporter, SalesImporter salesImporter) {
         this.xmlValidator = xmlValidator;

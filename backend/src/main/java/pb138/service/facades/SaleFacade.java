@@ -1,5 +1,7 @@
 package pb138.service.facades;
 
+import pb138.dal.entities.Category;
+import pb138.dal.entities.Item;
 import pb138.dal.entities.Sale;
 import pb138.service.exceptions.EntityDoesNotExistException;
 import pb138.service.exceptions.NotEnoughStoredException;
@@ -7,17 +9,22 @@ import pb138.service.exceptions.ServiceException;
 
 import java.util.Date;
 import java.util.List;
-import pb138.dal.entities.Category;
-import pb138.dal.entities.Item;
 
 /**
- * Created by Honza on 30.04.2017.
  * Facade for working with sales
  */
 public interface SaleFacade {
 
 
-    //Must be solved - what if the total amount of sales is greater than current stock?
+    /**
+     * Adds one sale
+     * @param ean EAN of item
+     * @param date date of sale
+     * @param sold items sold
+     * @return Sale that was added
+     * @throws EntityDoesNotExistException if item with this EAN doesn't exist
+     * @throws NotEnoughStoredException if there is not enough items of this item stored
+     */
     Sale addSale(long ean, Date date, int sold) throws EntityDoesNotExistException, NotEnoughStoredException;
 
     /**

@@ -19,6 +19,10 @@ import java.util.List;
 public class ItemImporterImpl implements ItemImporter{
     private ItemFacade itemFacade;
 
+    /**
+     * Constructor
+     * @param itemFacade item facade
+     */
     public ItemImporterImpl(ItemFacade itemFacade) {
         this.itemFacade = itemFacade;
     }

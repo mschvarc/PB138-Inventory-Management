@@ -6,13 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jan on 10.05.2017.
+ * Implements watchdog
  *
  */
 public class ItemCountWatchdogServiceImpl implements ItemCountWatchdogService{
     private ItemService itemService;
     private EmailSender emailSender;
 
+    /**
+     * Constructor
+     * @param itemService item service
+     * @param emailSender email sender
+     */
     public ItemCountWatchdogServiceImpl(ItemService itemService, EmailSender emailSender) {
         this.itemService = itemService;
         this.emailSender = emailSender;

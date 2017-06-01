@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Jan on 06.05.2017.
  * Implements shipment facade
  */
 public class ShipmentFacadeImpl  implements ShipmentFacade{

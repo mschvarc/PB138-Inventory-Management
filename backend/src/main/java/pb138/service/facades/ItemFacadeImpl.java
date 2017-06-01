@@ -12,7 +12,7 @@ import pb138.utils.Pair;
 import java.util.List;
 
 /**
- * Created by Jan on 03.05.2017.
+ * Implements item facade
  *
  */
 public class ItemFacadeImpl implements ItemFacade {

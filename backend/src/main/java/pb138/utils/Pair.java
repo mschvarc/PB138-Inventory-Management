@@ -30,6 +30,8 @@ import java.io.Serializable;
 
 /**
  * <p>A convenience class to represent name-value pairs.</p>
+ * @param <K> Key
+ * @param <V> Value
  */
 public class Pair<K, V> implements Serializable {
 

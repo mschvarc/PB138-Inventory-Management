@@ -14,6 +14,7 @@ public class ItemFilter implements EntityFilter {
 
     /**
      * Items with count below specified threshold will be selected
+     * @return items below threshold
      */
     public Boolean getFetchItemsBelowThreshold() {
         return fetchItemsBelowThreshold;

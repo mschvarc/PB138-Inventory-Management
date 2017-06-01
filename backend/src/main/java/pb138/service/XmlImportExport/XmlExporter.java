@@ -6,7 +6,7 @@ import pb138.service.exceptions.XmlValidationException;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
- * Created by Jan on 06.05.2017.
+ * For exporting XML of current stock
  *
  */
 public interface XmlExporter {
@@ -16,7 +16,12 @@ public interface XmlExporter {
      * @return xml in Document format (may be changed)
      * @throws ParserConfigurationException I have no idea why this could happen
      */
-    Document ExportXmlToDoc() throws ParserConfigurationException;
+    Document exportXmlToDoc() throws ParserConfigurationException;
 
-    String ExportXmlToString() throws XmlValidationException;
+    /**
+     * Exports all items in database to string with XML
+     * @return string containing all items in XML format
+     * @throws XmlValidationException if there are problems while validating XML
+     */
+    String exportXmlToString() throws XmlValidationException;
 }

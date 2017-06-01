@@ -11,7 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import pb138.dal.entities.Item;
-import pb138.service.XmlImportExport.XmlExporter;
 import pb138.service.facades.CategoryFacade;
 import pb138.service.facades.CreateOrUpdate;
 import pb138.service.facades.ItemFacade;
@@ -62,8 +61,8 @@ public class XmlExporterTest extends TestCase {
 
         Pair<Item, CreateOrUpdate> i4 = itemFacade.createOrUpdateItem("t-shirt", "Nice blue T-Shirt", "Clothes", null, "pieces", 21312);
         itemFacade.storeItemInDb(i4);
-        String s = xmlExporter.ExportXmlToString();
-        Document doc = xmlExporter.ExportXmlToDoc();
+        String s = xmlExporter.exportXmlToString();
+        Document doc = xmlExporter.exportXmlToDoc();
         Element root = doc.getDocumentElement();
         assertThat(root.getTagName(), is("items"));
         NodeList itemList = root.getChildNodes();
@@ -72,7 +71,7 @@ public class XmlExporterTest extends TestCase {
 
     @Test
     public void exportEmpty() throws Exception {
-        String s = xmlExporter.ExportXmlToString();
+        String s = xmlExporter.exportXmlToString();
         assertThat(s.contains("<items/>"), is(true));
     }
 }
