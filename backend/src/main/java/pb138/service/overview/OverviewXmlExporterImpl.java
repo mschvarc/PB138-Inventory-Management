@@ -20,6 +20,7 @@ import pb138.service.exceptions.XmlValidationException;
 import pb138.service.xmlvalidator.XmlValidator;
 
 /**
+ * Exporter of overview results to xml.
  * Implementation of OverviewXmlExporter interface.
  *
  * @author Marketa Elederova

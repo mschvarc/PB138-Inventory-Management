@@ -17,6 +17,7 @@ import pb138.service.services.CategoryService;
 import pb138.service.services.ItemService;
 
 /**
+ * Provides overview of sold items.
  * Implementation of OverviewProvider interface.
  *
  * @author Marketa Elederova

@@ -13,6 +13,8 @@ import org.xml.sax.SAXException;
 import pb138.service.exceptions.XmlValidationException;
 
 /**
+ * Class for validating xml against the xml schema.
+ * Implementation of XmlValidator interface.
  *
  * @author Marketa Elederova
  */
