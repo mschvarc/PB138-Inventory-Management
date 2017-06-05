@@ -107,6 +107,8 @@ export default class Data {
         this.app.setState({importState: "Cannot import XML file: "+(result.Body ? result.Body.Fault.faultstring : err)});
       } else {
         this.app.setState({importState: "Import successfull"});
+        this.loadItems();
+        this.loadCategories();
       }
     });
   }
