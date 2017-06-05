@@ -27,6 +27,7 @@ import java.util.Map;
 
 /**
  * Spring configuration class for web backend
+ *
  * @author Martin Schvarcbacher
  */
 @Configuration
@@ -53,6 +54,7 @@ public class Config {
 
     /**
      * Bootstraps ItemCountWatchdogService
+     *
      * @return ItemCountWatchdogService
      */
     @Bean
@@ -63,6 +65,7 @@ public class Config {
 
     /**
      * Bootstraps Endpoint
+     *
      * @return Endpoint
      */
     @Bean
@@ -74,8 +77,10 @@ public class Config {
     }
 
     //TODO: REMOVE FOR RELEASE!!!!
+
     /**
      * Bootstraps Endpoint DEBUG ONLY
+     *
      * @return Endpoint
      */
     @Bean
@@ -88,6 +93,7 @@ public class Config {
 
     /**
      * Bootstraps EmailSender
+     *
      * @return EmailSender
      */
     @Bean
@@ -99,6 +105,7 @@ public class Config {
 
     /**
      * Bootstraps EmailScheduler
+     *
      * @return EmailScheduler
      */
     @Bean
@@ -108,6 +115,7 @@ public class Config {
 
     /**
      * Bootstraps EmailSender
+     *
      * @return EmailSender
      */
     @Bean
@@ -115,6 +123,11 @@ public class Config {
         return new EmailSenderImpl(javaMailSender(), simpleMailMessage());
     }
 
+    /**
+     * Configures email sender bean
+     *
+     * @return JavaMailSender
+     */
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
@@ -128,6 +141,7 @@ public class Config {
 
     /**
      * Boostraps SimpleMailMessage
+     *
      * @return SimpleMailMessage
      */
     @Bean
