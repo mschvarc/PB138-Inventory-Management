@@ -11,16 +11,17 @@ import java.util.List;
 //Source: https://github.com/drichtarik/Dog-barbershop/blob/master/service/src/main/java/cz/muni/fi/pa165/service/BeanMappingServiceImpl.java
 
 /**
- * {@inheritDoc}
+ * Interface for mapping between DAL Entities and DTOs in Web layer
  *
- * @author Dominik Gmiterko
+ * @author Dominik Gmiterko, Martin Schvarcbacher
  */
 public class AutomapperImpl implements Automapper {
 
     private final Mapper dozer;
 
     /**
-     * {@inheritDoc}
+     * Default constructor for Automapper
+     * @param dozer configured DozerBeanMapper
      */
     public AutomapperImpl(DozerBeanMapper dozer) {
         if (dozer == null) {
