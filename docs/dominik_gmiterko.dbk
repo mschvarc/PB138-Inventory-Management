@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>PB138 Inventory Management System</title>
+    <authorgroup>
+      <author>
+        <firstname>Dominik</firstname>
+        <surname>Gmiterko</surname>
+      </author>
+    </authorgroup>
+  </articleinfo>
+  <para>
+    I was responsible for the whole web interface to the system.
+  </para>
+  <sect1 id="web-app-pages">
+    <title>Web app pages</title>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Dashboard - basic information about system
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Inventory - show current inventory state
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Categories - browse categories
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Import &amp; Export - form for importing data into system,
+          button for export of current inventory state
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Sales - overview of sales by category or for individual items
+          (exportable as <emphasis role="strong">XML</emphasis>, and
+          previewed directly in table)
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="internal-structure-used-technologies">
+    <title>Internal structure, used technologies</title>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          single-page application using React
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          all data are acquired through <emphasis role="strong">SOAP
+          API</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="strong">XSLT</emphasis> used for transforming
+          sales XML into HTML table
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="development">
+    <title>Development</title>
+    <para>
+      First I started with static templates for each page using hard-coded
+      data. Next step was to load them from <emphasis role="strong">SOAP
+      API</emphasis>. I was able to do this as soon as we with Martin got
+      SOAP working correctly. After that I implemented import&amp;export
+      and as last sales page. There was one additional step on sales page.
+      When XML with data is returned from back-end I generate preview for
+      the data. It's HTML table retrieved by applying
+      <emphasis role="strong">XSLT template</emphasis>.
+    </para>
+  </sect1>
+</article>
