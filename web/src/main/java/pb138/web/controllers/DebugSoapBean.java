@@ -25,6 +25,7 @@ import pb138.utils.Pair;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
@@ -87,6 +88,23 @@ public class DebugSoapBean extends SpringBeanAutowiringSupport {
             categoryRepository.delete(category);
         }
     }
+
+    /**
+     * Tests if SOAP controller is correctly deployed
+     *
+     * @param input string to echo
+     * @return original message + debug data
+     */
+    @WebMethod
+    public String testCorrectDeployment(@WebParam(name = "input") String input) {
+        int counter = 0;
+        counter += categoryRepository != null ? 1 : 0;
+        counter += itemRepository != null ? 1 : 0;
+        counter += saleRepository != null ? 1 : 0;
+        counter += shipmentRepository != null ? 1 : 0;
+        return "ECHO: " + input + "\r\nValid entities: " + counter + " / 4";
+    }
+
 
     /**
      * Adds test data to the database

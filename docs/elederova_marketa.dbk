@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>PB138 Inventory Management System</title>
+
+    <subtitle>Final report</subtitle>
+
+    <author>
+      <firstname>Markéta</firstname>
+
+      <surname>Elederová</surname>
+    </author>
+  </articleinfo>
+
+  <para>My task in project Inventory Management System was to implement
+  functionality for providing overviews of sales and validating XML files
+  against given XML Schema and also to write the XML Schemas for all types of
+  XML files that the system works with.</para>
+
+  <section>
+    <title>XML Schema</title>
+
+    <para>It was needed to write four XML Schemas for import: for items, for
+    categories, for shipments and for sales. One XML Schema is for export
+    actual state of the goods in stock and two XML schemas for export overview
+    of sales, one for overview sales of items, one of categories. To these XML
+    Schemas I wrote also some example XMLs for testing the schemas and then
+    for testing <classname>XMLValidator</classname> class.</para>
+  </section>
+
+  <section>
+    <title>XML Validator</title>
+
+    <para>In class <classname>XmlValidator</classname> are methods
+    <methodname>validate</methodname> and <methodname>isValid</methodname>,
+    that are used (together with the XML Schemas) in classes working with XML
+    files.</para>
+  </section>
+
+  <section>
+    <title>Overview Provider</title>
+
+    <para>Providing overviews is implemented in class
+    <classname>OverviewProvider</classname> and allows getting daily, weekly
+    or monthly counts of sold particular items or items belonging to
+    particular category. It uses other interfaces for items, categories and
+    sales and it is used in web interface. I have also implemented class
+    <classname>OverviewXmlExporter</classname> that can transform result
+    returned from any <classname>OvervierProvider</classname> method to XML
+    file.</para>
+  </section>
+</article>

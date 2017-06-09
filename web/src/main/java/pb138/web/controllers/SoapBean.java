@@ -107,21 +107,6 @@ public class SoapBean extends SpringBeanAutowiringSupport {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
-    /**
-     * Tests if SOAP controller is correctly deployed
-     *
-     * @param input string to echo
-     * @return original message + debug data
-     */
-    @WebMethod
-    public String testCorrectDeployment(@WebParam(name = "input") String input) {
-        int counter = 0;
-        counter += categoryRepository != null ? 1 : 0;
-        counter += itemRepository != null ? 1 : 0;
-        counter += saleRepository != null ? 1 : 0;
-        counter += shipmentRepository != null ? 1 : 0;
-        return "ECHO: " + input + "\r\nValid entities: " + counter + " / 4";
-    }
 
 
     /**
