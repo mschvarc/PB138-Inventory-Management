@@ -1,1 +1,1 @@
-Please add your Docbook report to this directory.
+Docbook source for this project

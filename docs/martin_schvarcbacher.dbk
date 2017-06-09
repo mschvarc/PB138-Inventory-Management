@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title/>
+
+    <author>
+      <firstname>Martin</firstname>
+
+      <surname>Schvarcbacher</surname>
+
+      <affiliation>
+        <orgname/>
+      </affiliation>
+    </author>
+
+    <pubdate/>
+  </articleinfo>
+
+	<section>
+    <title>My responsibilities</title>
+    <para>My job was to implement the data access layer, SOAP API and email
+    alert sending. Additionally I was the team leader. </para>
+	</section>
+	
+
+	<section>
+	<title> SOAP API </title>
+    <para>SOAP API was implemented using Apache CXF and JAX-WS. CXF was
+    primarily responsible for generating the WSDL file from the SOAP JavaBean.
+    This Java first approach allowed faster development, since there was no
+    need to first generate a WSDL and create Java classes and objects based on
+    that. In addition, any change in WSDL would necessitate heavy refactoring
+    to match the new WSDL. CXF also took care of data marshaling and
+    un-marshaling, so it was possible to transfer all DTO via SOAP without any
+    new configuration files. One problem was getting the new Java 8 datatypes
+    to work, such as java.time.Period. The solution was to find a 3rd party
+    XML data adapter, which is capable of data marshaling and un-marshaling
+    these new types. Without this adapter, CXF would silently drop the
+    unsupported attributes, which took time to find the cause of. The SOAP
+    implementation itself is relatively simple and passes most of the requests
+    to Markéta’s and Jan’s Services. One design decision was to send the
+    results of OverviewResult as XML and use XSLT on the front-end to parse
+    relevant data into a user viewable table. </para>
+	</section>
+	
+
+	<section>
+	<title>Data Access Layer</title>
+    <para>The data access layer was implemented using primarily Hibernate 5.
+    One design pattern was to use a Filter object with configurable parameters
+    and passing this filter to a find method. This removed the need to have
+    methods such as findById / findBySaleDate etc, as all of this and relevant
+    combinations could be achieved by configuring the filter object. One of
+    the new features was using the Hibernate meta-model and annotation
+    processing to achieve zero SQL required for data filtering. The meta-model
+    provides a type safe model of a Persistence Entity and this allows
+    creating type-safe filtering queries. This query is constructed by adding
+    predicates from a user selected filter. One problem was getting the
+    Annotations to work. Since they have to be created from the source code
+    and are not checked into source control, this required configuring the IDE
+    to support the generated annotations. Overall, I consider this approach
+    better than manually creating an SQL query by appending the required
+    conditions based on a filter. </para>
+	</section>
+
+	<section>
+	<title>Email alerting system</title>
+    <para>The email alerting system runs every 24 hours to check the status of
+    all items in the database. If their count drops below a user defined per
+    item threshold, the system will send the user an email containing all of
+    the stock that is running low. The email configuration uses an XML file
+    and XPATH for data extraction. </para>
+	</section>
+</article>
