@@ -30,8 +30,8 @@ Create a web application, which will allow a shop owner to keep track of the cur
 ![](https://mschvarc.github.io/PB138-Inventory-Management/images/UseCaseDiagram1.png)
 
 ## Docbook reports:
-[Dominik Gmiterko](https://mschvarc.github.io/PB138-Inventory-Management/docbook/dominik_gmiterko.html)
-[Jan Čech](https://mschvarc.github.io/PB138-Inventory-Management/docbook/jan_cech.html)
-[Markéta Elederová](https://mschvarc.github.io/PB138-Inventory-Management/docbook/elederova_marketa.html)
-[Martin Schvarcbacher](https://mschvarc.github.io/PB138-Inventory-Management/docbook/martin_schvarcbacher.html)
+* [Dominik Gmiterko](https://mschvarc.github.io/PB138-Inventory-Management/docbook/dominik_gmiterko.html)
+* [Jan Čech](https://mschvarc.github.io/PB138-Inventory-Management/docbook/jan_cech.html)
+* [Markéta Elederová](https://mschvarc.github.io/PB138-Inventory-Management/docbook/elederova_marketa.html)
+* [Martin Schvarcbacher](https://mschvarc.github.io/PB138-Inventory-Management/docbook/martin_schvarcbacher.html)
 
