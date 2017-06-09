@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>PB138 Inventory management system</title>
+
+    <author>
+      <firstname>Jan</firstname>
+
+      <surname>Cech</surname>
+    </author>
+  </articleinfo>
+
+  <section>
+    <title id="my-task">My task</title>
+
+    <para>My main task was to create the middle layer between web and
+    database. This also included processing XML file and splitting it into
+    objects and generating XML files from objects from database, and providing
+    sales with given properties (date, category, item) for other component for
+    further processing.</para>
+  </section>
+
+  <section>
+    <title>Problems</title>
+
+    <para>We decided, that loading any XML file must be an atomic operation -
+    if one of the entries is somehow invalid (inserting an item that belongs
+    to a non-existing category, creating sale/shipment for non-existing item,
+    selling more pieces of product that are currently in stock) , the state of
+    the database must not change. This was sometimes really challenging. I
+    always had to move through XML, creating the objects "on the way", storing
+    them only in some list and stopping with appropriate exception if
+    something went wrong. Only after successfully reaching the end of file, I
+    knew that everything was OK and I could proceed to store objects in
+    database. It was even trickier when it came to sales. I had to check, if
+    the summary of sales for every product is not higher than the current
+    stock. I did this by summing sales for each product in map and than
+    comparing value associated with each product with its current stock. Only
+    after this all passed I stored sales in db and actually changed stock of
+    items.</para>
+
+    <para>I don't recall exporting to XML to cause any bigger problems and I
+    consider it to be the easiest part of my task.</para>
+
+    <para>While extracting sales of given properties from database, I could
+    use filters that the db layer has provided me, so the only problem I
+    encountered was with properly reformatting the date.</para>
+
+    <para>Quite a funny problem was when we found out (in quite a late stage
+    of a developing), that the EAN code that we used as a business key will be
+    to big for the integer - for testing, we used small values as 1 or 2, but
+    it could be up to 13 number long, so much bigger than integer.
+    Fortunately, it took only some easy refactoring to fix it.</para>
+
+    <para>In general, it took me some time before I learned how to work with
+    spring (and understood how it works and what it does in our app), how to
+    properly set everything up, how to properly use maven, etc.</para>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Summary</title>
+
+    <para>This project was really interesting. I learned something about
+    making a complete java web app, how it should be connected with database,
+    etc. I also improved in using git to cooperate inside a team. I only used
+    it so far for synchronizing my own work between notebook and desktop, so I
+    didn't have to really solve any merge conflicts, use branches or anything
+    like that. Now it was something totally different and I even learned some
+    git functions that I had no idea they exist (eg. cherrypick). The XML part
+    was made easier by the fact, that we validated each XML file before
+    processing it, so I only had to process valid files in a format we agreed
+    on.</para>
+  </section>
+</article>
