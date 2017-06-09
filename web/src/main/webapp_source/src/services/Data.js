@@ -1,6 +1,6 @@
 import soap from 'browser-soap';
 
-var sopaApiUrl = 'http://localhost:8080/services/soap?wsdl';
+var sopaApiUrl = 'services/soap?wsdl';
 
 export default class Data {
 
