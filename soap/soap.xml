@@ -1,0 +1,724 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="pb138.web" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="SoapBean" targetNamespace="pb138.web">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="pb138.web" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="pb138.web">
+  <xs:element name="overviewResultCategory" type="tns:overviewResultCategory"/>
+  <xs:element name="overviewResultItem" type="tns:overviewResultItem"/>
+  <xs:complexType name="itemDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="alertThreshold" type="xs:int"/>
+      <xs:element minOccurs="0" name="category" type="tns:categoryDto"/>
+      <xs:element name="currentCount" type="xs:int"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element name="ean" type="xs:long"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="unit" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="categoryDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="overviewResultItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="timespan" type="xs:string"/>
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="item" type="tns:itemDto"/>
+      <xs:element name="entityCount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="overviewResultCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="timespan" type="xs:string"/>
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="category" type="tns:categoryDto"/>
+      <xs:element name="entityCount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="#all" name="itemDtoArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:itemDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="#all" name="overviewResultItemArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:overviewResultItem"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="#all" name="categoryDtoArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:categoryDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="#all" name="overviewResultCategoryArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:overviewResultCategory"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="XmlValidationException" type="tns:XmlValidationException"/>
+  <xs:complexType name="XmlValidationException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NotEnoughStoredException" type="tns:NotEnoughStoredException"/>
+  <xs:complexType name="NotEnoughStoredException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntityDoesNotExistException" type="tns:EntityDoesNotExistException"/>
+  <xs:complexType name="EntityDoesNotExistException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceException" type="tns:ServiceException"/>
+  <xs:complexType name="ServiceException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="importXml">
+    <wsdl:part name="xmlToImport" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForItemResponse">
+    <wsdl:part name="return" type="tns:overviewResultItemArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForCategoryXml">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="weekStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfWeeks" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForItemXml">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="weekStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfWeeks" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForItemXml">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="dayStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfDays" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllItemsForCategoryResponse">
+    <wsdl:part name="return" type="tns:itemDtoArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForItem">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="dayStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfDays" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForCategoryResponse">
+    <wsdl:part name="return" type="tns:overviewResultCategoryArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCategories">
+  </wsdl:message>
+  <wsdl:message name="getCategoryByName">
+    <wsdl:part name="categoryName" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCategoriesResponse">
+    <wsdl:part name="return" type="tns:categoryDtoArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForCategoryXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCategoryByNameResponse">
+    <wsdl:part name="return" type="tns:categoryDto">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForCategoryResponse">
+    <wsdl:part name="return" type="tns:overviewResultCategoryArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ServiceException">
+    <wsdl:part element="tns:ServiceException" name="ServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForItem">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="weekStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfWeeks" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForItemXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForCategoryXml">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="dayStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfDays" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForItemXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForCategory">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="weekStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfWeeks" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllItems">
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForItemXml">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="monthStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfMonths" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="XmlValidationException">
+    <wsdl:part element="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForItemXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changeItem">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="currentCount" type="xsd:int">
+    </wsdl:part>
+    <wsdl:part name="unit" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="alertThreshold" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="importXmlResponse">
+  </wsdl:message>
+  <wsdl:message name="EntityDoesNotExistException">
+    <wsdl:part element="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForCategoryXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotEnoughStoredException">
+    <wsdl:part element="tns:NotEnoughStoredException" name="NotEnoughStoredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="exportAllItemsToXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWeeklySalesForCategoryResponse">
+    <wsdl:part name="return" type="tns:overviewResultCategoryArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForCategoryXml">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="monthStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfMonths" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForCategoryXmlResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForCategory">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="dayStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfDays" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDailySalesForItemResponse">
+    <wsdl:part name="return" type="tns:overviewResultItemArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllItemsForCategory">
+    <wsdl:part name="categoryName" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForItemResponse">
+    <wsdl:part name="return" type="tns:overviewResultItemArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changeItemResponse">
+    <wsdl:part name="return" type="tns:itemDto">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="exportAllItemsToXml">
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForItem">
+    <wsdl:part name="ean" type="xsd:long">
+    </wsdl:part>
+    <wsdl:part name="monthStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfMonths" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMonthlySalesForCategory">
+    <wsdl:part name="category" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="monthStart" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="numberOfMonths" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllItemsResponse">
+    <wsdl:part name="return" type="tns:itemDtoArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SoapBean">
+    <wsdl:operation name="importXml">
+      <wsdl:input message="tns:importXml" name="importXml">
+    </wsdl:input>
+      <wsdl:output message="tns:importXmlResponse" name="importXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotEnoughStoredException" name="NotEnoughStoredException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ServiceException" name="ServiceException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllItems">
+      <wsdl:input message="tns:getAllItems" name="getAllItems">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllItemsResponse" name="getAllItemsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForItemXml">
+      <wsdl:input message="tns:getMonthlySalesForItemXml" name="getMonthlySalesForItemXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getMonthlySalesForItemXmlResponse" name="getMonthlySalesForItemXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForCategoryXml">
+      <wsdl:input message="tns:getWeeklySalesForCategoryXml" name="getWeeklySalesForCategoryXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getWeeklySalesForCategoryXmlResponse" name="getWeeklySalesForCategoryXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForItemXml">
+      <wsdl:input message="tns:getWeeklySalesForItemXml" name="getWeeklySalesForItemXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getWeeklySalesForItemXmlResponse" name="getWeeklySalesForItemXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeItem">
+      <wsdl:input message="tns:changeItem" name="changeItem">
+    </wsdl:input>
+      <wsdl:output message="tns:changeItemResponse" name="changeItemResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ServiceException" name="ServiceException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForItemXml">
+      <wsdl:input message="tns:getDailySalesForItemXml" name="getDailySalesForItemXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getDailySalesForItemXmlResponse" name="getDailySalesForItemXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForItem">
+      <wsdl:input message="tns:getDailySalesForItem" name="getDailySalesForItem">
+    </wsdl:input>
+      <wsdl:output message="tns:getDailySalesForItemResponse" name="getDailySalesForItemResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCategories">
+      <wsdl:input message="tns:getAllCategories" name="getAllCategories">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllCategoriesResponse" name="getAllCategoriesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryByName">
+      <wsdl:input message="tns:getCategoryByName" name="getCategoryByName">
+    </wsdl:input>
+      <wsdl:output message="tns:getCategoryByNameResponse" name="getCategoryByNameResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForCategoryXml">
+      <wsdl:input message="tns:getMonthlySalesForCategoryXml" name="getMonthlySalesForCategoryXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getMonthlySalesForCategoryXmlResponse" name="getMonthlySalesForCategoryXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForCategory">
+      <wsdl:input message="tns:getDailySalesForCategory" name="getDailySalesForCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:getDailySalesForCategoryResponse" name="getDailySalesForCategoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllItemsForCategory">
+      <wsdl:input message="tns:getAllItemsForCategory" name="getAllItemsForCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllItemsForCategoryResponse" name="getAllItemsForCategoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportAllItemsToXml">
+      <wsdl:input message="tns:exportAllItemsToXml" name="exportAllItemsToXml">
+    </wsdl:input>
+      <wsdl:output message="tns:exportAllItemsToXmlResponse" name="exportAllItemsToXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForItem">
+      <wsdl:input message="tns:getWeeklySalesForItem" name="getWeeklySalesForItem">
+    </wsdl:input>
+      <wsdl:output message="tns:getWeeklySalesForItemResponse" name="getWeeklySalesForItemResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForCategoryXml">
+      <wsdl:input message="tns:getDailySalesForCategoryXml" name="getDailySalesForCategoryXml">
+    </wsdl:input>
+      <wsdl:output message="tns:getDailySalesForCategoryXmlResponse" name="getDailySalesForCategoryXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:XmlValidationException" name="XmlValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForItem">
+      <wsdl:input message="tns:getMonthlySalesForItem" name="getMonthlySalesForItem">
+    </wsdl:input>
+      <wsdl:output message="tns:getMonthlySalesForItemResponse" name="getMonthlySalesForItemResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForCategory">
+      <wsdl:input message="tns:getMonthlySalesForCategory" name="getMonthlySalesForCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:getMonthlySalesForCategoryResponse" name="getMonthlySalesForCategoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForCategory">
+      <wsdl:input message="tns:getWeeklySalesForCategory" name="getWeeklySalesForCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:getWeeklySalesForCategoryResponse" name="getWeeklySalesForCategoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EntityDoesNotExistException" name="EntityDoesNotExistException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SoapBeanSoapBinding" type="tns:SoapBean">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="importXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="importXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="importXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotEnoughStoredException">
+        <soap:fault name="NotEnoughStoredException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllItems">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getAllItems">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllItemsResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForItemXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getMonthlySalesForItemXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMonthlySalesForItemXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForCategoryXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getWeeklySalesForCategoryXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getWeeklySalesForCategoryXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForItemXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getWeeklySalesForItemXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getWeeklySalesForItemXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeItem">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="changeItem">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeItemResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForItemXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getDailySalesForItemXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDailySalesForItemXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForItem">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getDailySalesForItem">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDailySalesForItemResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCategories">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getAllCategories">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllCategoriesResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryByName">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getCategoryByName">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCategoryByNameResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForCategoryXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getMonthlySalesForCategoryXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMonthlySalesForCategoryXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForCategory">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getDailySalesForCategory">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDailySalesForCategoryResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllItemsForCategory">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getAllItemsForCategory">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllItemsForCategoryResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="exportAllItemsToXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="exportAllItemsToXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="exportAllItemsToXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForItem">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getWeeklySalesForItem">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getWeeklySalesForItemResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySalesForCategoryXml">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getDailySalesForCategoryXml">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDailySalesForCategoryXmlResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="XmlValidationException">
+        <soap:fault name="XmlValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForItem">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getMonthlySalesForItem">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMonthlySalesForItemResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMonthlySalesForCategory">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getMonthlySalesForCategory">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMonthlySalesForCategoryResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWeeklySalesForCategory">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getWeeklySalesForCategory">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getWeeklySalesForCategoryResponse">
+        <soap:body namespace="pb138.web" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EntityDoesNotExistException">
+        <soap:fault name="EntityDoesNotExistException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SoapBean">
+    <wsdl:port binding="tns:SoapBeanSoapBinding" name="SoapBeanPort">
+      <soap:address location="http://localhost:8080/services/soap"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
