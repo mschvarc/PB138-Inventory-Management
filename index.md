@@ -38,5 +38,5 @@ Create a web application, which will allow a shop owner to keep track of the cur
 
 # SOAP API Documentation
 For detailed documentation, please refer to the JavaDoc of pb138.web.controllers.SoapBean. To use this API follow the WSDL requirements.
-* [SOAP API JavaDoc, go to pb138.web.controllers.SoapBean](https://mschvarc.github.io/PB138-Inventory-Management/javadoc/apidocs/)
+* [SOAP API JavaDoc](https://mschvarc.github.io/PB138-Inventory-Management/javadoc/apidocs/pb138/web/controllers/SoapBean.html)
 * [SOAP WSDL file](https://mschvarc.github.io/PB138-Inventory-Management/soap/soap.xml)
