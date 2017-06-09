@@ -3,18 +3,11 @@
 "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <article>
   <articleinfo>
-    <title/>
-
+    <title>PB138 Inventory Management System</title>
     <author>
       <firstname>Martin</firstname>
-
       <surname>Schvarcbacher</surname>
-
-      <affiliation>
-        <orgname/>
-      </affiliation>
     </author>
-
     <pubdate/>
   </articleinfo>
 
