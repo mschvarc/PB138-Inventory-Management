@@ -3,9 +3,21 @@
 <shipments>
 
     <shipment>
-            <itemEan>7614500010013</itemEan>
-            <amount>500</amount>
-            <date>2017-05-05</date>
+        <itemEan>7614500010013</itemEan>
+        <amount>500</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+    <shipment>
+        <itemEan>0042238302211</itemEan>
+        <amount>1000</amount>
+        <date>2017-05-05</date>
+    </shipment>
+
+    <shipment>
+        <itemEan>5011898007328</itemEan>
+        <amount>1000</amount>
+        <date>2017-05-05</date>
     </shipment>
 
     <shipment>
