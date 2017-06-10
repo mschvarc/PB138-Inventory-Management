@@ -13,16 +13,13 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
-        <property name="persistenceUnitName" value="H2_INMEMORY_DB"/>
+        <property name="persistenceUnitName" value="POSTGRES"/>
         <property name="packagesToScan" value="pb138"/>
         <property name="jpaProperties">
             <props>
                 <!-- http://stackoverflow.com/questions/306806/hibernate-automatically-creating-updating-the-db-tables-based-on-entity-classes -->
-                <!-- For MySQL deployment -->
-                <!--
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
             </props>
         </property>
     </bean>
